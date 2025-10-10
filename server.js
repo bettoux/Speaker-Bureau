@@ -13,7 +13,8 @@ app.use(express.json());
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/uploads', express.static('uploads'));
+//app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Configure multer for image uploads
 const storage = multer.diskStorage({
@@ -46,7 +47,8 @@ const upload = multer({
     }
 });
 
-const DATA_FILE = './data/speakers.json';
+const DATA_FILE = express.static(path.join(__dirname, 'data', 'speakers.json'));
+//const DATA_FILE = './data/speakers.json';
 
 // Initialize data file
 async function initializeDataFile() {
@@ -202,6 +204,7 @@ initializeDataFile().then(() => {
     });
 
 });
+
 
 
 
