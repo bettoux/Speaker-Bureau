@@ -8,7 +8,7 @@ const PORT = 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('/public/index.html'));
 app.use('/uploads', express.static('uploads'));
 
 // Configure multer for image uploads
@@ -196,4 +196,5 @@ initializeDataFile().then(() => {
         console.log(`Admin panel: http://localhost:${PORT}/admin`);
         console.log(`Public site: http://localhost:${PORT}`);
     });
+
 });
