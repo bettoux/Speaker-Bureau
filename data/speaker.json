@@ -1,0 +1,103 @@
+[
+  {
+    "id": 1,
+    "name": "Sarah Johnson",
+    "title": "CEO & Innovation Strategist",
+    "bio": "English bio...",
+    "topics": [
+      "Technology",
+      "Business"
+    ],
+    "keyTopics": [
+      "Topic 1",
+      "Topic 2"
+    ],
+    "image": "👤",
+    "name_fr": null,
+    "title_fr": "PDG et Stratège en Innovation",
+    "bio_fr": "Biographie en français...",
+    "topics_fr": [
+      "Technologie",
+      "Affaires"
+    ],
+    "keyTopics_fr": [
+      "Sujet 1",
+      "Sujet 2"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "David Lee",
+    "title": "Cybersecurity Expert",
+    "bio": "English bio...",
+    "topics": [
+      "Cybersecurity",
+      "Data Privacy"
+    ],
+    "keyTopics": [
+      "Topic A",
+      "Topic B"
+    ],
+    "image": "👤",
+    "name_fr": null,
+    "title_fr": "Expert en Cybersécurité",
+    "bio_fr": "Biographie en français...",
+    "topics_fr": [
+      "Cybersécurité",
+      "Confidentialité des Données"
+    ],
+    "keyTopics_fr": [
+      "Sujet A",
+      "Sujet B"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Emily Davis",
+    "title": "Digital Marketing Guru",
+    "bio": "English bio...",
+    "topics": [
+      "Marketing",
+      "Social Media"
+    ],
+    "keyTopics": [
+      "Topic X",
+      "Topic Y"
+    ],
+    "image": "👤",
+    "name_fr": null,
+    "title_fr": "Gourou du Marketing Digital",
+    "bio_fr": "Biographie en français...",
+    "topics_fr": [
+      "Marketing",
+      "Médias Sociaux"
+    ],
+    "keyTopics_fr": [
+      "Sujet X",
+      "Sujet Y"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Moridja Kitenge Banza",
+    "title": "Artiste en Arts-Visuels | President du CA de Culture Montreal",
+    "bio": "\nMoridja Kitenge Banza est un artiste canadien d’origine congolaise, né à Kinshasa en 1980 en République démocratique du Congo. Il est diplômé de l’Académie des beaux-arts de Kinshasa, de l’École supérieure des beaux-arts de Nantes Métropole ainsi que de la faculté des Sciences humaines et sociales de l’Université de La Rochelle.  \n\n \n\nEn 2010, il reçoit le 1er prix de La Biennale de l’Art africain contemporain, DAK’ART, pour la vidéo Hymne à nous et son installation De 1848 à nos jours. Il a reçu un Prix Sobey en 2020. Le Musée des beaux-arts de l’Ontario (AGO) et la Fondation Phi ont présenté des expositions solo de l’artiste. Son travail a notamment été présenté au Musée Dauphinois (Grenoble, France), au Museum of Contemporary Art (Rosklide, Danemark), à la Arndt Gallery et la Ngbk (Berlin, Allemagne), à la Biennale Internationale de Casablanca (Casablanca, Maroc), à la Fondation Attijariwafa bank (Casablanca, Maroc), à la Fondation Blachère (Apt, France),  au Musée des beaux-arts de Montréal (Montréal, Canada), au Projet Casa (Montréal, Canada), au Musée d’art contemporain de Montréal (Montréal, Canada) et au Musée des beaux-arts du Canada (Ottawa, Canada). Le musée McMichael et le Musée d’art de Joliette présenteront des expositions individuelles de Kitenge Banza en 2023 et 2024.\n\n \n\nOn compte des oeuvres de l’artistes dans les collections du Musée des beaux-arts de Montréal, du Musée d’art contemporain de Montréal, du Musée national des beaux-arts du Québec, du Musée des beaux-arts du Canada, du Musée des beaux-arts de l’Ontario (AGO), la Collection de la Ville de Laval ainsi que dans de nombreuses collections corporatives telles BMO, la Caisse de dépôt et de placement du Québec, Canadian Shield Capital, Hydro-Québec, le Mouvement Desjardins, RBC et TD Bank Corporate Art Collection.",
+    "image": "/uploads/1760120399700-96866468.jpg",
+    "topics": [
+      "Visual Arts",
+      "Culture",
+      "Governance",
+      "Cultural Policies"
+    ],
+    "keyTopics": [
+      "Cultural Policies",
+      "AI and Arts",
+      "Living from your art"
+    ],
+    "name_fr": null,
+    "title_fr": null,
+    "bio_fr": "\nMoridja Kitenge Banza est un artiste canadien d’origine congolaise, né à Kinshasa en 1980 en République démocratique du Congo. Il est diplômé de l’Académie des beaux-arts de Kinshasa, de l’École supérieure des beaux-arts de Nantes Métropole ainsi que de la faculté des Sciences humaines et sociales de l’Université de La Rochelle.  \n\n \n\nEn 2010, il reçoit le 1er prix de La Biennale de l’Art africain contemporain, DAK’ART, pour la vidéo Hymne à nous et son installation De 1848 à nos jours. Il a reçu un Prix Sobey en 2020. Le Musée des beaux-arts de l’Ontario (AGO) et la Fondation Phi ont présenté des expositions solo de l’artiste. Son travail a notamment été présenté au Musée Dauphinois (Grenoble, France), au Museum of Contemporary Art (Rosklide, Danemark), à la Arndt Gallery et la Ngbk (Berlin, Allemagne), à la Biennale Internationale de Casablanca (Casablanca, Maroc), à la Fondation Attijariwafa bank (Casablanca, Maroc), à la Fondation Blachère (Apt, France),  au Musée des beaux-arts de Montréal (Montréal, Canada), au Projet Casa (Montréal, Canada), au Musée d’art contemporain de Montréal (Montréal, Canada) et au Musée des beaux-arts du Canada (Ottawa, Canada). Le musée McMichael et le Musée d’art de Joliette présenteront des expositions individuelles de Kitenge Banza en 2023 et 2024.\n\n \n\nOn compte des oeuvres de l’artistes dans les collections du Musée des beaux-arts de Montréal, du Musée d’art contemporain de Montréal, du Musée national des beaux-arts du Québec, du Musée des beaux-arts du Canada, du Musée des beaux-arts de l’Ontario (AGO), la Collection de la Ville de Laval ainsi que dans de nombreuses collections corporatives telles BMO, la Caisse de dépôt et de placement du Québec, Canadian Shield Capital, Hydro-Québec, le Mouvement Desjardins, RBC et TD Bank Corporate Art Collection.",
+    "topics_fr": [],
+    "keyTopics_fr": []
+  }
+]
