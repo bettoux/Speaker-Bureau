@@ -53,7 +53,7 @@ const DATA_FILE = express.static(path.join(__dirname, 'data', 'speakers.json'));
 // Initialize data file
 async function initializeDataFile() {
     try {
-        await fs.mkdir('./data', { recursive: true });
+        await fs.mkdir(express.static(path.join(__dirname, 'data')), { recursive: true });
         try {
             await fs.access(DATA_FILE);
         } catch {
@@ -204,6 +204,7 @@ initializeDataFile().then(() => {
     });
 
 });
+
 
 
 
