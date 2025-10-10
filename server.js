@@ -8,7 +8,7 @@ const PORT = 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static('/public/index.html'));
+app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 
 // Configure multer for image uploads
@@ -198,3 +198,4 @@ initializeDataFile().then(() => {
     });
 
 });
+
