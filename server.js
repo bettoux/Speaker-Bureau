@@ -194,9 +194,10 @@ initializeDataFile().then(() => {
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
         console.log(`Admin panel: http://localhost:${PORT}/admin`);
-        console.log(`Public site: http://localhost:${PORT}/public`);
+        console.log(`Public site: http://localhost:${PORT}`);
     });
 
 });
+
 
 
