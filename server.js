@@ -8,7 +8,11 @@ const PORT = 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static('public'));
+// app.use(express.static('public'));
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/uploads', express.static('uploads'));
 
 // Configure multer for image uploads
@@ -198,6 +202,7 @@ initializeDataFile().then(() => {
     });
 
 });
+
 
 
 
