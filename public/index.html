@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaker Bureau</title>
+
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind with the new, bright color scheme (V5) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-main': '#FFFFFF',      // White (Primary background for brightness)
+                        'bg-section': '#eeeeee', //'#0A0A0A',   // Near Black (Contrast for forms/highlights)
+                        'text-dark': '#000000',    // Black text on light backgrounds
+                        'text-light': '#FFFFFF',   // White text on dark backgrounds
+                        'text-detail': '#555555',  // Subtle Grey for secondary text on light background
+                        'accent-purple': '#7877E6', // Primary Purple
+                        'accent-hover-purple': '#5C5BCC', // Slightly darker purple for hover
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #FFFFFF;
+            --grey: #F4F4F3;
+            --purple: #7877E6;
+            --dark-grey: #4F4F4F;
+            --black: #000000;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--grey);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--dark-grey);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: var(--purple);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 2px solid var(--grey);
+            color: var(--dark-grey);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .lang-btn.active {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
+        .hero {
+            background: var(--grey);
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--dark-grey);
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--grey);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--grey);
+            background: var(--white);
+            color: var(--dark-grey);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .filter-btn.active {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
+        .speakers-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .speaker-card {
+            background: var(--white);
+            border: 1px solid var(--grey);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .speaker-image {
+            width: 100%;
+            height: 300px;
+            background: var(--grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--dark-grey);
+            overflow: hidden;
+        }
+
+        .speaker-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .speaker-info {
+            padding: 1.5rem;
+        }
+
+        .speaker-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .speaker-title {
+            color: var(--dark-grey);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .speaker-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .topic-tag {
+            background: var(--grey);
+            color: var(--dark-grey);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--white);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--purple);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.3s;
+        }
+
+        .modal-close:hover {
+            opacity: 0.8;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 350px;
+            background: var(--grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: var(--dark-grey);
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-info {
+            padding: 2rem;
+        }
+
+        .modal-name {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-title {
+            color: var(--dark-grey);
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            margin-bottom: 2rem;
+        }
+
+        .modal-bio {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: var(--dark-grey);
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h3 {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            margin-bottom: 1rem;
+            color: var(--purple);
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-section li {
+            padding: 0.5rem 0;
+            color: var(--dark-grey);
+        }
+
+        .modal-section li:before {
+            content: "→ ";
+            color: var(--purple);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .contact-btn {
+            background: var(--purple);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            width: 100%;
+        }
+
+        .contact-btn:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--dark-grey);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--dark-grey);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                justify-content: center;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .language-switcher {
+                order: 2;
+            }
+
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-info {
+                padding: 1.5rem;
+            }
+
+            .contact-btn {
+                padding: 0.875rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem 2rem;
+            }
+
+            .controls {
+                padding: 1.5rem 1rem 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.625rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .speaker-image {
+                height: 250px;
+            }
+
+            .modal-image {
+                height: 250px;
+                font-size: 4rem;
+            }
+        }
+    </style>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        /* Custom scroll behavior for smooth navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Style for the cinematic hero text */
+        .hero-title {
+            animation: fadeIn 2s ease-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* Spinner styles (adjusted for light background) */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.2); /* Darker border for visibility */
+            border-top: 4px solid #7877E6; /* Purple top */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Utility to hide sections for SPA routing */
+        .page-content {
+            display: none;
+        }
+        .page-content.active {
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <!--
+        <div class="header-content">
+            <a href="#" class="logo" data-i18n="siteName">SPEAKER BUREAU</a>
+            <div class="header-right">
+                <nav>
+                    <a href="#speakers" data-i18n="navSpeakers">Speakers</a>
+                    <a href="#about" data-i18n="navAbout">About</a>
+                    <a href="#contact" data-i18n="navContact">Contact</a>
+                </nav>
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <!-- Navigation Bar -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo/Bureau Name -->
+            <a href="#" onclick="showSection('index')" class="text-3xl font-extrabold tracking-wider text-text-dark transition duration-300 hover:text-accent-purple">FACETTES</a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#speakers" data-key="nav_speakers" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Speakers</a>
+                <a href="#services" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Services</a>
+                <a href="#contact" data-key="nav_contact" class="px-5 py-2 text-sm font-semibold bg-accent-purple text-text-light rounded-full hover:bg-accent-hover-purple transition duration-300 tracking-wider">
+                    CONTACT
+                </a>
+                
+                <!-- Language Toggle -->
+                <button id="lang-toggle" class="lang-btn px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50" data-lang="fr">
+                    FR
+                </button>
+                <button id="lang-toggle" class="lang-btn px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50" data-lang="en">
+                    EN
+                </button>
+
+                <!-- Language Toggle -->
+                <button id="lang-toggle" class="px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50">
+                    FR
+                </button>
+
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <div class="flex items-center md:hidden">
+                <button id="mobile-menu-button" class="text-text-dark p-2 rounded-lg hover:bg-text-detail/20 transition duration-200 mr-2" aria-label="Toggle Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+                <!-- Language Toggle for Mobile -->
+                <button id="lang-toggle-mobile" class="px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50">
+                    FR
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <nav id="mobile-menu" class="hidden md:hidden bg-bg-main shadow-xl absolute w-full border-t border-text-detail transition-all duration-300 ease-in-out">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#speakers" data-key="nav_speakers_mobile" class="block px-3 py-2 rounded-md text-base font-medium text-text-dark hover:bg-text-detail/20" onclick="document.getElementById('mobile-menu').classList.add('hidden'); showSection('index')">Speakers</a>
+                <a href="#services" data-key="nav_services_mobile" class="block px-3 py-2 rounded-md text-base font-medium text-text-dark hover:bg-text-detail/20" onclick="document.getElementById('mobile-menu').classList.add('hidden'); showSection('index')">Services</a>
+                <a href="#contact" data-key="nav_contact_mobile" class="block px-3 py-2 rounded-md text-base font-medium text-text-dark hover:bg-text-detail/20" onclick="document.getElementById('mobile-menu').classList.add('hidden'); showSection('index')">Contact</a>
+            </div>
+        </nav>
+
+    </header>
+
+    <!--
+    <section class="hero">
+        <div class="hero-content">
+            <h1 data-i18n="heroTitle">World-Class Speakers for Your Next Event</h1>
+            <p data-i18n="heroSubtitle">Connect with industry leaders, innovators, and thought leaders who inspire and engage audiences worldwide.</p>
+        </div>
+    </section>
+    -->
+
+        <!-- 1. Hero Section -->
+                    <section id="hero" class="h-[80vh] flex items-center justify-center overflow-hidden relative border-b border-text-detail/10">
+                        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            
+                            <h1 data-i18n="heroTitle" data-key="hero_tagline" class="hero-title text-5xl sm:text-7xl lg:text-8xl font-black uppercase text-text-dark mb-6 tracking-tighter">
+                                Where Bold Ideas Meet <span class="text-accent-purple">Global Reach</span>
+                            </h1>
+                            
+                            <p data-i18n="heroSubtitle" data-key="hero_subheading" class="text-xl sm:text-2xl font-light text-text-detail max-w-4xl mx-auto mb-10">
+                                The agency for intersectional talent, shaping the future of culture, commerce, and impact.
+                            </p>
+
+                            <a href="#speakers" data-key="hero_cta" class="inline-block px-10 py-4 text-lg font-semibold bg-accent-purple text-text-light rounded-md shadow-xl hover:bg-accent-hover-purple transition duration-300 transform hover:scale-105 border-2 border-accent-purple uppercase tracking-wider">
+                                Explore Talent
+                            </a>
+                        </div>
+                    </section>
+
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search speakers...">
+        </div>
+        <div class="filter-buttons" id="filterButtons">
+            <button class="filter-btn active" data-category="all" data-i18n="filterAll">All</button>
+        </div>
+    </div>
+
+    <section class="speakers-container" id="speakers">
+        <div class="loading" id="loading" data-i18n="loading">Loading speakers...</div>
+        <div class="speakers-grid" id="speakersGrid"></div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3 data-i18n="noResultsTitle">No speakers found</h3>
+            <p data-i18n="noResultsText">Try adjusting your search or filters</p>
+        </div>
+    </section>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+
+            <!-- 3. Services Section -->
+            <section id="services" class="py-24 border-b border-text-detail/10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 data-i18n="services_heading" data-key="services_heading" class="text-3xl font-bold mb-2 text-center uppercase tracking-widest text-text-dark">Agency Expertise</h2>
+                    <p data-i18n="services_subtext" data-key="services_subtext" class="text-xl text-text-detail max-w-3xl mx-auto mb-12 text-center">Beyond booking, we ensure seamless execution and maximum impact.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <!-- Service Card 1: Access -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Calendar -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check"><path d="M12 21h-7c-1.104 0-2-.896-2-2v-14c0-1.104.896-2 2-2h14c1.104 0 2 .896 2 2v8"/><polyline points="10 13 13 16 22 7"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_1_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_1_title">Exclusive Speaker Access</h3>
+                                <p data-i18n="service_1_description" class="text-text-detail text-sm" data-key="service_1_description">Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.</p>
+                            </div>
+                        </div>
+
+                        <!-- Service Card 2: Strategy -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Users -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_2_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_2_title">Content Alignment & Strategy</h3>
+                                <p data-i18n="service_2_description" class="text-text-detail text-sm" data-key="service_2_description">Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.</p>
+                            </div>
+                        </div>
+
+                        <!-- Service Card 3: Support -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Microphone -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_3_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_3_title">On-Site Logistics Support</h3>
+                                <p data-i18n="service_3_description" class="text-text-detail text-sm" data-key="service_3_description">Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Call to Action / Contact Section - Dark Background -->
+            <section id="contact" class="py-24 bg-bg-section border-t border-b border-accent-purple/50">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-3 md:gap-16 items-start">
+                    
+                    <!-- Left Text Block (White text on dark background) -->
+                    <div class="md:col-span-1 mb-10 md:mb-0 pt-4">
+                        <h2 data-i18n="contact_heading" data-key="contact_heading" class="text-4xl font-black text-text-dark mb-4">CONNECT</h2>
+                        <p data-i18n="contact_tagline" data-key="contact_tagline" class="text-xl text-text-detail">
+                            Initiate a conversation with our team to find the ideal voice for your next defining moment.
+                        </p>
+                    </div>
+                    
+                    <!-- Simple contact form placeholder and LLM FEATURE (Light form on dark background) -->
+                    <form id="contact-form" class="md:col-span-2 space-y-6 bg-bg-main p-8 rounded-xl shadow-2xl border border-accent-purple/50 text-text-dark">
+                        <input type="text" data-i18n="form_name" data-key="form_name" placeholder="Your Name" required
+                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                        <input type="email" data-i18n="form_email" data-key="form_email" placeholder="Your Email" required
+                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                        <input id="event-topic" type="text" data-i18n="form_event" data-key="form_event" placeholder="Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)" required
+                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                        <textarea id="event-details" data-i18n="form_details" data-key="form_details" placeholder="Tell us about your audience, event date, and budget range..." rows="4" required
+                                  class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail"></textarea>
+                        
+
+                        <button type="submit" data-i18n="form_submit" data-key="form_submit" class="w-full py-3 bg-accent-purple text-text-light font-semibold rounded-md shadow-lg hover:bg-accent-hover-purple transition duration-300 transform hover:scale-[1.01] uppercase tracking-wider">
+                            SUBMIT INQUIRY
+                        </button>
+                        <p data-i18n="contact_response_time" data-key="contact_response_time" class="text-sm text-text-detail mt-4 text-center">A consultant will be in touch within 24 hours.</p>
+                    </form>
+                </div>
+            </section>
+
+
+
+    <!-- Footer - Light Background -->
+    <footer class="bg-bg-main py-8 border-t border-text-detail/20 text-text-dark shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center flex-wrap text-center md:text-left">
+            <p data-key="footer_rights" class="text-text-detail text-sm w-full md:w-auto mb-4 md:mb-0">&copy; 2025 Facettes. All rights reserved.</p>
+            <div class="flex space-x-6">
+                <!-- Social Media Links (Placeholder) -->
+                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">LINKEDIN</a>
+                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">INSTAGRAM</a>
+                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">EMAIL</a>
+            </div>
+        </div>
+    </footer>
+
+    <!--
+    <footer>
+        <div class="footer-content">
+            <p data-i18n="footerCopyright">&copy; 2025 Speaker Bureau. All rights reserved.</p>
+            <p style="margin-top: 1rem;" data-i18n="footerContact">Contact: info@speakerbureau.com | (555) 123-4567</p>
+        </div>
+    </footer>
+    -->
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                siteName: "FACETTES",
+                navSpeakers: "Speakers",
+                navAbout: "About",
+                navContact: "Contact",
+                heroTitle: "Where Bold Ideas Meet Global Reach",
+                heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
+                searchPlaceholder: "Search speakers...",
+                filterAll: "All",
+                loading: "Loading speakers...",
+                noResultsTitle: "No speakers found",
+                noResultsText: "Try adjusting your search or filters",
+                keyTopicsTitle: "Key Speaking Topics",
+                bookButton: "Book This Speaker",
+                services_heading: "Agency Expertise",
+                services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
+                service_1_title: "Exclusive Speaker Access",
+                service_1_description: "Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.",
+                service_2_title: "Content Alignment & Strategy",
+                service_2_description: "Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.",
+                service_3_title: "On-Site Logistics Support",
+                service_3_description: "Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.",
+                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
+                contact_heading: "CONNECT",
+                contact_tagline: "Initiate a conversation with our team to find the ideal voice for your next defining moment.",
+                form_name: "Your Name",
+                form_email: "Your Email",
+                form_event: "Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)",
+                form_details: "Tell us about your audience, event date, and budget range...",
+                form_submit: "SUBMIT INQUIRY",
+                contact_response_time: "A consultant will be in touch within 24 hours.",
+                footerCopyright: "© 2025 Speaker Bureau. All rights reserved.",
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567"
+            },
+            fr: {
+                siteName: "FACETTES",
+                navSpeakers: "Conférenciers",
+                navAbout: "À propos",
+                navContact: "Contact",
+                heroTitle: "Des Conférenciers de Classe MondLà où les Idées Audacieuses Rencontrent la Portée Mondiale",
+                heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
+                searchPlaceholder: "Rechercher des conférenciers...",
+                filterAll: "Tous",
+                loading: "Chargement des conférenciers...",
+                noResultsTitle: "Aucun conférencier trouvé",
+                noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
+                keyTopicsTitle: "Sujets de Conférence Principaux",
+                bookButton: "Réserver ce Conférencier",
+                services_heading: "Services Événementiels Complets",
+                services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
+                service_1_title: "Accès Exclusif aux Conférenciers",
+                service_1_description: "Accès direct à une liste organisée de leaders mondiaux. Nous gérons les négociations et la logistique du début à la fin.",
+                service_2_title: "Alignement et Stratégie de Contenu",
+                service_2_description: "Consultation stratégique pour faire correspondre les conférenciers à votre public et à vos objectifs pour une résonance maximale du message, assurant l'adéquation culturelle.",
+                service_3_title: "Soutien Logistique sur Place",
+                service_3_description: "Support complet incluant les fiches techniques, la coordination des voyages, la gestion de la liaison sur site et les cycles de feedback post-événement.",
+                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
+                contact_heading: "Prêt à Réserver un Conférencier ?",
+                contact_tagline: "Parlez-nous de votre événement, de votre public et de vos objectifs, et l'équipe Facettes trouvera la voix parfaite.",
+                form_name: "Votre Nom",
+                form_email: "Votre Email",
+                form_event: "Type d'Événement / Thème (ex : Session Stratégique T3 sur l'IA)",
+                form_details: "Parlez-nous de votre public, de la date de l'événement et de la fourchette budgétaire...",
+                form_submit: "SOUMETTRE LA DEMANDE",
+                contact_response_time: "Un consultant vous contactera dans les 24 heures.",
+                footerCopyright: "© 2025 Bureau de Conférenciers. Tous droits réservés.",
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567"
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'en';
+        let speakers = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        // Language switching
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            document.documentElement.lang = lang;
+            
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.dataset.i18n;
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.dataset.i18nPlaceholder;
+                if (translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Re-render speakers to update filter buttons
+            generateFilterButtons();
+        }
+
+        // Language button listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+
+        // Fetch speakers from API
+        async function loadSpeakers() {
+            try {
+                const response = await fetch('/api/speakers');
+                speakers = await response.json();
+                generateFilterButtons();
+                renderSpeakers();
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error loading speakers:', error);
+                const errorMsg = currentLang === 'fr' 
+                    ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page</p>'
+                    : '<h3>Error loading speakers</h3><p>Please refresh the page</p>';
+                document.getElementById('loading').innerHTML = errorMsg;
+            }
+        }
+
+        // Generate filter buttons dynamically
+        function generateFilterButtons() {
+            const allTopics = new Set();
+            speakers.forEach(speaker => {
+                const topics = currentLang === 'fr' && speaker.topics_fr 
+                    ? speaker.topics_fr 
+                    : speaker.topics;
+                topics.forEach(topic => allTopics.add(topic));
+            });
+
+            const filterButtons = document.getElementById('filterButtons');
+            const sortedTopics = Array.from(allTopics).sort();
+            
+            filterButtons.innerHTML = `
+                <button class="filter-btn active" data-category="all">${translations[currentLang].filterAll}</button>
+                ${sortedTopics.map(topic => 
+                    `<button class="filter-btn" data-category="${topic}">${topic}</button>`
+                ).join('')}
+            `;
+        }
+
+        function renderSpeakers() {
+            const grid = document.getElementById('speakersGrid');
+            const noResults = document.getElementById('noResults');
+            
+            const filtered = speakers.filter(speaker => {
+                const topics = currentLang === 'fr' && speaker.topics_fr 
+                    ? speaker.topics_fr 
+                    : speaker.topics;
+                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
+                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
+                
+                const matchesFilter = currentFilter === 'all' || topics.includes(currentFilter);
+                const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    topics.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            grid.innerHTML = filtered.map((speaker, index) => {
+                const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
+                    ? `<img src="${speaker.image}" alt="${speaker.name}">`
+                    : speaker.image || '👤';
+                
+                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
+                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
+                const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
+                
+                return `
+                    <div class="speaker-card" onclick="openModal(${speakers.indexOf(speaker)})">
+                        <div class="speaker-image">${imageContent}</div>
+                        <div class="speaker-info">
+                            <div class="speaker-name">${name}</div>
+                            <div class="speaker-title">${title}</div>
+                            <div class="speaker-topics">
+                                ${topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openModal(index) {
+            const speaker = speakers[index];
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+
+            const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
+                ? `<img src="${speaker.image}" alt="${speaker.name}">`
+                : speaker.image || '👤';
+
+            const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
+            const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
+            const bio = currentLang === 'fr' && speaker.bio_fr ? speaker.bio_fr : speaker.bio;
+            const keyTopics = currentLang === 'fr' && speaker.keyTopics_fr ? speaker.keyTopics_fr : speaker.keyTopics;
+            const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
+
+            modalBody.innerHTML = `
+                <div class="modal-image">${imageContent}</div>
+                <div class="modal-info">
+                    <h2 class="modal-name">${name}</h2>
+                    <p class="modal-title">${title}</p>
+                    <div class="modal-bio">${bio}</div>
+                    ${keyTopics && keyTopics.length > 0 ? `
+                        <div class="modal-section">
+                            <h3>${translations[currentLang].keyTopicsTitle}</h3>
+                            <ul>
+                                ${keyTopics.map(topic => `<li>${topic}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    <div class="speaker-topics">
+                        ${topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <button class="contact-btn" onclick="alert('${translations[currentLang].bookMessage}')">${translations[currentLang].bookButton}</button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            renderSpeakers();
+        });
+
+        document.getElementById('filterButtons').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.category;
+                renderSpeakers();
+            }
+        });
+
+        // Initialize
+        setLanguage(currentLang);
+        loadSpeakers();
+    </script>
+</body>
+</html>
