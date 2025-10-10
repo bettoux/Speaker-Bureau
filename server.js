@@ -8,13 +8,11 @@ const PORT = 3000;
 
 // Middleware
 app.use(express.json());
-// app.use(express.static('public'));
+//app.use(express.static('public'));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
-
-//app.use('/uploads', express.static('uploads'));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static('uploads'));
 
 // Configure multer for image uploads
 const storage = multer.diskStorage({
@@ -47,13 +45,12 @@ const upload = multer({
     }
 });
 
-const DATA_FILE = express.static(path.join(__dirname, 'data', 'speakers.json'));
-//const DATA_FILE = './data/speakers.json';
+const DATA_FILE = './data/speakers.json';
 
 // Initialize data file
 async function initializeDataFile() {
     try {
-        await fs.mkdir(express.static(path.join(__dirname, 'data')), { recursive: true });
+        await fs.mkdir('./data', { recursive: true });
         try {
             await fs.access(DATA_FILE);
         } catch {
@@ -202,11 +199,4 @@ initializeDataFile().then(() => {
         console.log(`Admin panel: http://localhost:${PORT}/admin`);
         console.log(`Public site: http://localhost:${PORT}`);
     });
-
 });
-
-
-
-
-
-
