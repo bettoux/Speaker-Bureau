@@ -592,6 +592,30 @@
             </nav>
 
             <!-- Mobile Menu Button -->
+           <!--
+            <div class="flex items-center md:hidden">
+                <button id="mobile-menu-button" class="text-text-dark p-2 rounded-lg hover:bg-text-detail/20 transition duration-200 mr-2" aria-label="Toggle Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>-->
+                <!-- Language Toggle for Mobile -->
+                <!--<button id="lang-toggle-mobile" class="px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50">
+                    FR
+                </button>
+            </div>
+        </div>-->
+        
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <nav id="mobile-menu" class="hidden md:hidden bg-bg-main shadow-xl absolute w-full border-t border-text-detail transition-all duration-300 ease-in-out">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#speakers" data-key="nav_speakers_mobile" class="block px-3 py-2 rounded-md text-base font-medium text-text-dark hover:bg-text-detail/20" onclick="document.getElementById('mobile-menu').classList.add('hidden'); showSection('index')">Speakers</a>
+                <a href="#services" data-key="nav_services_mobile" class="block px-3 py-2 rounded-md text-base font-medium text-text-dark hover:bg-text-detail/20" onclick="document.getElementById('mobile-menu').classList.add('hidden'); showSection('index')">Services</a>
+                <a href="#contact" data-key="nav_contact_mobile" class="block px-3 py-2 rounded-md text-base font-medium text-text-dark hover:bg-text-detail/20" onclick="document.getElementById('mobile-menu').classList.add('hidden'); showSection('index')">Contact</a>
+            </div>
+        </nav>
+    
+
+        <!-- Mobile Menu Button -->
             <div class="flex items-center md:hidden">
                 <button id="mobile-menu-button" class="text-text-dark p-2 rounded-lg hover:bg-text-detail/20 transition duration-200 mr-2" aria-label="Toggle Menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -611,6 +635,9 @@
                 <a href="#contact" data-key="nav_contact_mobile" class="block px-3 py-2 rounded-md text-base font-medium text-text-dark hover:bg-text-detail/20" onclick="document.getElementById('mobile-menu').classList.add('hidden'); showSection('index')">Contact</a>
             </div>
         </nav>
+
+
+
 
     </header>
 
