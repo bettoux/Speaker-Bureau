@@ -1086,16 +1086,16 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
-
+        // Initialize
+        setLanguage(currentLang);
+        loadSpeakers();
 
         // UI Listeners
         document.getElementById('mobile-menu-button').addEventListener('click', toggleMobileMenu);
         document.getElementById('lang-toggle').addEventListener('click', toggleLang);
         document.getElementById('lang-toggle-mobile').addEventListener('click', toggleLang);
 
-        // Initialize
-        setLanguage(currentLang);
-        loadSpeakers();
+        
     </script>
 </body>
 </html>
