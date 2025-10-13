@@ -48,6 +48,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: var(--black);
             line-height: 1.6;
+            background: var(--white);
         }
 
         header {
@@ -216,7 +217,7 @@
         .speakers-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
         }
 
         .speakers-grid {
@@ -227,18 +228,64 @@
 
         .speaker-card {
             background: var(--white);
-            border: 1px solid var(--grey);
+            position: relative;
+            aspect-ratio: 4/5;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--grey);
         }
 
-        .speaker-card:hover {
+        .speaker-image-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .speaker-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .speaker-card:hover .speaker-image-container::after {
+            opacity: 1;
+        }
+
+        /*.speaker-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }*/
+
+        .speaker-image-bg {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--dark-grey);
+            transition: transform 0.6s ease;
         }
 
-        .speaker-image {
+        .speaker-card:hover .speaker-image-bg {
+            transform: scale(1.05);
+        }
+
+        .speaker-image-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /*.speaker-image {
             width: 100%;
             height: 300px;
             background: var(--grey);
@@ -254,22 +301,35 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
+        }*/
 
         .speaker-info {
-            padding: 1.5rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem 1.5rem;
+            color: var(--white);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        .speaker-card:hover .speaker-info {
+            transform: translateY(0);
         }
 
         .speaker-name {
             font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
         }
 
         .speaker-title {
-            color: var(--dark-grey);
             font-size: 0.95rem;
-            margin-bottom: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0.75rem;
         }
 
         .speaker-topics {
@@ -279,11 +339,12 @@
         }
 
         .topic-tag {
-            background: var(--grey);
-            color: var(--dark-grey);
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
         }
 
         .modal {
@@ -296,6 +357,12 @@
             background: rgba(0,0,0,0.8);
             z-index: 2000;
             overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal.active {
@@ -312,6 +379,18 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-close {
@@ -339,7 +418,7 @@
 
         .modal-image {
             width: 100%;
-            height: 350px;
+            height: 400px;
             background: var(--grey);
             display: flex;
             align-items: center;
@@ -466,7 +545,20 @@
             }
 
             .speakers-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1rem;
+            }
+
+            .speaker-info {
+                padding: 1.5rem 1rem 1rem;
+            }
+
+            .speaker-name {
+                font-size: 1.25rem;
+            }
+
+            .speaker-title {
+                font-size: 0.875rem;
             }
 
             .modal-info {
@@ -500,13 +592,19 @@
                 font-size: 0.875rem;
             }
 
-            .speaker-image {
-                height: 250px;
+            .speakers-grid {
+                grid-template-columns: 1fr;
             }
 
             .modal-image {
-                height: 250px;
+                height: 300px;
                 font-size: 4rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .speakers-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
@@ -936,12 +1034,14 @@
                 
                 return `
                     <div class="speaker-card" onclick="openModal(${speakers.indexOf(speaker)})">
-                        <div class="speaker-image">${imageContent}</div>
+                        <div class="speaker-image-container">
+                            <div class="speaker-image-bg">${imageContent}</div>
+                        </div>
                         <div class="speaker-info">
                             <div class="speaker-name">${name}</div>
                             <div class="speaker-title">${title}</div>
                             <div class="speaker-topics">
-                                ${topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                                ${topics.slice(0, 3).map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
                             </div>
                         </div>
                     </div>
@@ -979,7 +1079,7 @@
                         </div>
                     ` : ''}
                     <div class="speaker-topics">
-                        ${topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                        ${topics.map(topic => `<span class="topic-tag" style="background: var(--grey); color: var(--dark-grey);">${topic}</span>`).join('')}
                     </div>
                     <div style="margin-top: 2rem;">
                         <button class="contact-btn" onclick="alert('${translations[currentLang].bookMessage}')">${translations[currentLang].bookButton}</button>
@@ -1034,6 +1134,4 @@
         
     </script>
 </body>
-
 </html>
-
