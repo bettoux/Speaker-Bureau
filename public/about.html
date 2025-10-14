@@ -48,6 +48,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: var(--black);
             line-height: 1.6;
+            background: var(--white);
         }
 
         header {
@@ -216,29 +217,136 @@
         .speakers-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
+            overflow: visible;
+            min-height: 60vh;
         }
 
         .speakers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
+            gap: 1rem;
+            align-items: start;
+            position: relative;
+            justify-content: center;
+        }
+
+         /* Center grid when few speakers */
+        @media (min-width: 1200px) {
+            .speakers-grid[data-count="1"],
+            .speakers-grid[data-count="2"],
+            .speakers-grid[data-count="3"],
+            .speakers-grid[data-count="4"] {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+                max-width: 1400px;
+            }
         }
 
         .speaker-card {
-            background: var(--white);
-            border: 1px solid var(--grey);
+            position: relative;
+            aspect-ratio: 4/5;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--grey);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            will-change: transform;
+            border-radius: 24px;
+        }
+
+        .speaker-image-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .speaker-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 30%, transparent 50%);
+            opacity: 1;
+            transition: opacity 0.4s ease;
         }
 
         .speaker-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            z-index: 10;
         }
 
-        .speaker-image {
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Staggered vertical offset for columns - creates the misaligned effect */
+        .speaker-card:nth-child(4n+1) {
+            margin-top: 0;
+        }
+
+        .speaker-card:nth-child(4n+2) {
+            margin-top: 1.5rem;
+        }
+
+        .speaker-card:nth-child(4n+3) {
+            margin-top: 3rem;
+        }
+
+        .speaker-card:nth-child(4n+4) {
+            margin-top: 0.75rem;
+        }
+
+        .speaker-card:hover .speaker-image-container::after {
+            opacity: 1;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 70%);
+        }
+
+        /* Remove animation delays that might interfere */
+        .speaker-card:nth-child(1) { animation-delay: 0s; }
+        .speaker-card:nth-child(2) { animation-delay: 0.1s; }
+        .speaker-card:nth-child(3) { animation-delay: 0.2s; }
+        .speaker-card:nth-child(4) { animation-delay: 0.3s; }
+        .speaker-card:nth-child(5) { animation-delay: 0s; }
+        .speaker-card:nth-child(6) { animation-delay: 0.1s; }
+        .speaker-card:nth-child(7) { animation-delay: 0.2s; }
+        .speaker-card:nth-child(8) { animation-delay: 0.3s; }
+        .speaker-card:nth-child(n+9) { animation-delay: 0s; }
+
+        /*.speaker-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }*/
+
+        .speaker-image-bg {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--dark-grey);
+            transition: transform 0.6s ease;
+        }
+
+        .speaker-card:hover .speaker-image-bg {
+            transform: scale(1.05);
+        }
+
+        .speaker-image-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /*.speaker-image {
             width: 100%;
             height: 300px;
             background: var(--grey);
@@ -254,36 +362,66 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
+        }*/
 
         .speaker-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             padding: 1.5rem;
+            color: var(--white);
+            z-index: 2;
+        }
+
+        .speaker-card:hover .speaker-info {
+            transform: translateY(0);
         }
 
         .speaker-name {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+            line-height: 1.2;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.4s ease;
+        }
+
+        .speaker-details {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .speaker-card:hover .speaker-details {
+            max-height: 200px; /* Enough to show content */
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .speaker-title {
-            color: var(--dark-grey);
             font-size: 0.95rem;
-            margin-bottom: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0.75rem;
         }
 
         .speaker-topics {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         .topic-tag {
-            background: var(--grey);
-            color: var(--dark-grey);
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
         }
 
         .modal {
@@ -296,6 +434,12 @@
             background: rgba(0,0,0,0.8);
             z-index: 2000;
             overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal.active {
@@ -312,6 +456,18 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-close {
@@ -339,7 +495,7 @@
 
         .modal-image {
             width: 100%;
-            height: 350px;
+            height: 400px;
             background: var(--grey);
             display: flex;
             align-items: center;
@@ -445,6 +601,219 @@
             color: var(--dark-grey);
         }
 
+        .load-more-container {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .load-more-btn {
+            background: var(--purple);
+            color: var(--white);
+            padding: 1rem 3rem;
+            border: 2px solid var(--purple);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .load-more-btn:hover {
+            background: var(--white);
+            color: var(--purple);
+        }
+
+        .load-more-btn.hidden {
+            display: none;
+        }
+
+        /* Featured section for highlighting speakers */
+        .featured-section {
+            background: var(--grey);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .featured-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .featured-text h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .featured-text p {
+            font-size: 1.1rem;
+            color: var(--dark-grey);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .featured-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--purple);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--dark-grey);
+            margin-top: 0.5rem;
+        }
+
+        .featured-image {
+            aspect-ratio: 1;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--dark-grey);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Services/Expertise section */
+        .expertise-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 2rem 1rem;
+        }
+
+        .expertise-section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .expertise-card {
+            background: var(--grey);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .expertise-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .expertise-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--purple);
+        }
+
+        .expertise-card p {
+            color: var(--dark-grey);
+            line-height: 1.6;
+        }
+
+        /* CTA section */
+        .cta-section {
+            background: var(--purple);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0 0 0;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: var(--white);
+            color: var(--purple);
+            padding: 1rem 3rem;
+            border: 2px solid var(--white);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .featured-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 justify-content: center;
@@ -466,7 +835,36 @@
             }
 
             .speakers-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1rem;
+            }
+
+            /* Adjust stagger for mobile - 2 columns */
+            .speaker-card:nth-child(4n+1),
+            .speaker-card:nth-child(4n+2),
+            .speaker-card:nth-child(4n+3),
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(2n+1) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(2n+2) {
+                margin-top: 1rem;
+            }
+
+            .speaker-info {
+                padding: 1.5rem 1rem 1rem;
+            }
+
+            .speaker-name {
+                font-size: 1.25rem;
+            }
+
+            .speaker-title {
+                font-size: 0.875rem;
             }
 
             .modal-info {
@@ -500,15 +898,67 @@
                 font-size: 0.875rem;
             }
 
-            .speaker-image {
-                height: 250px;
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Single column - remove stagger on mobile */
+            .speaker-card:nth-child(2n+1),
+            .speaker-card:nth-child(2n+2) {
+                margin-top: 0;
             }
 
             .modal-image {
-                height: 250px;
+                height: 300px;
                 font-size: 4rem;
             }
         }
+
+        @media (min-width: 1200px) {
+            .speakers-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            /* Enhanced stagger for large screens - 4 columns */
+            .speaker-card:nth-child(4n+1) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+2) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+3) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 3rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1199px) {
+            /* 3 columns - adjust stagger */
+            .speaker-card:nth-child(4n+1),
+            .speaker-card:nth-child(4n+2),
+            .speaker-card:nth-child(4n+3),
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(3n+1) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(3n+2) {
+                margin-top: 1.5rem;
+            }
+
+            .speaker-card:nth-child(3n+3) {
+                margin-top: 3rem;
+            }
+        }
+
     </style>
 
     <style>
@@ -549,8 +999,6 @@
 
 </head>
 <body>
-
-
     <header>
 
         <!-- Navigation Bar -->
@@ -560,11 +1008,11 @@
             
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#speakers" data-key="nav_speakers" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Speakers</a>
-                <a href="#services" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Services</a>
+                <a href="./index.html#speakers" data-key="nav_speakers" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Speakers</a>
+                <a href="./index.html#services" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Services</a>
                 <a href="./about.html" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">About</a>
                 <a href="#contact" data-key="nav_contact" class="px-5 py-2 text-sm font-semibold bg-accent-purple text-text-light rounded-full hover:bg-accent-hover-purple transition duration-300 tracking-wider">
-                    CONTACT
+                    Contact
                 </a>
                 
                 <!-- Language Toggle -->
@@ -618,7 +1066,8 @@
                         </div>
                     </section>
 
-    <!-- 3. Services Vision -->
+
+        <!-- 3. Services Vision -->
             <section id="vision" class="py-24 border-b border-text-detail/10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 data-i18n="vision_heading" data-key="services_heading" class="text-3xl font-bold mb-2 text-center uppercase tracking-widest text-text-dark">Our Vision</h2>
@@ -653,8 +1102,8 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check"><path d="M12 21h-7c-1.104 0-2-.896-2-2v-14c0-1.104.896-2 2-2h14c1.104 0 2 .896 2 2v8"/><polyline points="10 13 13 16 22 7"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
                             </div>
                             <div>
-                                <h3 data-i18n="value" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_1_title">Benevolence</h3>
-                                <p data-i18n="value_1_description" class="text-text-detail text-sm" data-key="service_1_description">Because it embodies our deep commitment to the well-being, growth, and success of our talent.
+                                <h3 data-i18n="value_1_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_1_title">Benevolence</h3>
+                                <p data-i18n="value_1_description" class="text-text-detail font-light text-xl text-detail" data-key="service_1_description">Because it embodies our deep commitment to the well-being, growth, and success of our talent.
                                 We firmly believe that for our representatives to shine fully, they need constant moral support, attentive listening, and a kind approach.
                                 Benevolence allows us to establish authentic relationships with our talent, to understand their needs and challenges, and to support them positively at every stage of their journey.
                                 By fostering an environment where benevolence prevails, we help our talent develop their self-confidence, overcome obstacles, and realize their potential.</p>
@@ -669,14 +1118,14 @@
                             </div>
                             <div>
                                 <h3 data-i18n="value_2_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_2_title">Integrity</h3>
-                                <p data-i18n="value_2_description" class="text-text-detail text-sm" data-key="service_2_description">Because it is at the heart of our commitment to our talent, clients, and partners.
+                                <p data-i18n="value_2_description" class="text-text-detail font-light text-xl text-detail" data-key="service_2_description">Because it is at the heart of our commitment to our talent, clients, and partners.
                                 It represents our pledge to act honestly, transparently, and ethically in all our interactions.
                                 Integrity guides us in the fair management of contracts, in respecting the rights of our talent, and in preserving their reputation and image.
                                 By placing integrity at the forefront of our actions, we establish a solid foundation of trust and mutual respect, which strengthens the credibility of our agency and the satisfaction of our talent and clients.</p>
                             </div>
                         </div>
 
-                        <!-- Value Card 3: Support -->
+                        <!-- Value Card 3: Curiosity -->
                         <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
                             <div class="text-5xl text-accent-purple mb-6">
                                 <!-- Icon: Microphone -->
@@ -684,7 +1133,7 @@
                             </div>
                             <div>
                                 <h3 data-i18n="value_3_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_3_title">Curiosity</h3>
-                                <p data-i18n="value_3_description" class="text-text-detail text-sm" data-key="service_3_description">Because it embodies our deep commitment to continuous learning, open-mindedness, and the discovery of the many facets of cultural diversity in Canada.
+                                <p data-i18n="value_3_description" class="text-text-detail font-light text-xl text-detail" data-key="service_3_description">Because it embodies our deep commitment to continuous learning, open-mindedness, and the discovery of the many facets of cultural diversity in Canada.
                                 We firmly believe that for our representatives to shine fully, it is essential to explore new horizons, understand multiple experiences, and grasp diverse life stories.
                                 Curiosity drives us to ask questions, challenge stereotypes, learn constantly, and expand our horizons, thus contributing to authentic and inclusive representation.</p>
                             </div>
@@ -692,6 +1141,107 @@
                     </div>
                     </div>
                 </section>
+
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 data-i18n="ctaTitle">Ready to Book a Speaker?</h2>
+            <p data-i18n="ctaText">Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.</p>
+            <a href="#contact" class="cta-button" data-i18n="ctaButton">Contact Us</a>
+        </div>
+    </section>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 3. Services Section -->
+        <section id="services" class="py-24 border-b border-text-detail/10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 data-i18n="services_heading" data-key="services_heading" class="text-3xl font-bold mb-2 text-center uppercase tracking-widest text-text-dark">Agency Expertise</h2>
+                    <p data-i18n="services_subtext" data-key="services_subtext" class="text-xl text-text-detail max-w-3xl mx-auto mb-12 text-center">Beyond booking, we ensure seamless execution and maximum impact.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <!-- Service Card 1: Access -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Calendar -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check"><path d="M12 21h-7c-1.104 0-2-.896-2-2v-14c0-1.104.896-2 2-2h14c1.104 0 2 .896 2 2v8"/><polyline points="10 13 13 16 22 7"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_1_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_1_title">Exclusive Speaker Access</h3>
+                                <p data-i18n="service_1_description" class="text-text-detail text-sm" data-key="service_1_description">Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.</p>
+                            </div>
+                        </div>
+
+                        <!-- Service Card 2: Strategy -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Users -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_2_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_2_title">Content Alignment & Strategy</h3>
+                                <p data-i18n="service_2_description" class="text-text-detail text-sm" data-key="service_2_description">Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.</p>
+                            </div>
+                        </div>
+
+                        <!-- Service Card 3: Support -->
+                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
+                            <div class="text-5xl text-accent-purple mb-6">
+                                <!-- Icon: Microphone -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                            </div>
+                            <div>
+                                <h3 data-i18n="service_3_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_3_title">On-Site Logistics Support</h3>
+                                <p data-i18n="service_3_description" class="text-text-detail text-sm" data-key="service_3_description">Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- 4. Call to Action / Contact Section - Dark Background -->
+        <section id="contact" class="py-24 bg-bg-section border-t border-b border-accent-purple/50">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-3 md:gap-16 items-start">
+                    
+                    <!-- Left Text Block (White text on dark background) -->
+                    <div class="md:col-span-1 mb-10 md:mb-0 pt-4">
+                        <h2 data-i18n="contact_heading" data-key="contact_heading" class="text-4xl font-black text-text-dark mb-4">CONNECT</h2>
+                        <p data-i18n="contact_tagline" data-key="contact_tagline" class="text-xl text-text-detail">
+                            Initiate a conversation with our team to find the ideal voice for your next defining moment.
+                        </p>
+                    </div>
+                    
+                    <!-- Simple contact form placeholder and LLM FEATURE (Light form on dark background) -->
+                    <form id="contact-form" class="md:col-span-2 space-y-6 bg-bg-main p-8 rounded-xl shadow-2xl border border-accent-purple/50 text-text-dark">
+                        <input type="text" data-i18n="form_name" data-key="form_name" placeholder="Your Name" required
+                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                        <input type="email" data-i18n="form_email" data-key="form_email" placeholder="Your Email" required
+                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                        <input id="event-topic" type="text" data-i18n="form_event" data-key="form_event" placeholder="Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)" required
+                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
+                        <textarea id="event-details" data-i18n="form_details" data-key="form_details" placeholder="Tell us about your audience, event date, and budget range..." rows="4" required
+                                  class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail"></textarea>
+                        
+
+                        <button type="submit" data-i18n="form_submit" data-key="form_submit" class="w-full py-3 bg-accent-purple text-text-light font-semibold rounded-md shadow-lg hover:bg-accent-hover-purple transition duration-300 transform hover:scale-[1.01] uppercase tracking-wider">
+                            SUBMIT INQUIRY
+                        </button>
+                        <p data-i18n="contact_response_time" data-key="contact_response_time" class="text-sm text-text-detail mt-4 text-center">A consultant will be in touch within 24 hours.</p>
+                    </form>
+                </div>
+        </section>
+
 
 
     <!-- Footer - Light Background -->
@@ -717,7 +1267,6 @@
                 navAbout: "About",
                 navContact: "Contact",
                 heroTitle: "Where Bold Ideas Meet Global Reach",
-                heroTitleAbout: "Elevating Voices. Transforming Perspectives.",
                 heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
                 searchPlaceholder: "Search speakers...",
                 filterAll: "All",
@@ -726,12 +1275,20 @@
                 noResultsText: "Try adjusting your search or filters",
                 keyTopicsTitle: "Key Speaking Topics",
                 bookButton: "Book This Speaker",
+                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
                 vision_heading: "Our Vision",
                 vision_subtext1: "Facettes transcends the simple representation of speakers; it is committed to offering conversations that go beyond conventional thinking. We aspire to stimulate thought and open doors to new ideas and horizons, thus transforming each event into a captivating intellectual experience.",
                 vision_subtext2: "We are proud to represent experts with exceptional backgrounds, brimming with novel and innovative approaches. Their talks do not simply reflect their expertise; they shape new perspectives and inspire concrete changes.",
                 vision_subtext3: "At Facettes, we are the ambassadors for 'change makers' who, too busy making an impact in their environment, deserve to have their vision and ideas shared. Our mission goes beyond traditional presentations; it is a commitment to amplifying influential voices that are shaping the world around them.",
-                vision_subtext4: "In summary, Facettes' mission is to be the catalyst for dialogues and thoughts that transcend boundaries, thereby carrying the message of visionaries busy making an impact on the world. This is our commitment; this is our mission.", 
-                
+                vision_subtext4: "In summary, Facettes' mission is to be the catalyst for dialogues and thoughts that transcend boundaries, thereby carrying the message of visionaries busy making an impact on the world. This is our commitment; this is our mission.",
+                value_heading: "Our Values",
+                value_subtext: "We combine Curiosity for diverse narratives, Benevolence for robust support, and unwavering Integrity in all our partnerships.",
+                value_1_title: "Benevolence",
+                value_1_description: "Because it embodies our deep commitment to the well-being, growth, and success of our talent. We firmly believe that for our representatives to shine fully, they need constant moral support, attentive listening, and a kind approach. Benevolence allows us to establish authentic relationships with our talent, to understand their needs and challenges, and to support them positively at every stage of their journey. By fostering an environment where benevolence prevails, we help our talent develop their self-confidence, overcome obstacles, and realize their potential.",
+                value_2_title: "Integrity",
+                value_2_description: "Because it is at the heart of our commitment to our talent, clients, and partners. It represents our pledge to act honestly, transparently, and ethically in all our interactions. Integrity guides us in the fair management of contracts, in respecting the rights of our talent, and in preserving their reputation and image. By placing integrity at the forefront of our actions, we establish a solid foundation of trust and mutual respect, which strengthens the credibility of our agency and the satisfaction of our talent and clients.",
+                value_3_title: "Curiosity",
+                value_3_description: "Because it embodies our deep commitment to continuous learning, open-mindedness, and the discovery of the many facets of cultural diversity in Canada. We firmly believe that for our representatives to shine fully, it is essential to explore new horizons, understand multiple experiences, and grasp diverse life stories. Curiosity drives us to ask questions, challenge stereotypes, learn constantly, and expand our horizons, thus contributing to authentic and inclusive representation.",
                 services_heading: "Agency Expertise",
                 services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
                 service_1_title: "Exclusive Speaker Access",
@@ -750,7 +1307,31 @@
                 form_submit: "SUBMIT INQUIRY",
                 contact_response_time: "A consultant will be in touch within 24 hours.",
                 footerCopyright: "© 2025 Speaker Bureau. All rights reserved.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567"
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
+                loadMore: "Load More Speakers",
+                featuredTitle: "Expert Speakers, Tailored to Your Event",
+                featuredText1: "We carefully curate our roster of speakers to ensure every voice brings unique insights and transformative ideas to your audience.",
+                featuredText2: "From intimate corporate gatherings to large-scale conferences, our speakers deliver engaging, memorable experiences that inspire action and drive results.",
+                stat1Number: "500+",
+                stat1Label: "Events Delivered",
+                stat2Number: "98%",
+                stat2Label: "Client Satisfaction",
+                stat3Number: "50+",
+                stat3Label: "Industries Served",
+                stat4Number: "Global",
+                stat4Label: "Reach",
+                expertiseTitle: "Areas of Expertise",
+                expertise1Title: "Leadership & Strategy",
+                expertise1Text: "Visionary leaders who inspire teams and drive organizational transformation through proven strategies and innovative thinking.",
+                expertise2Title: "Innovation & Technology",
+                expertise2Text: "Tech pioneers and innovators sharing insights on emerging trends, digital transformation, and the future of business.",
+                expertise3Title: "Sales & Marketing",
+                expertise3Text: "Industry experts delivering actionable strategies to accelerate growth, build brands, and connect with modern consumers.",
+                expertise4Title: "Sustainability & Impact",
+                expertise4Text: "Thought leaders championing environmental responsibility and social impact in business and beyond.",
+                ctaTitle: "Ready to Book a Speaker?",
+                ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
+                ctaButton: "Contact Us"
             },
             fr: {
                 siteName: "FACETTES",
@@ -758,21 +1339,29 @@
                 navAbout: "À propos",
                 navContact: "Contact",
                 heroTitle: "Des Conférenciers de Classe MondLà où les Idées Audacieuses Rencontrent la Portée Mondiale",
-                heroTitleAbout: "Élever les Voix. Transformer les Perspectives.",
                 heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
                 searchPlaceholder: "Rechercher des conférenciers...",
                 filterAll: "Tous",
                 loading: "Chargement des conférenciers...",
+                loadMore: "Charger Plus de Conférenciers",
                 noResultsTitle: "Aucun conférencier trouvé",
                 noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
                 keyTopicsTitle: "Sujets de Conférence Principaux",
                 bookButton: "Réserver ce Conférencier",
-                
+                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
                 vision_heading: "Notre Vision",
                 vision_subtext1: "Facettes transcende la simple représentation de conférencier·ère·s ; elle s'engage à offrir des conversations qui vont au-delà de la réflexion conventionnelle. Nous aspirons à stimuler la pensée et à ouvrir des portes vers de nouvelles idées et horizons, transformant ainsi chaque événement en une expérience intellectuelle captivante.",
                 vision_subtext2: "Nous sommes fièr·e·s de représenter des expert·e·s aux parcours exceptionnels, débordant·e·s d'approches inédites et innovantes. Leurs discours ne se contentent pas de refléter leurs expertises, mais iels façonnent de nouvelles perspectives et inspirent des changements concrets.",
                 vision_subtext3: "Chez Facettes, nous sommes les ambassadeur·rice·s des 'change makers' qui, trop occupé·e·s à impacter leur environnement, méritent d'avoir leur vision et leurs réflexions partagées. Notre mission va au-delà de la présentation traditionnelle ; elle est un engagement envers l'amplification des voix influentes qui façonnent le monde qui les entoure.",
                 vision_subtext4: "En somme, la mission de Facettes est d'être le catalyseur de dialogues et de pensées qui transcendent les limites, portant ainsi la parole des visionnaires occupé·e·s à impacter le monde. Ceci est notre engagement, ceci est notre mission.",
+                value_heading: "Nos Valeurs",
+                value_subtext: "Nous combinons la Curiosité pour des récits diversifiés, la Bienveillance pour un soutien solide, et une Intégrité inébranlable dans tous nos partenariats.",
+                value_1_title: "Bienveillance",
+                value_1_description: "Parce qu'elle incarne notre engagement profond envers le bien-être, la croissance et le succès de nos talents. Nous croyons fermement que pour que nos représentant·e·s brillent pleinement, iels ont besoin d'un soutien moral constant, d'une écoute attentive et d'une approche bienveillante. La bienveillance nous permet d'établir des relations authentiques avec nos talents, de comprendre leurs besoins et défis, et de les accompagner positivement à chaque étape de leur parcours. En favorisant un environnement où la bienveillance prévaut, nous aidons nos talents à développer leur confiance en soi, à surmonter les obstacles et à réaliser leur potentiel.",
+                value_2_title: "Intégrité",
+                value_2_description: "Parce qu'elle est au cœur de notre engagement envers nos talents, clients et partenaires. Elle représente notre promesse d'agir avec honnêteté, transparence et éthique dans toutes nos interactions. L'intégrité nous guide dans la gestion équitable des contrats, le respect des droits de nos talents, et la préservation de leur réputation et image. En plaçant l'intégrité au premier plan de nos actions, nous établissons une base solide de confiance et de respect mutuel, renforçant ainsi la crédibilité de notre agence et la satisfaction de nos talents et clients.",
+                value_3_title: "Curiosité",
+                value_3_description: "Parce qu'elle incarne notre engagement profond envers l'apprentissage continu, l'ouverture d'esprit, et la découverte des multiples facettes de la diversité culturelle au Canada. Nous croyons fermement que pour que nos représentant·e·s brillent pleinement, il est essentiel d'explorer de nouveaux horizons, de comprendre des expériences multiples, et de saisir des récits de vie diversifiés. La curiosité nous pousse à poser des questions, à défier les stéréotypes, à apprendre constamment, et à élargir nos horizons, contribuant ainsi à une représentation authentique et inclusive.",
                 services_heading: "Services Événementiels Complets",
                 services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
                 service_1_title: "Accès Exclusif aux Conférenciers",
@@ -781,7 +1370,6 @@
                 service_2_description: "Consultation stratégique pour faire correspondre les conférenciers à votre public et à vos objectifs pour une résonance maximale du message, assurant l'adéquation culturelle.",
                 service_3_title: "Soutien Logistique sur Place",
                 service_3_description: "Support complet incluant les fiches techniques, la coordination des voyages, la gestion de la liaison sur site et les cycles de feedback post-événement.",
-                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
                 contact_heading: "Prêt à Réserver un Conférencier ?",
                 contact_tagline: "Parlez-nous de votre événement, de votre public et de vos objectifs, et l'équipe Facettes trouvera la voix parfaite.",
                 form_name: "Votre Nom",
@@ -791,15 +1379,39 @@
                 form_submit: "SOUMETTRE LA DEMANDE",
                 contact_response_time: "Un consultant vous contactera dans les 24 heures.",
                 footerCopyright: "© 2025 Bureau de Conférenciers. Tous droits réservés.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567"
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
+                featuredTitle: "Des Conférenciers Experts, Adaptés à Votre Événement",
+                featuredText1: "Nous sélectionnons soigneusement notre liste de conférenciers pour garantir que chaque voix apporte des perspectives uniques et des idées transformatrices à votre public.",
+                featuredText2: "Des rassemblements corporatifs intimes aux conférences à grande échelle, nos conférenciers offrent des expériences engageantes et mémorables qui inspirent l'action et produisent des résultats.",
+                stat1Number: "500+",
+                stat1Label: "Événements Réalisés",
+                stat2Number: "98%",
+                stat2Label: "Satisfaction Client",
+                stat3Number: "50+",
+                stat3Label: "Industries Desservies",
+                stat4Number: "Mondiale",
+                stat4Label: "Portée",
+                expertiseTitle: "Domaines d'Expertise",
+                expertise1Title: "Leadership et Stratégie",
+                expertise1Text: "Des leaders visionnaires qui inspirent les équipes et conduisent la transformation organisationnelle grâce à des stratégies éprouvées et une pensée innovante.",
+                expertise2Title: "Innovation et Technologie",
+                expertise2Text: "Des pionniers technologiques et innovateurs partageant des perspectives sur les tendances émergentes, la transformation numérique et l'avenir des affaires.",
+                expertise3Title: "Ventes et Marketing",
+                expertise3Text: "Des experts de l'industrie proposant des stratégies concrètes pour accélérer la croissance, bâtir des marques et se connecter avec les consommateurs modernes.",
+                expertise4Title: "Durabilité et Impact",
+                expertise4Text: "Des leaders d'opinion défendant la responsabilité environnementale et l'impact social dans les affaires et au-delà.",
+                ctaTitle: "Prêt à Réserver un Conférencier?",
+                ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
+                ctaButton: "Nous Contacter"
             }
         };
-
 
         let currentLang = localStorage.getItem('language') || 'en';
         let speakers = [];
         let currentFilter = 'all';
         let searchTerm = '';
+        let displayedCount = 8; // Show 2 rows of 4 speakers initially
+        const speakersPerLoad = 8;
 
         // Language switching
         function setLanguage(lang) {
@@ -819,8 +1431,8 @@
                     element.textContent = translations[lang][key];
                 }
             });
-
-
+            
+            
             // Update placeholders
             document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
                 const key = element.dataset.i18nPlaceholder;
@@ -838,9 +1450,300 @@
             btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
         });
 
+        // Fetch speakers from API
+        async function loadSpeakers() {
+            try {
+                const response = await fetch('/api/speakers');
+                speakers = await response.json();
+                generateFilterButtons();
+                renderSpeakers();
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error loading speakers:', error);
+                const errorMsg = currentLang === 'fr' 
+                    ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page</p>'
+                    : '<h3>Error loading speakers</h3><p>Please refresh the page</p>';
+                document.getElementById('loading').innerHTML = errorMsg;
+            }
+        }
+
+        // Generate filter buttons dynamically
+        function generateFilterButtons() {
+            const allTopics = new Set();
+            speakers.forEach(speaker => {
+                const topics = currentLang === 'fr' && speaker.topics_fr 
+                    ? speaker.topics_fr 
+                    : speaker.topics;
+                topics.forEach(topic => allTopics.add(topic));
+            });
+
+            const filterButtons = document.getElementById('filterButtons');
+            const sortedTopics = Array.from(allTopics).sort();
+            
+            filterButtons.innerHTML = `
+                <button class="filter-btn active" data-category="all">${translations[currentLang].filterAll}</button>
+                ${sortedTopics.map(topic => 
+                    `<button class="filter-btn" data-category="${topic}">${topic}</button>`
+                ).join('')}
+            `;
+        }
+
+        function renderSpeakers() {
+            const grid = document.getElementById('speakersGrid');
+            const noResults = document.getElementById('noResults');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            
+            const filtered = speakers.filter(speaker => {
+                const topics = currentLang === 'fr' && speaker.topics_fr 
+                    ? speaker.topics_fr 
+                    : speaker.topics;
+                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
+                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
+                
+                const matchesFilter = currentFilter === 'all' || topics.includes(currentFilter);
+                const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    topics.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                loadMoreContainer.style.display = 'none';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            // Show only up to displayedCount speakers
+            const speakersToShow = filtered.slice(0, displayedCount);
+
+            grid.innerHTML = speakersToShow.map((speaker, index) => {
+                const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
+                    ? `<img src="${speaker.image}" alt="${speaker.name}">`
+                    : speaker.image || '👤';
+                
+                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
+                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
+                const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
+
+                // Assign subtle parallax speed factors (0.05 to 0.15) based on the column index.
+                const columnIndex = (index % 4) + 1;
+                const parallaxSpeed = 
+                    columnIndex === 1 ? 0: 
+                    columnIndex === 2 ? 0 : 
+                    columnIndex === 3 ? 0 : 
+                    0; // Column 4 has 0 speed (no parallax)
+                
+                return `
+                    <div class="speaker-card" data-parallax-speed="${parallaxSpeed}" onclick="openModal(${speakers.indexOf(speaker)})">
+                        <div class="speaker-image-container">
+                            <div class="speaker-image-bg">${imageContent}</div>
+                        </div>
+                        <div class="speaker-info">
+                            <div class="speaker-name">${name}</div>
+                            <div class="speaker-details">
+                                <div class="speaker-title">${title}</div>
+                                <div class="speaker-topics">
+                                    ${topics.slice(0, 3).map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add data attribute for centering few speakers
+            grid.setAttribute('data-count', speakersToShow.length);
+
+            // Show/hide load more button
+            if (filtered.length > displayedCount) {
+                loadMoreContainer.style.display = 'block';
+            } else {
+                loadMoreContainer.style.display = 'none';
+            }
+
+            // Initialize parallax effect after rendering
+           // initParallax();
+        }
+
+        function loadMoreSpeakers() {
+            displayedCount += speakersPerLoad;
+            renderSpeakers();
+        }
+
+        // Parallax scrolling effect
+        let parallaxEnabled = false;
+
+        function initParallax() {
+            // Cards and container are scoped to this function
+            const cards = document.querySelectorAll('.speaker-card');
+            const speakersContainer = document.getElementById('speakers');
+            
+            if (cards.length === 0) {
+                parallaxEnabled = false;
+                return;
+            }
+
+            console.log(`Initializing parallax for ${cards.length} cards`);
+            parallaxEnabled = true;
+           
+            
+            function updateParallax() {
+                if (!parallaxEnabled) return;
+                
+                const containerRect = speakersContainer.getBoundingClientRect();
+                
+                // --- FIX: Check if the container is currently within the viewport ---
+                // containerRect.top < window.innerHeight: top edge is above the bottom of the viewport
+                // containerRect.bottom > 0: bottom edge is below the top of the viewport
+                if (containerRect.top < window.innerHeight && containerRect.bottom > 0) {
+                    
+                    // Calculate the scroll distance of the container up the screen from its starting point.
+                    // This value is 0 when the container top is at the viewport top, and increases as we scroll down (containerRect.top becomes negative).
+                    const relativeScroll = -containerRect.top;
+                
+                cards.forEach((card) => {
+                        const speed = parseFloat(card.dataset.parallaxSpeed);
+                        if (speed === 0) return;
+                        
+                        // Calculate the offset. A positive offset makes the card move down relative
+                        // to the page's scroll, causing it to scroll slower (lag effect).
+                        const offset = relativeScroll * speed;
+                        
+                        // Apply transform
+                        card.style.transform = `translateY(${offset}px)`;
+                    });
+                } else {
+                    // Reset transform when the container is fully out of the viewport 
+                    // to prevent transform offsets from stacking and causing issues.
+                    cards.forEach((card) => {
+                        card.style.transform = `translateY(0px)`;
+                    });
+                }
+            }
+
+            // Use scroll event with requestAnimationFrame
+            let ticking = false;
+            
+            function onScroll() {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateParallax();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+            
+            window.addEventListener('scroll', onScroll, { passive: true });
+            
+            // Initial call
+            setTimeout(() => {
+                updateParallax();
+            }, 100);
+        }
 
 
 
-        </script>
-    </body>
+        function openModal(index) {
+            const speaker = speakers[index];
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+
+            const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
+                ? `<img src="${speaker.image}" alt="${speaker.name}">`
+                : speaker.image || '👤';
+
+            const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
+            const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
+            const bio = currentLang === 'fr' && speaker.bio_fr ? speaker.bio_fr : speaker.bio;
+            const keyTopics = currentLang === 'fr' && speaker.keyTopics_fr ? speaker.keyTopics_fr : speaker.keyTopics;
+            const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
+
+            modalBody.innerHTML = `
+                <div class="modal-image">${imageContent}</div>
+                <div class="modal-info">
+                    <h2 class="modal-name">${name}</h2>
+                    <p class="modal-title">${title}</p>
+                    <div class="modal-bio">${bio}</div>
+                    ${keyTopics && keyTopics.length > 0 ? `
+                        <div class="modal-section">
+                            <h3>${translations[currentLang].keyTopicsTitle}</h3>
+                            <ul>
+                                ${keyTopics.map(topic => `<li>${topic}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    <div class="speaker-topics">
+                        ${topics.map(topic => `<span class="topic-tag" style="background: var(--grey); color: var(--dark-grey);">${topic}</span>`).join('')}
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <button class="contact-btn" onclick="alert('${translations[currentLang].bookMessage}')">${translations[currentLang].bookButton}</button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            displayedCount = 8; // Reset to initial count when searching
+            renderSpeakers();
+        });
+
+        document.getElementById('filterButtons').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.category;
+                displayedCount = 8; // Reset to initial count when filtering
+                renderSpeakers();
+            }
+        });
+
+   
+
+
+    
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // Disable parallax on mobile for better performance
+        const isMobile = window.innerWidth < 768;
+        
+        console.log('Page loaded, mobile:', isMobile);
+        
+        if (isMobile) {
+            window.initParallax = () => {
+                console.log('Parallax disabled on mobile');
+            };
+        }
+
+        // Initialize
+        setLanguage(currentLang);
+        loadSpeakers();
+
+        // UI Listeners
+        document.getElementById('mobile-menu-button').addEventListener('click', toggleMobileMenu);
+        document.getElementById('lang-toggle').addEventListener('click', toggleLang);
+        document.getElementById('lang-toggle-mobile').addEventListener('click', toggleLang);
+
+        
+    </script>
+</body>
 </html>

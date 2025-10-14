@@ -219,6 +219,7 @@
             margin: 0 auto;
             padding: 3rem 1rem;
             overflow: visible;
+            min-height: 60vh;
         }
 
         .speakers-grid {
@@ -227,6 +228,18 @@
             gap: 1rem;
             align-items: start;
             position: relative;
+            justify-content: center;
+        }
+
+         /* Center grid when few speakers */
+        @media (min-width: 1200px) {
+            .speakers-grid[data-count="1"],
+            .speakers-grid[data-count="2"],
+            .speakers-grid[data-count="3"],
+            .speakers-grid[data-count="4"] {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+                max-width: 1400px;
+            }
         }
 
         .speaker-card {
@@ -399,6 +412,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         .topic-tag {
@@ -612,6 +626,192 @@
 
         .load-more-btn.hidden {
             display: none;
+        }
+
+        /* Featured section for highlighting speakers */
+        .featured-section {
+            background: var(--grey);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .featured-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .featured-text h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .featured-text p {
+            font-size: 1.1rem;
+            color: var(--dark-grey);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .featured-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--purple);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--dark-grey);
+            margin-top: 0.5rem;
+        }
+
+        .featured-image {
+            aspect-ratio: 1;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--dark-grey);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Services/Expertise section */
+        .expertise-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 2rem 1rem;
+        }
+
+        .expertise-section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .expertise-card {
+            background: var(--grey);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .expertise-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .expertise-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--purple);
+        }
+
+        .expertise-card p {
+            color: var(--dark-grey);
+            line-height: 1.6;
+        }
+
+        /* CTA section */
+        .cta-section {
+            background: var(--purple);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0 0 0;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: var(--white);
+            color: var(--purple);
+            padding: 1rem 3rem;
+            border: 2px solid var(--white);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .featured-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -875,6 +1075,7 @@
         </div>
     </div>
 
+    <!-- 2. Speaker display section -->
     <section class="speakers-container" id="speakers">
         <div class="loading" id="loading" data-i18n="loading">Loading speakers...</div>
         <div class="speakers-grid" id="speakersGrid"></div>
@@ -889,12 +1090,83 @@
         </div>
     </section>
 
+    <!-- Featured Section -->
+    <!---
+    <section class="featured-section">
+        <div class="featured-content">
+            <div class="featured-text">
+                <h2 data-i18n="featuredTitle">Expert Speakers, Tailored to Your Event</h2>
+                <p data-i18n="featuredText1">We carefully curate our roster of speakers to ensure every voice brings unique insights and transformative ideas to your audience.</p>
+                <p data-i18n="featuredText2">From intimate corporate gatherings to large-scale conferences, our speakers deliver engaging, memorable experiences that inspire action and drive results.</p>
+                <div class="featured-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-i18n="stat1Number">500+</div>
+                        <div class="stat-label" data-i18n="stat1Label">Events Delivered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-i18n="stat2Number">98%</div>
+                        <div class="stat-label" data-i18n="stat2Label">Client Satisfaction</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-i18n="stat3Number">50+</div>
+                        <div class="stat-label" data-i18n="stat3Label">Industries Served</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-i18n="stat4Number">Global</div>
+                        <div class="stat-label" data-i18n="stat4Label">Reach</div>
+                    </div>
+                </div>
+            </div>
+            <div class="featured-image">
+                <span>🎤</span>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Expertise Section -->
+    <!--<section class="expertise-section">
+        <h2 data-i18n="expertiseTitle">Areas of Expertise</h2>
+        <div class="expertise-grid">
+            <div class="expertise-card">
+                <div class="expertise-icon">💼</div>
+                <h3 data-i18n="expertise1Title">Leadership & Strategy</h3>
+                <p data-i18n="expertise1Text">Visionary leaders who inspire teams and drive organizational transformation through proven strategies and innovative thinking.</p>
+            </div>
+            <div class="expertise-card">
+                <div class="expertise-icon">🚀</div>
+                <h3 data-i18n="expertise2Title">Innovation & Technology</h3>
+                <p data-i18n="expertise2Text">Tech pioneers and innovators sharing insights on emerging trends, digital transformation, and the future of business.</p>
+            </div>
+            <div class="expertise-card">
+                <div class="expertise-icon">🎯</div>
+                <h3 data-i18n="expertise3Title">Sales & Marketing</h3>
+                <p data-i18n="expertise3Text">Industry experts delivering actionable strategies to accelerate growth, build brands, and connect with modern consumers.</p>
+            </div>
+            <div class="expertise-card">
+                <div class="expertise-icon">🌱</div>
+                <h3 data-i18n="expertise4Title">Sustainability & Impact</h3>
+                <p data-i18n="expertise4Text">Thought leaders championing environmental responsibility and social impact in business and beyond.</p>
+            </div>
+        </div>
+    </section>-->
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 data-i18n="ctaTitle">Ready to Book a Speaker?</h2>
+            <p data-i18n="ctaText">Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.</p>
+            <a href="#contact" class="cta-button" data-i18n="ctaButton">Contact Us</a>
+        </div>
+    </section>
+
     <div class="modal" id="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div id="modalBody"></div>
         </div>
     </div>
+
+
 
 
             <!-- 3. Services Section -->
@@ -1009,6 +1281,7 @@
                 noResultsText: "Try adjusting your search or filters",
                 keyTopicsTitle: "Key Speaking Topics",
                 bookButton: "Book This Speaker",
+                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
                 services_heading: "Agency Expertise",
                 services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
                 service_1_title: "Exclusive Speaker Access",
@@ -1027,7 +1300,31 @@
                 form_submit: "SUBMIT INQUIRY",
                 contact_response_time: "A consultant will be in touch within 24 hours.",
                 footerCopyright: "© 2025 Speaker Bureau. All rights reserved.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567"
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
+                loadMore: "Load More Speakers",
+                featuredTitle: "Expert Speakers, Tailored to Your Event",
+                featuredText1: "We carefully curate our roster of speakers to ensure every voice brings unique insights and transformative ideas to your audience.",
+                featuredText2: "From intimate corporate gatherings to large-scale conferences, our speakers deliver engaging, memorable experiences that inspire action and drive results.",
+                stat1Number: "500+",
+                stat1Label: "Events Delivered",
+                stat2Number: "98%",
+                stat2Label: "Client Satisfaction",
+                stat3Number: "50+",
+                stat3Label: "Industries Served",
+                stat4Number: "Global",
+                stat4Label: "Reach",
+                expertiseTitle: "Areas of Expertise",
+                expertise1Title: "Leadership & Strategy",
+                expertise1Text: "Visionary leaders who inspire teams and drive organizational transformation through proven strategies and innovative thinking.",
+                expertise2Title: "Innovation & Technology",
+                expertise2Text: "Tech pioneers and innovators sharing insights on emerging trends, digital transformation, and the future of business.",
+                expertise3Title: "Sales & Marketing",
+                expertise3Text: "Industry experts delivering actionable strategies to accelerate growth, build brands, and connect with modern consumers.",
+                expertise4Title: "Sustainability & Impact",
+                expertise4Text: "Thought leaders championing environmental responsibility and social impact in business and beyond.",
+                ctaTitle: "Ready to Book a Speaker?",
+                ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
+                ctaButton: "Contact Us"
             },
             fr: {
                 siteName: "FACETTES",
@@ -1039,10 +1336,12 @@
                 searchPlaceholder: "Rechercher des conférenciers...",
                 filterAll: "Tous",
                 loading: "Chargement des conférenciers...",
+                loadMore: "Charger Plus de Conférenciers",
                 noResultsTitle: "Aucun conférencier trouvé",
                 noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
                 keyTopicsTitle: "Sujets de Conférence Principaux",
                 bookButton: "Réserver ce Conférencier",
+                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
                 services_heading: "Services Événementiels Complets",
                 services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
                 service_1_title: "Accès Exclusif aux Conférenciers",
@@ -1061,7 +1360,30 @@
                 form_submit: "SOUMETTRE LA DEMANDE",
                 contact_response_time: "Un consultant vous contactera dans les 24 heures.",
                 footerCopyright: "© 2025 Bureau de Conférenciers. Tous droits réservés.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567"
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
+                featuredTitle: "Des Conférenciers Experts, Adaptés à Votre Événement",
+                featuredText1: "Nous sélectionnons soigneusement notre liste de conférenciers pour garantir que chaque voix apporte des perspectives uniques et des idées transformatrices à votre public.",
+                featuredText2: "Des rassemblements corporatifs intimes aux conférences à grande échelle, nos conférenciers offrent des expériences engageantes et mémorables qui inspirent l'action et produisent des résultats.",
+                stat1Number: "500+",
+                stat1Label: "Événements Réalisés",
+                stat2Number: "98%",
+                stat2Label: "Satisfaction Client",
+                stat3Number: "50+",
+                stat3Label: "Industries Desservies",
+                stat4Number: "Mondiale",
+                stat4Label: "Portée",
+                expertiseTitle: "Domaines d'Expertise",
+                expertise1Title: "Leadership et Stratégie",
+                expertise1Text: "Des leaders visionnaires qui inspirent les équipes et conduisent la transformation organisationnelle grâce à des stratégies éprouvées et une pensée innovante.",
+                expertise2Title: "Innovation et Technologie",
+                expertise2Text: "Des pionniers technologiques et innovateurs partageant des perspectives sur les tendances émergentes, la transformation numérique et l'avenir des affaires.",
+                expertise3Title: "Ventes et Marketing",
+                expertise3Text: "Des experts de l'industrie proposant des stratégies concrètes pour accélérer la croissance, bâtir des marques et se connecter avec les consommateurs modernes.",
+                expertise4Title: "Durabilité et Impact",
+                expertise4Text: "Des leaders d'opinion défendant la responsabilité environnementale et l'impact social dans les affaires et au-delà.",
+                ctaTitle: "Prêt à Réserver un Conférencier?",
+                ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
+                ctaButton: "Nous Contacter"
             }
         };
 
@@ -1214,6 +1536,9 @@
                 `;
             }).join('');
 
+            // Add data attribute for centering few speakers
+            grid.setAttribute('data-count', speakersToShow.length);
+
             // Show/hide load more button
             if (filtered.length > displayedCount) {
                 loadMoreContainer.style.display = 'block';
@@ -1243,7 +1568,9 @@
                 return;
             }
 
+            console.log(`Initializing parallax for ${cards.length} cards`);
             parallaxEnabled = true;
+           
             
             function updateParallax() {
                 if (!parallaxEnabled) return;
