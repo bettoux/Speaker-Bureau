@@ -218,21 +218,26 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 3rem 1rem;
+            overflow: visible;
         }
 
         .speakers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
+            gap: 1rem;
+            align-items: start;
+            position: relative;
         }
 
         .speaker-card {
-            background: var(--white);
             position: relative;
             aspect-ratio: 4/5;
             overflow: hidden;
             cursor: pointer;
             background: var(--grey);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            will-change: transform;
             border-radius: 24px;
         }
 
@@ -250,14 +255,56 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
-            opacity: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 30%, transparent 50%);
+            opacity: 1;
             transition: opacity 0.4s ease;
+        }
+
+        .speaker-card:hover {
+            z-index: 10;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Staggered vertical offset for columns - creates the misaligned effect */
+        .speaker-card:nth-child(4n+1) {
+            margin-top: 0;
+        }
+
+        .speaker-card:nth-child(4n+2) {
+            margin-top: 1.5rem;
+        }
+
+        .speaker-card:nth-child(4n+3) {
+            margin-top: 3rem;
+        }
+
+        .speaker-card:nth-child(4n+4) {
+            margin-top: 0.75rem;
         }
 
         .speaker-card:hover .speaker-image-container::after {
             opacity: 1;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 70%);
         }
+
+        /* Remove animation delays that might interfere */
+        .speaker-card:nth-child(1) { animation-delay: 0s; }
+        .speaker-card:nth-child(2) { animation-delay: 0.1s; }
+        .speaker-card:nth-child(3) { animation-delay: 0.2s; }
+        .speaker-card:nth-child(4) { animation-delay: 0.3s; }
+        .speaker-card:nth-child(5) { animation-delay: 0s; }
+        .speaker-card:nth-child(6) { animation-delay: 0.1s; }
+        .speaker-card:nth-child(7) { animation-delay: 0.2s; }
+        .speaker-card:nth-child(8) { animation-delay: 0.3s; }
+        .speaker-card:nth-child(n+9) { animation-delay: 0s; }
 
         /*.speaker-card:hover {
             transform: translateY(-4px);
@@ -309,10 +356,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 2rem 1.5rem 1.5rem;
+            padding: 1.5rem;
             color: var(--white);
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
             z-index: 2;
         }
 
@@ -323,8 +368,25 @@
         .speaker-name {
             font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
             line-height: 1.2;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.4s ease;
+        }
+
+        .speaker-details {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .speaker-card:hover .speaker-details {
+            max-height: 200px; /* Enough to show content */
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .speaker-title {
@@ -525,6 +587,33 @@
             color: var(--dark-grey);
         }
 
+        .load-more-container {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .load-more-btn {
+            background: var(--purple);
+            color: var(--white);
+            padding: 1rem 3rem;
+            border: 2px solid var(--purple);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .load-more-btn:hover {
+            background: var(--white);
+            color: var(--purple);
+        }
+
+        .load-more-btn.hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 justify-content: center;
@@ -548,6 +637,22 @@
             .speakers-grid {
                 grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
                 gap: 1rem;
+            }
+
+            /* Adjust stagger for mobile - 2 columns */
+            .speaker-card:nth-child(4n+1),
+            .speaker-card:nth-child(4n+2),
+            .speaker-card:nth-child(4n+3),
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(2n+1) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(2n+2) {
+                margin-top: 1rem;
             }
 
             .speaker-info {
@@ -597,6 +702,12 @@
                 grid-template-columns: 1fr;
             }
 
+            /* Single column - remove stagger on mobile */
+            .speaker-card:nth-child(2n+1),
+            .speaker-card:nth-child(2n+2) {
+                margin-top: 0;
+            }
+
             .modal-image {
                 height: 300px;
                 font-size: 4rem;
@@ -607,7 +718,47 @@
             .speakers-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
+
+            /* Enhanced stagger for large screens - 4 columns */
+            .speaker-card:nth-child(4n+1) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+2) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+3) {
+                margin-top: 3rem;
+            }
+
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 3rem;
+            }
         }
+
+        @media (min-width: 769px) and (max-width: 1199px) {
+            /* 3 columns - adjust stagger */
+            .speaker-card:nth-child(4n+1),
+            .speaker-card:nth-child(4n+2),
+            .speaker-card:nth-child(4n+3),
+            .speaker-card:nth-child(4n+4) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(3n+1) {
+                margin-top: 0;
+            }
+
+            .speaker-card:nth-child(3n+2) {
+                margin-top: 1.5rem;
+            }
+
+            .speaker-card:nth-child(3n+3) {
+                margin-top: 3rem;
+            }
+        }
+
     </style>
 
     <style>
@@ -731,6 +882,11 @@
             <h3 data-i18n="noResultsTitle">No speakers found</h3>
             <p data-i18n="noResultsText">Try adjusting your search or filters</p>
         </div>
+        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+            <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreSpeakers()">
+                <span data-i18n="loadMore">Load More Speakers</span>
+            </button>
+        </div>
     </section>
 
     <div class="modal" id="modal">
@@ -835,14 +991,6 @@
         </div>
     </footer>
 
-    <!--
-    <footer>
-        <div class="footer-content">
-            <p data-i18n="footerCopyright">&copy; 2025 Speaker Bureau. All rights reserved.</p>
-            <p style="margin-top: 1rem;" data-i18n="footerContact">Contact: info@speakerbureau.com | (555) 123-4567</p>
-        </div>
-    </footer>
-    -->
 
     <script>
         // Translations
@@ -921,6 +1069,8 @@
         let speakers = [];
         let currentFilter = 'all';
         let searchTerm = '';
+        let displayedCount = 8; // Show 2 rows of 4 speakers initially
+        const speakersPerLoad = 8;
 
         // Language switching
         function setLanguage(lang) {
@@ -1000,6 +1150,7 @@
         function renderSpeakers() {
             const grid = document.getElementById('speakersGrid');
             const noResults = document.getElementById('noResults');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
             
             const filtered = speakers.filter(speaker => {
                 const topics = currentLang === 'fr' && speaker.topics_fr 
@@ -1018,13 +1169,17 @@
             if (filtered.length === 0) {
                 grid.style.display = 'none';
                 noResults.style.display = 'block';
+                loadMoreContainer.style.display = 'none';
                 return;
             }
 
             grid.style.display = 'grid';
             noResults.style.display = 'none';
 
-            grid.innerHTML = filtered.map((speaker, index) => {
+            // Show only up to displayedCount speakers
+            const speakersToShow = filtered.slice(0, displayedCount);
+
+            grid.innerHTML = speakersToShow.map((speaker, index) => {
                 const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
                     ? `<img src="${speaker.image}" alt="${speaker.name}">`
                     : speaker.image || '👤';
@@ -1032,23 +1187,120 @@
                 const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
                 const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
                 const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
+
+                // Assign subtle parallax speed factors (0.05 to 0.15) based on the column index.
+                const columnIndex = (index % 4) + 1;
+                const parallaxSpeed = 
+                    columnIndex === 1 ? 0: 
+                    columnIndex === 2 ? 0 : 
+                    columnIndex === 3 ? 0 : 
+                    0; // Column 4 has 0 speed (no parallax)
                 
                 return `
-                    <div class="speaker-card" onclick="openModal(${speakers.indexOf(speaker)})">
+                    <div class="speaker-card" data-parallax-speed="${parallaxSpeed}" onclick="openModal(${speakers.indexOf(speaker)})">
                         <div class="speaker-image-container">
                             <div class="speaker-image-bg">${imageContent}</div>
                         </div>
                         <div class="speaker-info">
                             <div class="speaker-name">${name}</div>
-                            <div class="speaker-title">${title}</div>
-                            <div class="speaker-topics">
-                                ${topics.slice(0, 3).map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                            <div class="speaker-details">
+                                <div class="speaker-title">${title}</div>
+                                <div class="speaker-topics">
+                                    ${topics.slice(0, 3).map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                                </div>
                             </div>
                         </div>
                     </div>
                 `;
             }).join('');
+
+            // Show/hide load more button
+            if (filtered.length > displayedCount) {
+                loadMoreContainer.style.display = 'block';
+            } else {
+                loadMoreContainer.style.display = 'none';
+            }
+
+            // Initialize parallax effect after rendering
+           // initParallax();
         }
+
+        function loadMoreSpeakers() {
+            displayedCount += speakersPerLoad;
+            renderSpeakers();
+        }
+
+        // Parallax scrolling effect
+        let parallaxEnabled = false;
+
+        function initParallax() {
+            // Cards and container are scoped to this function
+            const cards = document.querySelectorAll('.speaker-card');
+            const speakersContainer = document.getElementById('speakers');
+            
+            if (cards.length === 0) {
+                parallaxEnabled = false;
+                return;
+            }
+
+            parallaxEnabled = true;
+            
+            function updateParallax() {
+                if (!parallaxEnabled) return;
+                
+                const containerRect = speakersContainer.getBoundingClientRect();
+                
+                // --- FIX: Check if the container is currently within the viewport ---
+                // containerRect.top < window.innerHeight: top edge is above the bottom of the viewport
+                // containerRect.bottom > 0: bottom edge is below the top of the viewport
+                if (containerRect.top < window.innerHeight && containerRect.bottom > 0) {
+                    
+                    // Calculate the scroll distance of the container up the screen from its starting point.
+                    // This value is 0 when the container top is at the viewport top, and increases as we scroll down (containerRect.top becomes negative).
+                    const relativeScroll = -containerRect.top;
+                
+                cards.forEach((card) => {
+                        const speed = parseFloat(card.dataset.parallaxSpeed);
+                        if (speed === 0) return;
+                        
+                        // Calculate the offset. A positive offset makes the card move down relative
+                        // to the page's scroll, causing it to scroll slower (lag effect).
+                        const offset = relativeScroll * speed;
+                        
+                        // Apply transform
+                        card.style.transform = `translateY(${offset}px)`;
+                    });
+                } else {
+                    // Reset transform when the container is fully out of the viewport 
+                    // to prevent transform offsets from stacking and causing issues.
+                    cards.forEach((card) => {
+                        card.style.transform = `translateY(0px)`;
+                    });
+                }
+            }
+
+            // Use scroll event with requestAnimationFrame
+            let ticking = false;
+            
+            function onScroll() {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateParallax();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+            
+            window.addEventListener('scroll', onScroll, { passive: true });
+            
+            // Initial call
+            setTimeout(() => {
+                updateParallax();
+            }, 100);
+        }
+
+
 
         function openModal(index) {
             const speaker = speakers[index];
@@ -1101,6 +1353,7 @@
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
             searchTerm = e.target.value;
+            displayedCount = 8; // Reset to initial count when searching
             renderSpeakers();
         });
 
@@ -1109,6 +1362,7 @@
                 document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
                 e.target.classList.add('active');
                 currentFilter = e.target.dataset.category;
+                displayedCount = 8; // Reset to initial count when filtering
                 renderSpeakers();
             }
         });
@@ -1121,6 +1375,17 @@
         // Mobile menu toggle
         function toggleMobileMenu() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // Disable parallax on mobile for better performance
+        const isMobile = window.innerWidth < 768;
+        
+        console.log('Page loaded, mobile:', isMobile);
+        
+        if (isMobile) {
+            window.initParallax = () => {
+                console.log('Parallax disabled on mobile');
+            };
         }
 
         // Initialize
