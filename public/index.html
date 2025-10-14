@@ -163,6 +163,7 @@
             gap: 1rem;
             flex-wrap: wrap;
             align-items: center;
+            scroll-margin-top: 100px;
         }
 
         .search-box {
@@ -1012,7 +1013,7 @@
                 <a href="#services" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Services</a>
                 <a href="./about.html" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">About</a>
                 <a href="#contact" data-key="nav_contact" class="px-5 py-2 text-sm font-semibold bg-accent-purple text-text-light rounded-full hover:bg-accent-hover-purple transition duration-300 tracking-wider">
-                    CONTACT
+                    Contact
                 </a>
                 
                 <!-- Language Toggle -->
@@ -1066,7 +1067,7 @@
                     </section>
 
 
-    <div class="controls">
+    <div class="controls" id="speakers">
         <div class="search-box">
             <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search speakers...">
         </div>
@@ -1076,7 +1077,7 @@
     </div>
 
     <!-- 2. Speaker display section -->
-    <section class="speakers-container" id="speakers">
+    <section class="speakers-container" >
         <div class="loading" id="loading" data-i18n="loading">Loading speakers...</div>
         <div class="speakers-grid" id="speakersGrid"></div>
         <div class="no-results" id="noResults" style="display: none;">
@@ -1170,7 +1171,7 @@
 
 
             <!-- 3. Services Section -->
-            <section id="services" class="py-24 border-b border-text-detail/10">
+            <section id="services" class="py-24 border-b border-text-detail/10 ">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 data-i18n="services_heading" data-key="services_heading" class="text-3xl font-bold mb-2 text-center uppercase tracking-widest text-text-dark">Agency Expertise</h2>
                     <p data-i18n="services_subtext" data-key="services_subtext" class="text-xl text-text-detail max-w-3xl mx-auto mb-12 text-center">Beyond booking, we ensure seamless execution and maximum impact.</p>
