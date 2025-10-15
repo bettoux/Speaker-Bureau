@@ -1258,492 +1258,167 @@
     </footer>
 
 
-    <script>
-        // Translations
-        const translations = {
-            en: {
-                siteName: "FACETTES",
-                navSpeakers: "Speakers",
-                navAbout: "About",
-                navContact: "Contact",
-                heroTitle: "Where Bold Ideas Meet Global Reach",
-                heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
-                searchPlaceholder: "Search speakers...",
-                filterAll: "All",
-                loading: "Loading speakers...",
-                noResultsTitle: "No speakers found",
-                noResultsText: "Try adjusting your search or filters",
-                keyTopicsTitle: "Key Speaking Topics",
-                bookButton: "Book This Speaker",
-                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
-                vision_heading: "Our Vision",
-                vision_subtext1: "Facettes transcends the simple representation of speakers; it is committed to offering conversations that go beyond conventional thinking. We aspire to stimulate thought and open doors to new ideas and horizons, thus transforming each event into a captivating intellectual experience.",
-                vision_subtext2: "We are proud to represent experts with exceptional backgrounds, brimming with novel and innovative approaches. Their talks do not simply reflect their expertise; they shape new perspectives and inspire concrete changes.",
-                vision_subtext3: "At Facettes, we are the ambassadors for 'change makers' who, too busy making an impact in their environment, deserve to have their vision and ideas shared. Our mission goes beyond traditional presentations; it is a commitment to amplifying influential voices that are shaping the world around them.",
-                vision_subtext4: "In summary, Facettes' mission is to be the catalyst for dialogues and thoughts that transcend boundaries, thereby carrying the message of visionaries busy making an impact on the world. This is our commitment; this is our mission.",
-                value_heading: "Our Values",
-                value_subtext: "We combine Curiosity for diverse narratives, Benevolence for robust support, and unwavering Integrity in all our partnerships.",
-                value_1_title: "Benevolence",
-                value_1_description: "Because it embodies our deep commitment to the well-being, growth, and success of our talent. We firmly believe that for our representatives to shine fully, they need constant moral support, attentive listening, and a kind approach. Benevolence allows us to establish authentic relationships with our talent, to understand their needs and challenges, and to support them positively at every stage of their journey. By fostering an environment where benevolence prevails, we help our talent develop their self-confidence, overcome obstacles, and realize their potential.",
-                value_2_title: "Integrity",
-                value_2_description: "Because it is at the heart of our commitment to our talent, clients, and partners. It represents our pledge to act honestly, transparently, and ethically in all our interactions. Integrity guides us in the fair management of contracts, in respecting the rights of our talent, and in preserving their reputation and image. By placing integrity at the forefront of our actions, we establish a solid foundation of trust and mutual respect, which strengthens the credibility of our agency and the satisfaction of our talent and clients.",
-                value_3_title: "Curiosity",
-                value_3_description: "Because it embodies our deep commitment to continuous learning, open-mindedness, and the discovery of the many facets of cultural diversity in Canada. We firmly believe that for our representatives to shine fully, it is essential to explore new horizons, understand multiple experiences, and grasp diverse life stories. Curiosity drives us to ask questions, challenge stereotypes, learn constantly, and expand our horizons, thus contributing to authentic and inclusive representation.",
-                services_heading: "Agency Expertise",
-                services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
-                service_1_title: "Exclusive Speaker Access",
-                service_1_description: "Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.",
-                service_2_title: "Content Alignment & Strategy",
-                service_2_description: "Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.",
-                service_3_title: "On-Site Logistics Support",
-                service_3_description: "Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.",
-                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
-                contact_heading: "CONNECT",
-                contact_tagline: "Initiate a conversation with our team to find the ideal voice for your next defining moment.",
-                form_name: "Your Name",
-                form_email: "Your Email",
-                form_event: "Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)",
-                form_details: "Tell us about your audience, event date, and budget range...",
-                form_submit: "SUBMIT INQUIRY",
-                contact_response_time: "A consultant will be in touch within 24 hours.",
-                footerCopyright: "© 2025 Speaker Bureau. All rights reserved.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
-                loadMore: "Load More Speakers",
-                featuredTitle: "Expert Speakers, Tailored to Your Event",
-                featuredText1: "We carefully curate our roster of speakers to ensure every voice brings unique insights and transformative ideas to your audience.",
-                featuredText2: "From intimate corporate gatherings to large-scale conferences, our speakers deliver engaging, memorable experiences that inspire action and drive results.",
-                stat1Number: "500+",
-                stat1Label: "Events Delivered",
-                stat2Number: "98%",
-                stat2Label: "Client Satisfaction",
-                stat3Number: "50+",
-                stat3Label: "Industries Served",
-                stat4Number: "Global",
-                stat4Label: "Reach",
-                expertiseTitle: "Areas of Expertise",
-                expertise1Title: "Leadership & Strategy",
-                expertise1Text: "Visionary leaders who inspire teams and drive organizational transformation through proven strategies and innovative thinking.",
-                expertise2Title: "Innovation & Technology",
-                expertise2Text: "Tech pioneers and innovators sharing insights on emerging trends, digital transformation, and the future of business.",
-                expertise3Title: "Sales & Marketing",
-                expertise3Text: "Industry experts delivering actionable strategies to accelerate growth, build brands, and connect with modern consumers.",
-                expertise4Title: "Sustainability & Impact",
-                expertise4Text: "Thought leaders championing environmental responsibility and social impact in business and beyond.",
-                ctaTitle: "Ready to Book a Speaker?",
-                ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
-                ctaButton: "Contact Us"
-            },
-            fr: {
-                siteName: "FACETTES",
-                navSpeakers: "Conférenciers",
-                navAbout: "À propos",
-                navContact: "Contact",
-                heroTitle: "Des Conférenciers de Classe MondLà où les Idées Audacieuses Rencontrent la Portée Mondiale",
-                heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
-                searchPlaceholder: "Rechercher des conférenciers...",
-                filterAll: "Tous",
-                loading: "Chargement des conférenciers...",
-                loadMore: "Charger Plus de Conférenciers",
-                noResultsTitle: "Aucun conférencier trouvé",
-                noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
-                keyTopicsTitle: "Sujets de Conférence Principaux",
-                bookButton: "Réserver ce Conférencier",
-                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
-                vision_heading: "Notre Vision",
-                vision_subtext1: "Facettes transcende la simple représentation de conférencier·ère·s ; elle s'engage à offrir des conversations qui vont au-delà de la réflexion conventionnelle. Nous aspirons à stimuler la pensée et à ouvrir des portes vers de nouvelles idées et horizons, transformant ainsi chaque événement en une expérience intellectuelle captivante.",
-                vision_subtext2: "Nous sommes fièr·e·s de représenter des expert·e·s aux parcours exceptionnels, débordant·e·s d'approches inédites et innovantes. Leurs discours ne se contentent pas de refléter leurs expertises, mais iels façonnent de nouvelles perspectives et inspirent des changements concrets.",
-                vision_subtext3: "Chez Facettes, nous sommes les ambassadeur·rice·s des 'change makers' qui, trop occupé·e·s à impacter leur environnement, méritent d'avoir leur vision et leurs réflexions partagées. Notre mission va au-delà de la présentation traditionnelle ; elle est un engagement envers l'amplification des voix influentes qui façonnent le monde qui les entoure.",
-                vision_subtext4: "En somme, la mission de Facettes est d'être le catalyseur de dialogues et de pensées qui transcendent les limites, portant ainsi la parole des visionnaires occupé·e·s à impacter le monde. Ceci est notre engagement, ceci est notre mission.",
-                value_heading: "Nos Valeurs",
-                value_subtext: "Nous combinons la Curiosité pour des récits diversifiés, la Bienveillance pour un soutien solide, et une Intégrité inébranlable dans tous nos partenariats.",
-                value_1_title: "Bienveillance",
-                value_1_description: "Parce qu'elle incarne notre engagement profond envers le bien-être, la croissance et le succès de nos talents. Nous croyons fermement que pour que nos représentant·e·s brillent pleinement, iels ont besoin d'un soutien moral constant, d'une écoute attentive et d'une approche bienveillante. La bienveillance nous permet d'établir des relations authentiques avec nos talents, de comprendre leurs besoins et défis, et de les accompagner positivement à chaque étape de leur parcours. En favorisant un environnement où la bienveillance prévaut, nous aidons nos talents à développer leur confiance en soi, à surmonter les obstacles et à réaliser leur potentiel.",
-                value_2_title: "Intégrité",
-                value_2_description: "Parce qu'elle est au cœur de notre engagement envers nos talents, clients et partenaires. Elle représente notre promesse d'agir avec honnêteté, transparence et éthique dans toutes nos interactions. L'intégrité nous guide dans la gestion équitable des contrats, le respect des droits de nos talents, et la préservation de leur réputation et image. En plaçant l'intégrité au premier plan de nos actions, nous établissons une base solide de confiance et de respect mutuel, renforçant ainsi la crédibilité de notre agence et la satisfaction de nos talents et clients.",
-                value_3_title: "Curiosité",
-                value_3_description: "Parce qu'elle incarne notre engagement profond envers l'apprentissage continu, l'ouverture d'esprit, et la découverte des multiples facettes de la diversité culturelle au Canada. Nous croyons fermement que pour que nos représentant·e·s brillent pleinement, il est essentiel d'explorer de nouveaux horizons, de comprendre des expériences multiples, et de saisir des récits de vie diversifiés. La curiosité nous pousse à poser des questions, à défier les stéréotypes, à apprendre constamment, et à élargir nos horizons, contribuant ainsi à une représentation authentique et inclusive.",
-                services_heading: "Services Événementiels Complets",
-                services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
-                service_1_title: "Accès Exclusif aux Conférenciers",
-                service_1_description: "Accès direct à une liste organisée de leaders mondiaux. Nous gérons les négociations et la logistique du début à la fin.",
-                service_2_title: "Alignement et Stratégie de Contenu",
-                service_2_description: "Consultation stratégique pour faire correspondre les conférenciers à votre public et à vos objectifs pour une résonance maximale du message, assurant l'adéquation culturelle.",
-                service_3_title: "Soutien Logistique sur Place",
-                service_3_description: "Support complet incluant les fiches techniques, la coordination des voyages, la gestion de la liaison sur site et les cycles de feedback post-événement.",
-                contact_heading: "Prêt à Réserver un Conférencier ?",
-                contact_tagline: "Parlez-nous de votre événement, de votre public et de vos objectifs, et l'équipe Facettes trouvera la voix parfaite.",
-                form_name: "Votre Nom",
-                form_email: "Votre Email",
-                form_event: "Type d'Événement / Thème (ex : Session Stratégique T3 sur l'IA)",
-                form_details: "Parlez-nous de votre public, de la date de l'événement et de la fourchette budgétaire...",
-                form_submit: "SOUMETTRE LA DEMANDE",
-                contact_response_time: "Un consultant vous contactera dans les 24 heures.",
-                footerCopyright: "© 2025 Bureau de Conférenciers. Tous droits réservés.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
-                featuredTitle: "Des Conférenciers Experts, Adaptés à Votre Événement",
-                featuredText1: "Nous sélectionnons soigneusement notre liste de conférenciers pour garantir que chaque voix apporte des perspectives uniques et des idées transformatrices à votre public.",
-                featuredText2: "Des rassemblements corporatifs intimes aux conférences à grande échelle, nos conférenciers offrent des expériences engageantes et mémorables qui inspirent l'action et produisent des résultats.",
-                stat1Number: "500+",
-                stat1Label: "Événements Réalisés",
-                stat2Number: "98%",
-                stat2Label: "Satisfaction Client",
-                stat3Number: "50+",
-                stat3Label: "Industries Desservies",
-                stat4Number: "Mondiale",
-                stat4Label: "Portée",
-                expertiseTitle: "Domaines d'Expertise",
-                expertise1Title: "Leadership et Stratégie",
-                expertise1Text: "Des leaders visionnaires qui inspirent les équipes et conduisent la transformation organisationnelle grâce à des stratégies éprouvées et une pensée innovante.",
-                expertise2Title: "Innovation et Technologie",
-                expertise2Text: "Des pionniers technologiques et innovateurs partageant des perspectives sur les tendances émergentes, la transformation numérique et l'avenir des affaires.",
-                expertise3Title: "Ventes et Marketing",
-                expertise3Text: "Des experts de l'industrie proposant des stratégies concrètes pour accélérer la croissance, bâtir des marques et se connecter avec les consommateurs modernes.",
-                expertise4Title: "Durabilité et Impact",
-                expertise4Text: "Des leaders d'opinion défendant la responsabilité environnementale et l'impact social dans les affaires et au-delà.",
-                ctaTitle: "Prêt à Réserver un Conférencier?",
-                ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
-                ctaButton: "Nous Contacter"
-            }
-        };
 
-        let currentLang = localStorage.getItem('language') || 'en';
-        let speakers = [];
-        let currentFilter = 'all';
-        let searchTerm = '';
-        let displayedCount = 8; // Show 2 rows of 4 speakers initially
-        const speakersPerLoad = 8;
 
-        // Language switching
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('language', lang);
-            document.documentElement.lang = lang;
-            
-            // Update language buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-            
-            // Update all translatable elements
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.dataset.i18n;
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-            
-            
-            // Update placeholders
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-                const key = element.dataset.i18nPlaceholder;
-                if (translations[lang][key]) {
-                    element.placeholder = translations[lang][key];
-                }
-            });
-            
-            // Re-render speakers to update filter buttons
-            generateFilterButtons();
+    <!-- REPLACE YOUR ENTIRE SCRIPT SECTION (starting from <script> to </script>) WITH THIS: -->
+
+<script>
+    // Translations
+    const translations = {
+        en: {
+            siteName: "FACETTES",
+            navSpeakers: "Speakers",
+            navAbout: "About",
+            navContact: "Contact",
+            heroTitle: "Where Bold Ideas Meet Global Reach",
+            heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
+            vision_heading: "Our Vision",
+            vision_subtext1: "Facettes transcends the simple representation of speakers; it is committed to offering conversations that go beyond conventional thinking. We aspire to stimulate thought and open doors to new ideas and horizons, thus transforming each event into a captivating intellectual experience.",
+            vision_subtext2: "We are proud to represent experts with exceptional backgrounds, brimming with novel and innovative approaches. Their talks do not simply reflect their expertise; they shape new perspectives and inspire concrete changes.",
+            vision_subtext3: "At Facettes, we are the ambassadors for 'change makers' who, too busy making an impact in their environment, deserve to have their vision and ideas shared. Our mission goes beyond traditional presentations; it is a commitment to amplifying influential voices that are shaping the world around them.",
+            vision_subtext4: "In summary, Facettes' mission is to be the catalyst for dialogues and thoughts that transcend boundaries, thereby carrying the message of visionaries busy making an impact on the world. This is our commitment; this is our mission.",
+            value_heading: "Our Values",
+            value_subtext: "We combine Curiosity for diverse narratives, Benevolence for robust support, and unwavering Integrity in all our partnerships.",
+            value_1_title: "Benevolence",
+            value_1_description: "Because it embodies our deep commitment to the well-being, growth, and success of our talent. We firmly believe that for our representatives to shine fully, they need constant moral support, attentive listening, and a kind approach. Benevolence allows us to establish authentic relationships with our talent, to understand their needs and challenges, and to support them positively at every stage of their journey. By fostering an environment where benevolence prevails, we help our talent develop their self-confidence, overcome obstacles, and realize their potential.",
+            value_2_title: "Integrity",
+            value_2_description: "Because it is at the heart of our commitment to our talent, clients, and partners. It represents our pledge to act honestly, transparently, and ethically in all our interactions. Integrity guides us in the fair management of contracts, in respecting the rights of our talent, and in preserving their reputation and image. By placing integrity at the forefront of our actions, we establish a solid foundation of trust and mutual respect, which strengthens the credibility of our agency and the satisfaction of our talent and clients.",
+            value_3_title: "Curiosity",
+            value_3_description: "Because it embodies our deep commitment to continuous learning, open-mindedness, and the discovery of the many facets of cultural diversity in Canada. We firmly believe that for our representatives to shine fully, it is essential to explore new horizons, understand multiple experiences, and grasp diverse life stories. Curiosity drives us to ask questions, challenge stereotypes, learn constantly, and expand our horizons, thus contributing to authentic and inclusive representation.",
+            services_heading: "Agency Expertise",
+            services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
+            service_1_title: "Exclusive Speaker Access",
+            service_1_description: "Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.",
+            service_2_title: "Content Alignment & Strategy",
+            service_2_description: "Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.",
+            service_3_title: "On-Site Logistics Support",
+            service_3_description: "Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.",
+            contact_heading: "CONNECT",
+            contact_tagline: "Initiate a conversation with our team to find the ideal voice for your next defining moment.",
+            form_name: "Your Name",
+            form_email: "Your Email",
+            form_event: "Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)",
+            form_details: "Tell us about your audience, event date, and budget range...",
+            form_submit: "SUBMIT INQUIRY",
+            contact_response_time: "A consultant will be in touch within 24 hours.",
+            ctaTitle: "Ready to Book a Speaker?",
+            ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
+            ctaButton: "Contact Us"
+        },
+        fr: {
+            siteName: "FACETTES",
+            navSpeakers: "Conférenciers",
+            navAbout: "À propos",
+            navContact: "Contact",
+            heroTitle: "Là où les Idées Audacieuses Rencontrent la Portée Mondiale",
+            heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
+            vision_heading: "Notre Vision",
+            vision_subtext1: "Facettes transcende la simple représentation de conférencier·ère·s ; elle s'engage à offrir des conversations qui vont au-delà de la réflexion conventionnelle. Nous aspirons à stimuler la pensée et à ouvrir des portes vers de nouvelles idées et horizons, transformant ainsi chaque événement en une expérience intellectuelle captivante.",
+            vision_subtext2: "Nous sommes fièr·e·s de représenter des expert·e·s aux parcours exceptionnels, débordant·e·s d'approches inédites et innovantes. Leurs discours ne se contentent pas de refléter leurs expertises, mais iels façonnent de nouvelles perspectives et inspirent des changements concrets.",
+            vision_subtext3: "Chez Facettes, nous sommes les ambassadeur·rice·s des 'change makers' qui, trop occupé·e·s à impacter leur environnement, méritent d'avoir leur vision et leurs réflexions partagées. Notre mission va au-delà de la présentation traditionnelle ; elle est un engagement envers l'amplification des voix influentes qui façonnent le monde qui les entoure.",
+            vision_subtext4: "En somme, la mission de Facettes est d'être le catalyseur de dialogues et de pensées qui transcendent les limites, portant ainsi la parole des visionnaires occupé·e·s à impacter le monde. Ceci est notre engagement, ceci est notre mission.",
+            value_heading: "Nos Valeurs",
+            value_subtext: "Nous combinons la Curiosité pour des récits diversifiés, la Bienveillance pour un soutien solide, et une Intégrité inébranlable dans tous nos partenariats.",
+            value_1_title: "Bienveillance",
+            value_1_description: "Parce qu'elle incarne notre engagement profond envers le bien-être, la croissance et le succès de nos talents. Nous croyons fermement que pour que nos représentant·e·s brillent pleinement, iels ont besoin d'un soutien moral constant, d'une écoute attentive et d'une approche bienveillante. La bienveillance nous permet d'établir des relations authentiques avec nos talents, de comprendre leurs besoins et défis, et de les accompagner positivement à chaque étape de leur parcours. En favorisant un environnement où la bienveillance prévaut, nous aidons nos talents à développer leur confiance en soi, à surmonter les obstacles et à réaliser leur potentiel.",
+            value_2_title: "Intégrité",
+            value_2_description: "Parce qu'elle est au cœur de notre engagement envers nos talents, clients et partenaires. Elle représente notre promesse d'agir avec honnêteté, transparence et éthique dans toutes nos interactions. L'intégrité nous guide dans la gestion équitable des contrats, le respect des droits de nos talents, et la préservation de leur réputation et image. En plaçant l'intégrité au premier plan de nos actions, nous établissons une base solide de confiance et de respect mutuel, renforçant ainsi la crédibilité de notre agence et la satisfaction de nos talents et clients.",
+            value_3_title: "Curiosité",
+            value_3_description: "Parce qu'elle incarne notre engagement profond envers l'apprentissage continu, l'ouverture d'esprit, et la découverte des multiples facettes de la diversité culturelle au Canada. Nous croyons fermement que pour que nos représentant·e·s brillent pleinement, il est essentiel d'explorer de nouveaux horizons, de comprendre des expériences multiples, et de saisir des récits de vie diversifiés. La curiosité nous pousse à poser des questions, à défier les stéréotypes, à apprendre constamment, et à élargir nos horizons, contribuant ainsi à une représentation authentique et inclusive.",
+            services_heading: "Services Événementiels Complets",
+            services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
+            service_1_title: "Accès Exclusif aux Conférenciers",
+            service_1_description: "Accès direct à une liste organisée de leaders mondiaux. Nous gérons les négociations et la logistique du début à la fin.",
+            service_2_title: "Alignement et Stratégie de Contenu",
+            service_2_description: "Consultation stratégique pour faire correspondre les conférenciers à votre public et à vos objectifs pour une résonance maximale du message, assurant l'adéquation culturelle.",
+            service_3_title: "Soutien Logistique sur Place",
+            service_3_description: "Support complet incluant les fiches techniques, la coordination des voyages, la gestion de la liaison sur site et les cycles de feedback post-événement.",
+            contact_heading: "CONNECTER",
+            contact_tagline: "Parlez-nous de votre événement, de votre public et de vos objectifs, et l'équipe Facettes trouvera la voix parfaite.",
+            form_name: "Votre Nom",
+            form_email: "Votre Email",
+            form_event: "Type d'Événement / Thème (ex : Session Stratégique T3 sur l'IA)",
+            form_details: "Parlez-nous de votre public, de la date de l'événement et de la fourchette budgétaire...",
+            form_submit: "SOUMETTRE LA DEMANDE",
+            contact_response_time: "Un consultant vous contactera dans les 24 heures.",
+            ctaTitle: "Prêt à Réserver un Conférencier?",
+            ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
+            ctaButton: "Nous Contacter"
         }
+    };
 
+    let currentLang = localStorage.getItem('language') || 'en';
+
+    // Language switching
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('language', lang);
+        document.documentElement.lang = lang;
+        
+        // Update language buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+        
+        // Update all translatable elements
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.dataset.i18n;
+            if (translations[lang][key]) {
+                element.textContent = translations[lang][key];
+            }
+        });
+        
+        // Update placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.dataset.i18nPlaceholder;
+            if (translations[lang][key]) {
+                element.placeholder = translations[lang][key];
+            }
+        });
+    }
+
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) {
+            mobileMenu.classList.toggle('hidden');
+            console.log('Mobile menu toggled');
+        }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded - initializing...');
+        
+        // Set initial language
+        setLanguage(currentLang);
+        
         // Language button listeners
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
-        });
-
-        // Fetch speakers from API
-        async function loadSpeakers() {
-            try {
-                const response = await fetch('/api/speakers');
-                speakers = await response.json();
-                generateFilterButtons();
-                renderSpeakers();
-                document.getElementById('loading').style.display = 'none';
-            } catch (error) {
-                console.error('Error loading speakers:', error);
-                const errorMsg = currentLang === 'fr' 
-                    ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page</p>'
-                    : '<h3>Error loading speakers</h3><p>Please refresh the page</p>';
-                document.getElementById('loading').innerHTML = errorMsg;
-            }
-        }
-
-        // Generate filter buttons dynamically
-        function generateFilterButtons() {
-            const allTopics = new Set();
-            speakers.forEach(speaker => {
-                const topics = currentLang === 'fr' && speaker.topics_fr 
-                    ? speaker.topics_fr 
-                    : speaker.topics;
-                topics.forEach(topic => allTopics.add(topic));
+            btn.addEventListener('click', () => {
+                console.log('Language button clicked:', btn.dataset.lang);
+                setLanguage(btn.dataset.lang);
             });
-
-            const filterButtons = document.getElementById('filterButtons');
-            const sortedTopics = Array.from(allTopics).sort();
-            
-            filterButtons.innerHTML = `
-                <button class="filter-btn active" data-category="all">${translations[currentLang].filterAll}</button>
-                ${sortedTopics.map(topic => 
-                    `<button class="filter-btn" data-category="${topic}">${topic}</button>`
-                ).join('')}
-            `;
+        });
+        
+        // Mobile menu button listener
+        const mobileMenuBtn = document.getElementById('mobile-menu-button');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            console.log('Mobile menu button listener attached');
+        } else {
+            console.error('Mobile menu button not found!');
         }
-
-        function renderSpeakers() {
-            const grid = document.getElementById('speakersGrid');
-            const noResults = document.getElementById('noResults');
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            
-            const filtered = speakers.filter(speaker => {
-                const topics = currentLang === 'fr' && speaker.topics_fr 
-                    ? speaker.topics_fr 
-                    : speaker.topics;
-                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
-                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
-                
-                const matchesFilter = currentFilter === 'all' || topics.includes(currentFilter);
-                const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                    title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                    topics.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
-                return matchesFilter && matchesSearch;
+        
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
             });
-
-            if (filtered.length === 0) {
-                grid.style.display = 'none';
-                noResults.style.display = 'block';
-                loadMoreContainer.style.display = 'none';
-                return;
-            }
-
-            grid.style.display = 'grid';
-            noResults.style.display = 'none';
-
-            // Show only up to displayedCount speakers
-            const speakersToShow = filtered.slice(0, displayedCount);
-
-            grid.innerHTML = speakersToShow.map((speaker, index) => {
-                const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
-                    ? `<img src="${speaker.image}" alt="${speaker.name}">`
-                    : speaker.image || '👤';
-                
-                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
-                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
-                const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
-
-                // Assign subtle parallax speed factors (0.05 to 0.15) based on the column index.
-                const columnIndex = (index % 4) + 1;
-                const parallaxSpeed = 
-                    columnIndex === 1 ? 0: 
-                    columnIndex === 2 ? 0 : 
-                    columnIndex === 3 ? 0 : 
-                    0; // Column 4 has 0 speed (no parallax)
-                
-                return `
-                    <div class="speaker-card" data-parallax-speed="${parallaxSpeed}" onclick="openModal(${speakers.indexOf(speaker)})">
-                        <div class="speaker-image-container">
-                            <div class="speaker-image-bg">${imageContent}</div>
-                        </div>
-                        <div class="speaker-info">
-                            <div class="speaker-name">${name}</div>
-                            <div class="speaker-details">
-                                <div class="speaker-title">${title}</div>
-                                <div class="speaker-topics">
-                                    ${topics.slice(0, 3).map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            // Add data attribute for centering few speakers
-            grid.setAttribute('data-count', speakersToShow.length);
-
-            // Show/hide load more button
-            if (filtered.length > displayedCount) {
-                loadMoreContainer.style.display = 'block';
-            } else {
-                loadMoreContainer.style.display = 'none';
-            }
-
-            // Initialize parallax effect after rendering
-           // initParallax();
-        }
-
-        function loadMoreSpeakers() {
-            displayedCount += speakersPerLoad;
-            renderSpeakers();
-        }
-
-        // Parallax scrolling effect
-        let parallaxEnabled = false;
-
-        function initParallax() {
-            // Cards and container are scoped to this function
-            const cards = document.querySelectorAll('.speaker-card');
-            const speakersContainer = document.getElementById('speakers');
-            
-            if (cards.length === 0) {
-                parallaxEnabled = false;
-                return;
-            }
-
-            console.log(`Initializing parallax for ${cards.length} cards`);
-            parallaxEnabled = true;
-           
-            
-            function updateParallax() {
-                if (!parallaxEnabled) return;
-                
-                const containerRect = speakersContainer.getBoundingClientRect();
-                
-                // --- FIX: Check if the container is currently within the viewport ---
-                // containerRect.top < window.innerHeight: top edge is above the bottom of the viewport
-                // containerRect.bottom > 0: bottom edge is below the top of the viewport
-                if (containerRect.top < window.innerHeight && containerRect.bottom > 0) {
-                    
-                    // Calculate the scroll distance of the container up the screen from its starting point.
-                    // This value is 0 when the container top is at the viewport top, and increases as we scroll down (containerRect.top becomes negative).
-                    const relativeScroll = -containerRect.top;
-                
-                cards.forEach((card) => {
-                        const speed = parseFloat(card.dataset.parallaxSpeed);
-                        if (speed === 0) return;
-                        
-                        // Calculate the offset. A positive offset makes the card move down relative
-                        // to the page's scroll, causing it to scroll slower (lag effect).
-                        const offset = relativeScroll * speed;
-                        
-                        // Apply transform
-                        card.style.transform = `translateY(${offset}px)`;
-                    });
-                } else {
-                    // Reset transform when the container is fully out of the viewport 
-                    // to prevent transform offsets from stacking and causing issues.
-                    cards.forEach((card) => {
-                        card.style.transform = `translateY(0px)`;
-                    });
-                }
-            }
-
-            // Use scroll event with requestAnimationFrame
-            let ticking = false;
-            
-            function onScroll() {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        updateParallax();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }
-            
-            window.addEventListener('scroll', onScroll, { passive: true });
-            
-            // Initial call
-            setTimeout(() => {
-                updateParallax();
-            }, 100);
-        }
-
-
-
-        function openModal(index) {
-            const speaker = speakers[index];
-            const modal = document.getElementById('modal');
-            const modalBody = document.getElementById('modalBody');
-
-            const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
-                ? `<img src="${speaker.image}" alt="${speaker.name}">`
-                : speaker.image || '👤';
-
-            const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
-            const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
-            const bio = currentLang === 'fr' && speaker.bio_fr ? speaker.bio_fr : speaker.bio;
-            const keyTopics = currentLang === 'fr' && speaker.keyTopics_fr ? speaker.keyTopics_fr : speaker.keyTopics;
-            const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
-
-            modalBody.innerHTML = `
-                <div class="modal-image">${imageContent}</div>
-                <div class="modal-info">
-                    <h2 class="modal-name">${name}</h2>
-                    <p class="modal-title">${title}</p>
-                    <div class="modal-bio">${bio}</div>
-                    ${keyTopics && keyTopics.length > 0 ? `
-                        <div class="modal-section">
-                            <h3>${translations[currentLang].keyTopicsTitle}</h3>
-                            <ul>
-                                ${keyTopics.map(topic => `<li>${topic}</li>`).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    <div class="speaker-topics">
-                        ${topics.map(topic => `<span class="topic-tag" style="background: var(--grey); color: var(--dark-grey);">${topic}</span>`).join('')}
-                    </div>
-                    <div style="margin-top: 2rem;">
-                        <button class="contact-btn" onclick="alert('${translations[currentLang].bookMessage}')">${translations[currentLang].bookButton}</button>
-                    </div>
-                </div>
-            `;
-
-            modal.classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') closeModal();
         });
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            searchTerm = e.target.value;
-            displayedCount = 8; // Reset to initial count when searching
-            renderSpeakers();
-        });
-
-        document.getElementById('filterButtons').addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-btn')) {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                currentFilter = e.target.dataset.category;
-                displayedCount = 8; // Reset to initial count when filtering
-                renderSpeakers();
-            }
-        });
-
-   
-
-
-    
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
-
-        // Disable parallax on mobile for better performance
-        const isMobile = window.innerWidth < 768;
         
-        console.log('Page loaded, mobile:', isMobile);
-        
-        if (isMobile) {
-            window.initParallax = () => {
-                console.log('Parallax disabled on mobile');
-            };
-        }
-
-        // Initialize
-        setLanguage(currentLang);
-        loadSpeakers();
-
-        // UI Listeners
-        document.getElementById('mobile-menu-button').addEventListener('click', toggleMobileMenu);
-        document.getElementById('lang-toggle').addEventListener('click', toggleLang);
-        document.getElementById('lang-toggle-mobile').addEventListener('click', toggleLang);
-
-        
-    </script>
+        console.log('Initialization complete');
+    });
+</script>
 </body>
 </html>
