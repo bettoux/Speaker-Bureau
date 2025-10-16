@@ -1,0 +1,758 @@
+// Save all content to localStorage
+        function saveContent() {
+            saveCurrentLanguageData();
+            
+            // Save content to localStorage
+            localStorage.setItem('facettesContent', JSON.stringify(contentData));
+            
+            // Save speakers to localStorage
+            localStorage.setItem('facettesSpeakers', JSON.stringify(speakersData));
+            
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.remove('hidden');
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 3000);
+            
+            console.log('Content and speakers saved to localStorage');
+        }
+
+        // Export content as JSON file
+        function exportContent() {
+            saveCurrentLanguageData();
+            
+            const exportData = {
+                content: contentData,
+                speakers: speakersData
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'facettes-full-backup.json';
+            link.click();
+        }
+
+        // Render speakers list
+        function renderSpeakersList() {
+            const container = document.getElementById('speakersList');
+            
+            if (speakersData.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-8">No speakers yet. Click "Add New Speaker" to get started.</p>';
+                return;
+            }
+            
+            container.innerHTML = speakersData.map((speaker, index) => `
+                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition speaker-item" data-index="${index}">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800">${speaker.name || 'Unnamed Speaker'}</h3>
+                            <p class="text-sm text-gray-600">${speaker.title || 'No title'}</p>
+                            <div class="mt-2 flex flex-wrap gap-2">
+                                ${(speaker.topics || []).slice(0, 3).map(topic => 
+                                    `<span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">${topic}</span>`
+                                ).join('')}
+                                ${(speaker.topics || []).length > 3 ? `<span class="text-xs text-gray-500">+${speaker.topics.length - 3} more</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editSpeaker(${index})" class="text-blue-600 hover:text-blue-800 p-2 rounded hover:bg-blue-50 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="deleteSpeaker(${index})" class="text-red-600 hover:text-red-800 p-2 rounded hover:bg-red-50 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter speakers
+        function filterSpeakers() {
+            const searchTerm = document.getElementById('speakerSearch').value.toLowerCase();
+            const items = document.querySelectorAll('.speaker-item');
+            
+            items.forEach((item, index) => {
+                const speaker = speakersData[index];
+                const matchesSearch = 
+                    (speaker.name || '').toLowerCase().includes(searchTerm) ||
+                    (speaker.title || '').toLowerCase().includes(searchTerm) ||
+                    (speaker.topics || []).some(t => t.toLowerCase().includes(searchTerm));
+                
+                item.style.display = matchesSearch ? 'block' : 'none';
+            });
+        }
+
+        // Add new speaker
+        function addNewSpeaker() {
+            const newSpeaker = {
+                name: '',
+                name_fr: '',
+                title: '',
+                title_fr: '',
+                bio: '',
+                bio_fr: '',
+                topics: [],
+                topics_fr: [],
+                keyTopics: [],
+                keyTopics_fr: [],
+                image: ''
+            };
+            
+            speakersData.push(newSpeaker);
+            editSpeaker(speakersData.length - 1);
+        }
+
+        // Edit speaker
+        function editSpeaker(index) {
+            const speaker = speakersData[index];
+            
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                    <div class="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Edit Speaker</h2>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="p-6 space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Name (English)</label>
+                                <input type="text" id="speaker-name" value="${speaker.name || ''}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nom (Français)</label>
+                                <input type="text" id="speaker-name-fr" value="${speaker.name_fr || ''}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Title (English)</label>
+                                <input type="text" id="speaker-title" value="${speaker.title || ''}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Titre (Français)</label>
+                                <input type="text" id="speaker-title-fr" value="${speaker.title_fr || ''}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Bio (English)</label>
+                                <textarea id="speaker-bio" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">${speaker.bio || ''}</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Bio (Français)</label>
+                                <textarea id="speaker-bio-fr" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">${speaker.bio_fr || ''}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Topics (English, comma-separated)</label>
+                                <input type="text" id="speaker-topics" value="${(speaker.topics || []).join(', ')}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Leadership, Innovation, Technology">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Sujets (Français, séparés par virgules)</label>
+                                <input type="text" id="speaker-topics-fr" value="${(speaker.topics_fr || []).join(', ')}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Leadership, Innovation, Technologie">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Key Topics (English, comma-separated)</label>
+                                <textarea id="speaker-key-topics" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Digital Transformation, AI Strategy">${(speaker.keyTopics || []).join(', ')}</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Sujets Clés (Français, séparés par virgules)</label>
+                                <textarea id="speaker-key-topics-fr" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Transformation Numérique, Stratégie IA">${(speaker.keyTopics_fr || []).join(', ')}</textarea>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Image URL or Emoji</label>
+                            <input type="text" id="speaker-image" value="${speaker.image || ''}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="/uploads/speaker.jpg or 👤">
+                            <p class="text-xs text-gray-500 mt-1">Enter a URL to an image or use an emoji</p>
+                        </div>
+                    </div>
+
+                    <div class="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-6 flex justify-end space-x-3">
+                        <button onclick="this.closest('.fixed').remove()" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                            Cancel
+                        </button>
+                        <button onclick="saveSpeaker(${index})" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                            Save Speaker
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Save speaker
+        function saveSpeaker(index) {
+            speakersData[index] = {
+                name: document.getElementById('speaker-name').value,
+                name_fr: document.getElementById('speaker-name-fr').value,
+                title: document.getElementById('speaker-title').value,
+                title_fr: document.getElementById('speaker-title-fr').value,
+                bio: document.getElementById('speaker-bio').value,
+                bio_fr: document.getElementById('speaker-bio-fr').value,
+                topics: document.getElementById('speaker-topics').value.split(',').map(t => t.trim()).filter(t => t),
+                topics_fr: document.getElementById('speaker-topics-fr').value.split(',').map(t => t.trim()).filter(t => t),
+                keyTopics: document.getElementById('speaker-key-topics').value.split(',').map(t => t.trim()).filter(t => t),
+                keyTopics_fr: document.getElementById('speaker-key-topics-fr').value.split(',').map(t => t.trim()).filter(t => t),
+                image: document.getElementById('speaker-image').value
+            };
+            
+            renderSpeakersList();
+            document.querySelector('.fixed').remove();
+            
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.remove('hidden');
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 2000);
+        }
+
+        // Delete speaker
+        function deleteSpeaker(index) {
+            if (confirm('Are you sure you want to delete this speaker?')) {
+                speakersData.splice(index, 1);
+                renderSpeakersList();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadContent);
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facettes Content Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .section-card {
+            transition: all 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .success-message {
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    
+    <!-- Success Message -->
+    <div id="successMessage" class="hidden fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 success-message">
+        <div class="flex items-center space-x-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span class="font-semibold">Changes saved successfully!</span>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg shadow-lg p-8 mb-8">
+            <h1 class="text-4xl font-black mb-2">Facettes Content Manager</h1>
+            <p class="text-purple-200">Edit your speaker bureau website content in English and French</p>
+        </div>
+
+        <!-- Language Tabs -->
+        <div class="flex space-x-4 mb-6">
+            <button onclick="switchLanguage('en')" id="tab-en" class="px-6 py-3 rounded-lg font-bold transition bg-purple-600 text-white shadow-lg">
+                English 🇬🇧
+            </button>
+            <button onclick="switchLanguage('fr')" id="tab-fr" class="px-6 py-3 rounded-lg font-bold transition bg-gray-300 text-gray-700 hover:bg-gray-400">
+                Français 🇫🇷
+            </button>
+        </div>
+
+        <!-- Navigation Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">🧭 Navigation</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Site Name</label>
+                    <input type="text" data-field="siteName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Speakers Link</label>
+                    <input type="text" data-field="navSpeakers" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">About Link</label>
+                    <input type="text" data-field="navAbout" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Contact Link</label>
+                    <input type="text" data-field="navContact" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">🚀 Hero Section</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Main Title</label>
+                    <textarea data-field="heroTitle" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Subtitle</label>
+                    <textarea data-field="heroSubtitle" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">🔍 Search & Filters</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Search Placeholder</label>
+                    <input type="text" data-field="searchPlaceholder" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">"All" Filter Button</label>
+                    <input type="text" data-field="filterAll" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Loading Message</label>
+                    <input type="text" data-field="loading" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Load More Button</label>
+                    <input type="text" data-field="loadMore" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">❌ No Results Messages</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">No Results Title</label>
+                    <input type="text" data-field="noResultsTitle" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">No Results Text</label>
+                    <input type="text" data-field="noResultsText" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- Speaker Modal Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">👤 Speaker Modal</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Key Topics Title</label>
+                    <input type="text" data-field="keyTopicsTitle" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Book Button Text</label>
+                    <input type="text" data-field="bookButton" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Book Message Alert</label>
+                    <input type="text" data-field="bookMessage" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">💼 Services Section</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Section Heading</label>
+                    <input type="text" data-field="services_heading" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Section Subtext</label>
+                    <input type="text" data-field="services_subtext" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+
+                <!-- Service 1 -->
+                <div class="bg-purple-50 border-l-4 border-purple-400 p-4 rounded mt-4">
+                    <h3 class="font-bold text-lg text-purple-800 mb-3">Service 1</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                            <input type="text" data-field="service_1_title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                            <textarea data-field="service_1_description" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+                    <h3 class="font-bold text-lg text-blue-800 mb-3">Service 2</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                            <input type="text" data-field="service_2_title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                            <textarea data-field="service_2_description" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded">
+                    <h3 class="font-bold text-lg text-green-800 mb-3">Service 3</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                            <input type="text" data-field="service_3_title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                            <textarea data-field="service_3_description" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">📧 Contact Section</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Contact Heading</label>
+                    <input type="text" data-field="contact_heading" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Contact Tagline</label>
+                    <textarea data-field="contact_tagline" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Form: Name Field</label>
+                    <input type="text" data-field="form_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Form: Email Field</label>
+                    <input type="text" data-field="form_email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Form: Event Field</label>
+                    <input type="text" data-field="form_event" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Form: Details Field</label>
+                    <input type="text" data-field="form_details" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Form: Submit Button</label>
+                    <input type="text" data-field="form_submit" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Response Time Message</label>
+                    <input type="text" data-field="contact_response_time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">📣 Call to Action Section</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">CTA Title</label>
+                    <input type="text" data-field="ctaTitle" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">CTA Text</label>
+                    <textarea data-field="ctaText" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">CTA Button</label>
+                    <input type="text" data-field="ctaButton" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-600 pb-2">📄 Footer</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Copyright Text</label>
+                    <input type="text" data-field="footerCopyright" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Contact Info</label>
+                    <input type="text" data-field="footerContact" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            </div>
+        </div>
+
+        <!-- Speakers Management Section -->
+        <div class="section-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex justify-between items-center mb-4 border-b-2 border-purple-600 pb-2">
+                <h2 class="text-2xl font-bold text-gray-800">👥 Manage Speakers</h2>
+                <button onclick="addNewSpeaker()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition flex items-center space-x-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    <span>Add New Speaker</span>
+                </button>
+            </div>
+            
+            <div class="mb-4">
+                <input type="text" id="speakerSearch" onkeyup="filterSpeakers()" placeholder="Search speakers by name..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            </div>
+
+            <div id="speakersList" class="space-y-4">
+                <!-- Speakers will be dynamically loaded here -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 sticky bottom-4">
+            <button onclick="saveContent()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg shadow-xl transition transform hover:scale-105 flex items-center justify-center space-x-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                </svg>
+                <span>Save All Changes</span>
+            </button>
+            <button onclick="exportContent()" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg shadow-xl transition transform hover:scale-105 flex items-center justify-center space-x-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span>Download Backup</span>
+            </button>
+            <a href="index.html" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg shadow-xl transition transform hover:scale-105 flex items-center justify-center space-x-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <span>Preview Site</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Content structure matching your index.html translations
+        const contentData = {
+            en: {
+                siteName: "FACETTES",
+                navSpeakers: "Speakers",
+                navAbout: "About",
+                navContact: "Contact",
+                heroTitle: "Where Bold Ideas Meet Global Reach",
+                heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
+                searchPlaceholder: "Search speakers...",
+                filterAll: "All",
+                loading: "Loading speakers...",
+                noResultsTitle: "No speakers found",
+                noResultsText: "Try adjusting your search or filters",
+                keyTopicsTitle: "Key Speaking Topics",
+                bookButton: "Book This Speaker",
+                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
+                services_heading: "Agency Expertise",
+                services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
+                service_1_title: "Exclusive Speaker Access",
+                service_1_description: "Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.",
+                service_2_title: "Content Alignment & Strategy",
+                service_2_description: "Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.",
+                service_3_title: "On-Site Logistics Support",
+                service_3_description: "Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.",
+                contact_heading: "CONNECT",
+                contact_tagline: "Initiate a conversation with our team to find the ideal voice for your next defining moment.",
+                form_name: "Your Name",
+                form_email: "Your Email",
+                form_event: "Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)",
+                form_details: "Tell us about your audience, event date, and budget range...",
+                form_submit: "SUBMIT INQUIRY",
+                contact_response_time: "A consultant will be in touch within 24 hours.",
+                footerCopyright: "© 2025 Speaker Bureau. All rights reserved.",
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
+                loadMore: "Load More Speakers",
+                ctaTitle: "Ready to Book a Speaker?",
+                ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
+                ctaButton: "Contact Us"
+            },
+            fr: {
+                siteName: "FACETTES",
+                navSpeakers: "Conférenciers",
+                navAbout: "À propos",
+                navContact: "Contact",
+                heroTitle: "Là où les Idées Audacieuses Rencontrent la Portée Mondiale",
+                heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
+                searchPlaceholder: "Rechercher des conférenciers...",
+                filterAll: "Tous",
+                loading: "Chargement des conférenciers...",
+                loadMore: "Charger Plus de Conférenciers",
+                noResultsTitle: "Aucun conférencier trouvé",
+                noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
+                keyTopicsTitle: "Sujets de Conférence Principaux",
+                bookButton: "Réserver ce Conférencier",
+                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
+                services_heading: "Services Événementiels Complets",
+                services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
+                service_1_title: "Accès Exclusif aux Conférenciers",
+                service_1_description: "Accès direct à une liste organisée de leaders mondiaux. Nous gérons les négociations et la logistique du début à la fin.",
+                service_2_title: "Alignement et Stratégie de Contenu",
+                service_2_description: "Consultation stratégique pour faire correspondre les conférenciers à votre public et à vos objectifs pour une résonance maximale du message, assurant l'adéquation culturelle.",
+                service_3_title: "Soutien Logistique sur Place",
+                service_3_description: "Support complet incluant les fiches techniques, la coordination des voyages, la gestion de la liaison sur site et les cycles de feedback post-événement.",
+                contact_heading: "Prêt à Réserver un Conférencier ?",
+                contact_tagline: "Parlez-nous de votre événement, de votre public et de vos objectifs, et l'équipe Facettes trouvera la voix parfaite.",
+                form_name: "Votre Nom",
+                form_email: "Votre Email",
+                form_event: "Type d'Événement / Thème (ex : Session Stratégique T3 sur l'IA)",
+                form_details: "Parlez-nous de votre public, de la date de l'événement et de la fourchette budgétaire...",
+                form_submit: "SOUMETTRE LA DEMANDE",
+                contact_response_time: "Un consultant vous contactera dans les 24 heures.",
+                footerCopyright: "© 2025 Bureau de Conférenciers. Tous droits réservés.",
+                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
+                ctaTitle: "Prêt à Réserver un Conférencier?",
+                ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
+                ctaButton: "Nous Contacter"
+            }
+        };
+
+        // Speakers data
+        let speakersData = [];
+
+        let currentLang = 'en';
+
+        // Load saved content from localStorage on page load
+        function loadContent() {
+            const savedContent = localStorage.getItem('facettesContent');
+            if (savedContent) {
+                const parsed = JSON.parse(savedContent);
+                contentData.en = parsed.en;
+                contentData.fr = parsed.fr;
+            }
+            
+            // Load speakers data
+            const savedSpeakers = localStorage.getItem('facettesSpeakers');
+            if (savedSpeakers) {
+                speakersData = JSON.parse(savedSpeakers);
+            }
+            
+            populateFields();
+            renderSpeakersList();
+        }
+
+        // Populate form fields with current language data
+        function populateFields() {
+            const data = contentData[currentLang];
+            document.querySelectorAll('[data-field]').forEach(field => {
+                const key = field.getAttribute('data-field');
+                if (data[key] !== undefined) {
+                    field.value = data[key];
+                }
+            });
+        }
+
+        // Switch between languages
+        function switchLanguage(lang) {
+            // Save current language data before switching
+            saveCurrentLanguageData();
+            
+            currentLang = lang;
+            
+            // Update tab styles
+            document.getElementById('tab-en').className = lang === 'en' 
+                ? 'px-6 py-3 rounded-lg font-bold transition bg-purple-600 text-white shadow-lg'
+                : 'px-6 py-3 rounded-lg font-bold transition bg-gray-300 text-gray-700 hover:bg-gray-400';
+            
+            document.getElementById('tab-fr').className = lang === 'fr'
+                ? 'px-6 py-3 rounded-lg font-bold transition bg-purple-600 text-white shadow-lg'
+                : 'px-6 py-3 rounded-lg font-bold transition bg-gray-300 text-gray-700 hover:bg-gray-400';
+            
+            populateFields();
+        }
+
+        // Save current form data to contentData object
+        function saveCurrentLanguageData() {
+            document.querySelectorAll('[data-field]').forEach(field => {
+                const key = field.getAttribute('data-field');
+                contentData[currentLang][key] = field.value;
+            });
+        }
+
+        // Save all content to localStorage
+        function saveContent() {
+            saveCurrentLanguageData();
+            
+            // Save to localStorage
+            localStorage.setItem('facettesContent', JSON.stringify(contentData));
+            
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.remove('hidden');
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 3000);
+            
+            console.log('Content saved to localStorage');
+        }
+
+        // Export content as JSON file
+        function exportContent() {
+            saveCurrentLanguageData();
+            
+            const dataStr = JSON.stringify(contentData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'facettes-content-backup.json';
+            link.click();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadContent);
+    </script>
+
+</body>
+</html>
