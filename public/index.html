@@ -3,1729 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speaker Bureau</title>
-
-    <!-- Load Tailwind CSS -->
+    <title>Passerelles | The Intersection of Art and Sport</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configure Tailwind with the new, bright color scheme (V5) -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'bg-main': '#FFFFFF',      // White (Primary background for brightness)
-                        'bg-section': '#eeeeee', //'#0A0A0A',   // Near Black (Contrast for forms/highlights)
-                        'text-dark': '#000000',    // Black text on light backgrounds
-                        'text-light': '#FFFFFF',   // White text on dark backgrounds
-                        'text-detail': '#555555',  // Subtle Grey for secondary text on light background
-                        'accent-purple': '#7877E6', // Primary Purple
-                        'accent-hover-purple': '#5C5BCC', // Slightly darker purple for hover
+                        'primary-deep': '#31005A',
+                        'accent-mustard': '#FFC82D',
+                        'primary-dark-bg': '#0A0A0A',
+                        'text-light': '#F3F4F6',
+                        'subtle-gray': '#D1D5DB',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
                 }
             }
         }
     </script>
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        html { scroll-behavior: smooth; }
 
-        :root {
-            --white: #FFFFFF;
-            --grey: #F4F4F3;
-            --purple: #7877E6;
-            --dark-grey: #4F4F4F;
-            --black: #000000;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: var(--black);
-            line-height: 1.6;
-            background: var(--white);
-        }
-
-        header {
-            background: var(--white);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--grey);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--black);
-            text-decoration: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        nav {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: var(--dark-grey);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            white-space: nowrap;
-        }
-
-        nav a:hover {
-            color: var(--purple);
-        }
-
-        .language-switcher {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .lang-btn {
-            background: none;
-            border: 2px solid var(--grey);
-            color: var(--dark-grey);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-
-        .lang-btn:hover {
-            border-color: var(--purple);
-            color: var(--purple);
-        }
-
-        .lang-btn.active {
-            background: var(--purple);
-            border-color: var(--purple);
-            color: var(--white);
-        }
-
-        .hero {
-            background: var(--grey);
-            padding: 4rem 2rem 3rem;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: var(--dark-grey);
-            margin-bottom: 2rem;
-        }
-
-        .controls {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 1rem 1rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-            scroll-margin-top: 100px;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--grey);
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--purple);
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid var(--grey);
-            background: var(--white);
-            color: var(--dark-grey);
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .filter-btn:hover {
-            border-color: var(--purple);
-            color: var(--purple);
-        }
-
-        .filter-btn.active {
-            background: var(--purple);
-            border-color: var(--purple);
-            color: var(--white);
-        }
-
-        .speakers-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 1rem;
-            overflow: visible;
-            min-height: 60vh;
-        }
-
-        .speakers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-            align-items: start;
-            position: relative;
-            justify-content: center;
-        }
-
-         /* Center grid when few speakers */
-        @media (min-width: 1200px) {
-            .speakers-grid[data-count="1"],
-            .speakers-grid[data-count="2"],
-            .speakers-grid[data-count="3"],
-            .speakers-grid[data-count="4"] {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-                max-width: 1400px;
-            }
-        }
-
-        .speaker-card {
-            position: relative;
-            aspect-ratio: 4/5;
-            overflow: hidden;
-            cursor: pointer;
-            background: var(--grey);
+        .animated-item {
             opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
-            will-change: transform;
-            border-radius: 24px;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-
-        .speaker-image-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .speaker-image-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 30%, transparent 50%);
-            opacity: 1;
-            transition: opacity 0.4s ease;
-        }
-
-        .speaker-card:hover {
-            z-index: 10;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Staggered vertical offset for columns - creates the misaligned effect */
-        .speaker-card:nth-child(4n+1) {
-            margin-top: 0;
-        }
-
-        .speaker-card:nth-child(4n+2) {
-            margin-top: 1.5rem;
-        }
-
-        .speaker-card:nth-child(4n+3) {
-            margin-top: 3rem;
-        }
-
-        .speaker-card:nth-child(4n+4) {
-            margin-top: 0.75rem;
-        }
-
-        .speaker-card:hover .speaker-image-container::after {
-            opacity: 1;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 70%);
-        }
-
-        /* Remove animation delays that might interfere */
-        .speaker-card:nth-child(1) { animation-delay: 0s; }
-        .speaker-card:nth-child(2) { animation-delay: 0.1s; }
-        .speaker-card:nth-child(3) { animation-delay: 0.2s; }
-        .speaker-card:nth-child(4) { animation-delay: 0.3s; }
-        .speaker-card:nth-child(5) { animation-delay: 0s; }
-        .speaker-card:nth-child(6) { animation-delay: 0.1s; }
-        .speaker-card:nth-child(7) { animation-delay: 0.2s; }
-        .speaker-card:nth-child(8) { animation-delay: 0.3s; }
-        .speaker-card:nth-child(n+9) { animation-delay: 0s; }
-
-        /*.speaker-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        }*/
-
-        .speaker-image-bg {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: var(--dark-grey);
-            transition: transform 0.6s ease;
-        }
-
-        .speaker-card:hover .speaker-image-bg {
-            transform: scale(1.05);
-        }
-
-        .speaker-image-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        /*.speaker-image {
-            width: 100%;
-            height: 300px;
-            background: var(--grey);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--dark-grey);
-            overflow: hidden;
-        }
-
-        .speaker-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }*/
-
-        .speaker-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem;
-            color: var(--white);
-            z-index: 2;
-        }
-
-        .speaker-card:hover .speaker-info {
-            transform: translateY(0);
-        }
-
-        .speaker-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
+        .animated-item.is-visible {
             opacity: 1;
             transform: translateY(0);
-            transition: all 0.4s ease;
         }
 
-        .speaker-details {
+        #hero-text {
+            line-height: 1.1;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8); 
+        }
+       
+        .pillar-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+        }
+        .pillar-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 4px #FFC82D; 
+        }
+
+        #parallax-layer {
+            transition: transform 0.1s linear;
+        }
+
+        /* Mobile Menu Styles */
+        #mobile-menu {
             max-height: 0;
             overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        #mobile-menu.open {
+            max-height: 400px;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background-color: #FFC82D;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(9px, 9px);
+        }
+
+        .hamburger.active span:nth-child(2) {
             opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
         }
 
-        .speaker-card:hover .speaker-details {
-            max-height: 200px; /* Enough to show content */
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .speaker-title {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            margin-bottom: 0.75rem;
-        }
-
-        .speaker-topics {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
-        .topic-tag {
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            overflow-y: auto;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal-content {
-            background: var(--white);
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.4s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--purple);
-            color: var(--white);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: opacity 0.3s;
-        }
-
-        .modal-close:hover {
-            opacity: 0.8;
-        }
-
-        .modal-image {
-            width: 100%;
-            height: 400px;
-            background: var(--grey);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
-            color: var(--dark-grey);
-            overflow: hidden;
-        }
-
-        .modal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-info {
-            padding: 2rem;
-        }
-
-        .modal-name {
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-title {
-            color: var(--dark-grey);
-            font-size: clamp(1rem, 2vw, 1.1rem);
-            margin-bottom: 2rem;
-        }
-
-        .modal-bio {
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            color: var(--dark-grey);
-        }
-
-        .modal-section {
-            margin-bottom: 2rem;
-        }
-
-        .modal-section h3 {
-            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-            margin-bottom: 1rem;
-            color: var(--purple);
-        }
-
-        .modal-section ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .modal-section li {
-            padding: 0.5rem 0;
-            color: var(--dark-grey);
-        }
-
-        .modal-section li:before {
-            content: "→ ";
-            color: var(--purple);
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-
-        .contact-btn {
-            background: var(--purple);
-            color: var(--white);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            width: 100%;
-        }
-
-        .contact-btn:hover {
-            opacity: 0.9;
-        }
-
-        footer {
-            background: var(--black);
-            color: var(--white);
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--dark-grey);
-        }
-
-        .loading {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--dark-grey);
-        }
-
-        .load-more-container {
-            text-align: center;
-            padding: 3rem 2rem;
-        }
-
-        .load-more-btn {
-            background: var(--purple);
-            color: var(--white);
-            padding: 1rem 3rem;
-            border: 2px solid var(--purple);
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-        }
-
-        .load-more-btn:hover {
-            background: var(--white);
-            color: var(--purple);
-        }
-
-        .load-more-btn.hidden {
-            display: none;
-        }
-
-        /* Featured section for highlighting speakers */
-        .featured-section {
-            background: var(--grey);
-            padding: 4rem 2rem;
-            margin: 4rem 0;
-        }
-
-        .featured-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .featured-text h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .featured-text p {
-            font-size: 1.1rem;
-            color: var(--dark-grey);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .featured-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--purple);
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: var(--dark-grey);
-            margin-top: 0.5rem;
-        }
-
-        .featured-image {
-            aspect-ratio: 1;
-            background: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
-            color: var(--dark-grey);
-        }
-
-        .featured-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Services/Expertise section */
-        .expertise-section {
-            max-width: 1400px;
-            margin: 4rem auto;
-            padding: 2rem 1rem;
-        }
-
-        .expertise-section h2 {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .expertise-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .expertise-card {
-            background: var(--grey);
-            padding: 2rem;
-            border-radius: 8px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .expertise-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        }
-
-        .expertise-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .expertise-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--purple);
-        }
-
-        .expertise-card p {
-            color: var(--dark-grey);
-            line-height: 1.6;
-        }
-
-        /* CTA section */
-        .cta-section {
-            background: var(--purple);
-            color: var(--white);
-            padding: 4rem 2rem;
-            text-align: center;
-            margin: 4rem 0 0 0;
-        }
-
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta-section h2 {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            background: var(--white);
-            color: var(--purple);
-            padding: 1rem 3rem;
-            border: 2px solid var(--white);
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-button:hover {
-            background: transparent;
-            color: var(--white);
-        }
-
-        @media (max-width: 768px) {
-            .featured-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .featured-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-
-            .expertise-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                justify-content: center;
-            }
-
-            .header-right {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            nav {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-            }
-
-            .language-switcher {
-                order: 2;
-            }
-
-            .speakers-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 1rem;
-            }
-
-            /* Adjust stagger for mobile - 2 columns */
-            .speaker-card:nth-child(4n+1),
-            .speaker-card:nth-child(4n+2),
-            .speaker-card:nth-child(4n+3),
-            .speaker-card:nth-child(4n+4) {
-                margin-top: 0;
-            }
-
-            .speaker-card:nth-child(2n+1) {
-                margin-top: 0;
-            }
-
-            .speaker-card:nth-child(2n+2) {
-                margin-top: 1rem;
-            }
-
-            .speaker-info {
-                padding: 1.5rem 1rem 1rem;
-            }
-
-            .speaker-name {
-                font-size: 1.25rem;
-            }
-
-            .speaker-title {
-                font-size: 0.875rem;
-            }
-
-            .modal-info {
-                padding: 1.5rem;
-            }
-
-            .contact-btn {
-                padding: 0.875rem 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 1rem;
-            }
-
-            .logo {
-                font-size: 1.25rem;
-            }
-
-            .hero {
-                padding: 3rem 1rem 2rem;
-            }
-
-            .controls {
-                padding: 1.5rem 1rem 0.5rem;
-            }
-
-            .filter-btn {
-                padding: 0.625rem 1rem;
-                font-size: 0.875rem;
-            }
-
-            .speakers-grid {
-                grid-template-columns: 1fr;
-            }
-
-            /* Single column - remove stagger on mobile */
-            .speaker-card:nth-child(2n+1),
-            .speaker-card:nth-child(2n+2) {
-                margin-top: 0;
-            }
-
-            .modal-image {
-                height: 300px;
-                font-size: 4rem;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .speakers-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            /* Enhanced stagger for large screens - 4 columns */
-            .speaker-card:nth-child(4n+1) {
-                margin-top: 3rem;
-            }
-
-            .speaker-card:nth-child(4n+2) {
-                margin-top: 3rem;
-            }
-
-            .speaker-card:nth-child(4n+3) {
-                margin-top: 3rem;
-            }
-
-            .speaker-card:nth-child(4n+4) {
-                margin-top: 3rem;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1199px) {
-            /* 3 columns - adjust stagger */
-            .speaker-card:nth-child(4n+1),
-            .speaker-card:nth-child(4n+2),
-            .speaker-card:nth-child(4n+3),
-            .speaker-card:nth-child(4n+4) {
-                margin-top: 0;
-            }
-
-            .speaker-card:nth-child(3n+1) {
-                margin-top: 0;
-            }
-
-            .speaker-card:nth-child(3n+2) {
-                margin-top: 1.5rem;
-            }
-
-            .speaker-card:nth-child(3n+3) {
-                margin-top: 3rem;
-            }
-        }
-
-    </style>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        /* Custom scroll behavior for smooth navigation */
-        html {
-            scroll-behavior: smooth;
-        }
-        /* Style for the cinematic hero text */
-        .hero-title {
-            animation: fadeIn 2s ease-out;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        /* Spinner styles (adjusted for light background) */
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.2); /* Darker border for visibility */
-            border-top: 4px solid #7877E6; /* Purple top */
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        /* Utility to hide sections for SPA routing */
-        .page-content {
-            display: none;
-        }
-        .page-content.active {
-            display: block;
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
         }
     </style>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header>
 
-        <!-- Navigation Bar -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <!-- Logo/Bureau Name -->
-            <a href="./index.html" onclick="showSection('index')" class="text-3xl font-extrabold tracking-wider text-text-dark transition duration-300 hover:text-accent-purple">FACETTES</a>
-            
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#speakers" data-key="nav_speakers" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Speakers</a>
-                <a href="#services" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">Services</a>
-                <a href="./about.html" data-key="nav_services" class="text-text-dark hover:text-accent-purple transition duration-300 font-medium tracking-wide uppercase">About</a>
-                <a href="#contact" data-key="nav_contact" class="px-5 py-2 text-sm font-semibold bg-accent-purple text-text-light rounded-full hover:bg-accent-hover-purple transition duration-300 tracking-wider">
-                    Contact
-                </a>
-                
-                <!-- Language Toggle -->
-                <button id="lang-toggle" class="lang-btn px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50" data-lang="fr">
-                    FR
-                </button>
-                <button id="lang-toggle" class="lang-btn px-3 py-1 text-sm font-semibold text-text-detail rounded-full hover:text-accent-purple transition duration-300 border border-text-detail/50" data-lang="en">
-                    EN
-                </button>
-
-
-            </nav>
-        
-        
-        <!-- FROM GEMINI -->
-        <!-- Mobile Menu Button -->
-            <div class="flex items-center md:hidden">
-                <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 p-2 rounded-md">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-                <button id="lang-toggle-mobile" class="text-sm font-semibold p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition ml-4">EN</button>
-            </div>
-        </div>
-        <!-- Mobile Navigation Menu -->
-        <nav id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
-            <a href="#speakers" data-key="nav_speakers" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light" data-lang-fr="Nos Services" data-lang-en="Our Services">Speaker</a>
-            <a href="#services" data-key="nav_services" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light" data-lang-fr="Région Desservie" data-lang-en="Service Area">Services</a>
-            <a href="./about.html" data-key="nav_about" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light" data-lang-fr="Région Desservie" data-lang-en="Service Area">About</a>
-            <a href="#contact" data-key="nav_contact" class="block py-3 px-4 text-gray-700 hover:bg-accent-hover-purple font-medium transition rounded-md hover:text-text-light" data-lang-fr="Contactez-nous" data-lang-en="Contact Us">CONTACT</a>
-        </nav>
-
-
-    </header>
-
-        <!-- 1. Hero Section -->
-                    <section id="hero" class="h-[80vh] flex items-center justify-center overflow-hidden relative border-b border-text-detail/10">
-                        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                            
-                            <h1 data-i18n="heroTitle" data-key="hero_tagline" class="hero-title text-5xl sm:text-7xl lg:text-8xl font-black uppercase text-text-dark mb-6 tracking-tighter">
-                                Where Bold Ideas Meet <span class="text-accent-purple">Global Reach</span>
-                            </h1>
-                            
-                            <p data-i18n="heroSubtitle" data-key="hero_subheading" class="text-xl sm:text-2xl font-light text-text-detail max-w-4xl mx-auto mb-10">
-                                The agency for intersectional talent, shaping the future of culture, commerce, and impact.
-                            </p>
-
-                            <a href="#speakers" data-key="hero_cta" class="inline-block px-10 py-4 text-lg font-semibold bg-accent-purple text-text-light rounded-md shadow-xl hover:bg-accent-hover-purple transition duration-300 transform hover:scale-105 border-2 border-accent-purple uppercase tracking-wider">
-                                Explore Talent
-                            </a>
-                        </div>
-                    </section>
-
-
-    <div class="controls" id="speakers">
-        <div class="search-box">
-            <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search speakers...">
-        </div>
-        <div class="filter-buttons" id="filterButtons">
-            <button class="filter-btn active" data-category="all" data-i18n="filterAll">All</button>
-        </div>
-    </div>
-
-    <!-- 2. Speaker display section -->
-    <section class="speakers-container" >
-        <div class="loading" id="loading" data-i18n="loading">Loading speakers...</div>
-        <div class="speakers-grid" id="speakersGrid"></div>
-        <div class="no-results" id="noResults" style="display: none;">
-            <h3 data-i18n="noResultsTitle">No speakers found</h3>
-            <p data-i18n="noResultsText">Try adjusting your search or filters</p>
-        </div>
-        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-            <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreSpeakers()">
-                <span data-i18n="loadMore">Load More Speakers</span>
-            </button>
-        </div>
-    </section>
-
-    <!-- Featured Section -->
-    <!---
-    <section class="featured-section">
-        <div class="featured-content">
-            <div class="featured-text">
-                <h2 data-i18n="featuredTitle">Expert Speakers, Tailored to Your Event</h2>
-                <p data-i18n="featuredText1">We carefully curate our roster of speakers to ensure every voice brings unique insights and transformative ideas to your audience.</p>
-                <p data-i18n="featuredText2">From intimate corporate gatherings to large-scale conferences, our speakers deliver engaging, memorable experiences that inspire action and drive results.</p>
-                <div class="featured-stats">
-                    <div class="stat-item">
-                        <div class="stat-number" data-i18n="stat1Number">500+</div>
-                        <div class="stat-label" data-i18n="stat1Label">Events Delivered</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-i18n="stat2Number">98%</div>
-                        <div class="stat-label" data-i18n="stat2Label">Client Satisfaction</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-i18n="stat3Number">50+</div>
-                        <div class="stat-label" data-i18n="stat3Label">Industries Served</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-i18n="stat4Number">Global</div>
-                        <div class="stat-label" data-i18n="stat4Label">Reach</div>
-                    </div>
-                </div>
-            </div>
-            <div class="featured-image">
-                <span>🎤</span>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- Expertise Section -->
-    <!--<section class="expertise-section">
-        <h2 data-i18n="expertiseTitle">Areas of Expertise</h2>
-        <div class="expertise-grid">
-            <div class="expertise-card">
-                <div class="expertise-icon">💼</div>
-                <h3 data-i18n="expertise1Title">Leadership & Strategy</h3>
-                <p data-i18n="expertise1Text">Visionary leaders who inspire teams and drive organizational transformation through proven strategies and innovative thinking.</p>
-            </div>
-            <div class="expertise-card">
-                <div class="expertise-icon">🚀</div>
-                <h3 data-i18n="expertise2Title">Innovation & Technology</h3>
-                <p data-i18n="expertise2Text">Tech pioneers and innovators sharing insights on emerging trends, digital transformation, and the future of business.</p>
-            </div>
-            <div class="expertise-card">
-                <div class="expertise-icon">🎯</div>
-                <h3 data-i18n="expertise3Title">Sales & Marketing</h3>
-                <p data-i18n="expertise3Text">Industry experts delivering actionable strategies to accelerate growth, build brands, and connect with modern consumers.</p>
-            </div>
-            <div class="expertise-card">
-                <div class="expertise-icon">🌱</div>
-                <h3 data-i18n="expertise4Title">Sustainability & Impact</h3>
-                <p data-i18n="expertise4Text">Thought leaders championing environmental responsibility and social impact in business and beyond.</p>
-            </div>
-        </div>
-    </section>-->
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2 data-i18n="ctaTitle">Ready to Book a Speaker?</h2>
-            <p data-i18n="ctaText">Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.</p>
-            <a href="#contact" class="cta-button" data-i18n="ctaButton">Contact Us</a>
-        </div>
-    </section>
-
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">×</button>
-            <div id="modalBody"></div>
-        </div>
-    </div>
-
-
-
-
-            <!-- 3. Services Section -->
-            <section id="services" class="py-24 border-b border-text-detail/10 ">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 data-i18n="services_heading" data-key="services_heading" class="text-3xl font-bold mb-2 text-center uppercase tracking-widest text-text-dark">Agency Expertise</h2>
-                    <p data-i18n="services_subtext" data-key="services_subtext" class="text-xl text-text-detail max-w-3xl mx-auto mb-12 text-center">Beyond booking, we ensure seamless execution and maximum impact.</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        
-                        <!-- Service Card 1: Access -->
-                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
-                            <div class="text-5xl text-accent-purple mb-6">
-                                <!-- Icon: Calendar -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check"><path d="M12 21h-7c-1.104 0-2-.896-2-2v-14c0-1.104.896-2 2-2h14c1.104 0 2 .896 2 2v8"/><polyline points="10 13 13 16 22 7"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                            </div>
-                            <div>
-                                <h3 data-i18n="service_1_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_1_title">Exclusive Speaker Access</h3>
-                                <p data-i18n="service_1_description" class="text-text-detail text-sm" data-key="service_1_description">Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.</p>
-                            </div>
-                        </div>
-
-                        <!-- Service Card 2: Strategy -->
-                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
-                            <div class="text-5xl text-accent-purple mb-6">
-                                <!-- Icon: Users -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                            </div>
-                            <div>
-                                <h3 data-i18n="service_2_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_2_title">Content Alignment & Strategy</h3>
-                                <p data-i18n="service_2_description" class="text-text-detail text-sm" data-key="service_2_description">Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.</p>
-                            </div>
-                        </div>
-
-                        <!-- Service Card 3: Support -->
-                        <div class="p-8 rounded-lg border-2 border-text-detail/20 hover:border-accent-purple transition duration-300 flex flex-col justify-between h-full">
-                            <div class="text-5xl text-accent-purple mb-6">
-                                <!-- Icon: Microphone -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </div>
-                            <div>
-                                <h3 data-i18n="service_3_title" class="text-xl font-semibold mb-3 text-text-dark" data-key="service_3_title">On-Site Logistics Support</h3>
-                                <p data-i18n="service_3_description" class="text-text-detail text-sm" data-key="service_3_description">Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 4. Call to Action / Contact Section - Dark Background -->
-            <section id="contact" class="py-24 bg-bg-section border-t border-b border-accent-purple/50">
-                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-3 md:gap-16 items-start">
-                    
-                    <!-- Left Text Block (White text on dark background) -->
-                    <div class="md:col-span-1 mb-10 md:mb-0 pt-4">
-                        <h2 data-i18n="contact_heading" data-key="contact_heading" class="text-4xl font-black text-text-dark mb-4">CONNECT</h2>
-                        <p data-i18n="contact_tagline" data-key="contact_tagline" class="text-xl text-text-detail">
-                            Initiate a conversation with our team to find the ideal voice for your next defining moment.
-                        </p>
-                    </div>
-                    
-                    <!-- Simple contact form placeholder and LLM FEATURE (Light form on dark background) -->
-                    <form id="contact-form" class="md:col-span-2 space-y-6 bg-bg-main p-8 rounded-xl shadow-2xl border border-accent-purple/50 text-text-dark">
-                        <input type="text" data-i18n="form_name" data-key="form_name" placeholder="Your Name" required
-                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
-                        <input type="email" data-i18n="form_email" data-key="form_email" placeholder="Your Email" required
-                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
-                        <input id="event-topic" type="text" data-i18n="form_event" data-key="form_event" placeholder="Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)" required
-                               class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail">
-                        <textarea id="event-details" data-i18n="form_details" data-key="form_details" placeholder="Tell us about your audience, event date, and budget range..." rows="4" required
-                                  class="w-full p-3 rounded-lg border border-text-detail/50 focus:ring-accent-purple focus:border-accent-purple bg-bg-main text-text-dark placeholder-text-detail"></textarea>
-                        
-
-                        <button type="submit" data-i18n="form_submit" data-key="form_submit" class="w-full py-3 bg-accent-purple text-text-light font-semibold rounded-md shadow-lg hover:bg-accent-hover-purple transition duration-300 transform hover:scale-[1.01] uppercase tracking-wider">
-                            SUBMIT INQUIRY
-                        </button>
-                        <p data-i18n="contact_response_time" data-key="contact_response_time" class="text-sm text-text-detail mt-4 text-center">A consultant will be in touch within 24 hours.</p>
-                    </form>
-                </div>
-            </section>
-
-
-
-    <!-- Footer - Light Background -->
-    <footer class="bg-bg-main py-8 border-t border-text-detail/20 text-text-dark shadow-inner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center flex-wrap text-center md:text-left">
-            <p data-key="footer_rights" class="text-text-detail text-sm w-full md:w-auto mb-4 md:mb-0">&copy; 2025 Facettes. All rights reserved.</p>
-            <div class="flex space-x-6">
-                <!-- Social Media Links (Placeholder) -->
-                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">LINKEDIN</a>
-                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">INSTAGRAM</a>
-                <a href="#" class="text-text-detail hover:text-accent-purple transition duration-300 text-sm">EMAIL</a>
-            </div>
-        </div>
-    </footer>
-
+<body class="font-sans text-text-light bg-primary-dark-bg">
 
     <script>
-        // Translations
-        const translations = {
+        const content = {
             en: {
-                siteName: "FACETTES",
-                navSpeakers: "Speakers",
-                navAbout: "About",
+                navBrand: "Passerelles",
+                navHome: "Home",
+                navPillars: "Pillars",
                 navContact: "Contact",
-                heroTitle: "Where Bold Ideas Meet Global Reach",
-                heroSubtitle: "The agency for intersectional talent, shaping the future of culture, commerce, and impact.",
-                searchPlaceholder: "Search speakers...",
-                filterAll: "All",
-                loading: "Loading speakers...",
-                noResultsTitle: "No speakers found",
-                noResultsText: "Try adjusting your search or filters",
-                keyTopicsTitle: "Key Speaking Topics",
-                bookButton: "Book This Speaker",
-                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
-                services_heading: "Agency Expertise",
-                services_subtext: "Beyond booking, we ensure seamless execution and maximum impact.",
-                service_1_title: "Exclusive Speaker Access",
-                service_1_description: "Direct access to a curated roster of global leaders. We manage negotiations and logistics from start to finish.",
-                service_2_title: "Content Alignment & Strategy",
-                service_2_description: "Strategic consultation to match speakers with your audience and event objectives for maximum message resonance, ensuring cultural fit.",
-                service_3_title: "On-Site Logistics Support",
-                service_3_description: "Comprehensive support including technical riders, travel coordination, on-site liaison management, and post-event feedback cycles.",
-                bookMessage: "Contact form coming soon! Email: info@speakerbureau.com",
-                contact_heading: "CONNECT",
-                contact_tagline: "Initiate a conversation with our team to find the ideal voice for your next defining moment.",
-                form_name: "Your Name",
-                form_email: "Your Email",
-                form_event: "Event Type / Topic Focus (e.g., Q3 Strategy Session on AI)",
-                form_details: "Tell us about your audience, event date, and budget range...",
-                form_submit: "SUBMIT INQUIRY",
-                contact_response_time: "A consultant will be in touch within 24 hours.",
-                footerCopyright: "© 2025 Speaker Bureau. All rights reserved.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
-                loadMore: "Load More Speakers",
-                featuredTitle: "Expert Speakers, Tailored to Your Event",
-                featuredText1: "We carefully curate our roster of speakers to ensure every voice brings unique insights and transformative ideas to your audience.",
-                featuredText2: "From intimate corporate gatherings to large-scale conferences, our speakers deliver engaging, memorable experiences that inspire action and drive results.",
-                stat1Number: "500+",
-                stat1Label: "Events Delivered",
-                stat2Number: "98%",
-                stat2Label: "Client Satisfaction",
-                stat3Number: "50+",
-                stat3Label: "Industries Served",
-                stat4Number: "Global",
-                stat4Label: "Reach",
-                expertiseTitle: "Areas of Expertise",
-                expertise1Title: "Leadership & Strategy",
-                expertise1Text: "Visionary leaders who inspire teams and drive organizational transformation through proven strategies and innovative thinking.",
-                expertise2Title: "Innovation & Technology",
-                expertise2Text: "Tech pioneers and innovators sharing insights on emerging trends, digital transformation, and the future of business.",
-                expertise3Title: "Sales & Marketing",
-                expertise3Text: "Industry experts delivering actionable strategies to accelerate growth, build brands, and connect with modern consumers.",
-                expertise4Title: "Sustainability & Impact",
-                expertise4Text: "Thought leaders championing environmental responsibility and social impact in business and beyond.",
-                ctaTitle: "Ready to Book a Speaker?",
-                ctaText: "Let's discuss how our speakers can make your next event unforgettable. Get in touch with us today.",
-                ctaButton: "Contact Us"
+                navCTA: "Let's Talk Possibilities",
+                langToggle: "FR",
+
+                heroSlogan: "Where Creativity Meets Competition.",
+                heroSubtext: "Unleashing the full potential of Art and Sport.",
+
+                visionTitle: "Why We Exist",
+                visionBody: "We're here to spark **unforgettable collaboration**. We unlock fresh audience engagement, build powerful new revenue streams, and cultivate sustainable careers by bringing the deliberate beauty of Art and the raw energy of Sport together.",
+
+                pillarTitle: "Our Pillars of Action: Igniting the Future",
+                p1Title: "Inspire & Connect",
+                p1Desc: "We light the fuse. We educate, advocate, and demonstrate the powerful, shared potential between creatives, athletes, and organizations—proving they belong together.",
+                p2Title: "Create & Amplify",
+                p2Desc: "This is where the magic happens. We curate and produce rich, high-impact content—from documentaries to digital experiences—that shows the world what's possible when art and sport collide.",
+                p3Title: "Unite & Grow",
+                p3Desc: "We build the future together. We forge profitable, sustainable alliances that drive growth and maximize mutual benefits for everyone involved—from leagues to individual artists.",
+
+                contactPrompt: "Ready to change the game?",
+                contactCTA: "Let's Talk Possibilities",
+
+                footerLegal: "© 2024 Passerelles. All Rights Reserved. Bridge the gap. Create the value."
             },
             fr: {
-                siteName: "FACETTES",
-                navSpeakers: "Conférenciers",
-                navAbout: "À propos",
+                navBrand: "Passerelles",
+                navHome: "Accueil",
+                navPillars: "Piliers",
                 navContact: "Contact",
-                heroTitle: "Des Conférenciers de Classe MondLà où les Idées Audacieuses Rencontrent la Portée Mondiale",
-                heroSubtitle: "L'agence de talents intersectionnels, façonnant l'avenir de la culture, du commerce et de l'impact.",
-                searchPlaceholder: "Rechercher des conférenciers...",
-                filterAll: "Tous",
-                loading: "Chargement des conférenciers...",
-                loadMore: "Charger Plus de Conférenciers",
-                noResultsTitle: "Aucun conférencier trouvé",
-                noResultsText: "Essayez d'ajuster votre recherche ou vos filtres",
-                keyTopicsTitle: "Sujets de Conférence Principaux",
-                bookButton: "Réserver ce Conférencier",
-                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
-                services_heading: "Services Événementiels Complets",
-                services_subtext: "Au-delà de la réservation, nous assurons une exécution fluide et un impact maximal.",
-                service_1_title: "Accès Exclusif aux Conférenciers",
-                service_1_description: "Accès direct à une liste organisée de leaders mondiaux. Nous gérons les négociations et la logistique du début à la fin.",
-                service_2_title: "Alignement et Stratégie de Contenu",
-                service_2_description: "Consultation stratégique pour faire correspondre les conférenciers à votre public et à vos objectifs pour une résonance maximale du message, assurant l'adéquation culturelle.",
-                service_3_title: "Soutien Logistique sur Place",
-                service_3_description: "Support complet incluant les fiches techniques, la coordination des voyages, la gestion de la liaison sur site et les cycles de feedback post-événement.",
-                bookMessage: "Formulaire de contact bientôt disponible ! Email: info@speakerbureau.com",
-                contact_heading: "Prêt à Réserver un Conférencier ?",
-                contact_tagline: "Parlez-nous de votre événement, de votre public et de vos objectifs, et l'équipe Facettes trouvera la voix parfaite.",
-                form_name: "Votre Nom",
-                form_email: "Votre Email",
-                form_event: "Type d'Événement / Thème (ex : Session Stratégique T3 sur l'IA)",
-                form_details: "Parlez-nous de votre public, de la date de l'événement et de la fourchette budgétaire...",
-                form_submit: "SOUMETTRE LA DEMANDE",
-                contact_response_time: "Un consultant vous contactera dans les 24 heures.",
-                footerCopyright: "© 2025 Bureau de Conférenciers. Tous droits réservés.",
-                footerContact: "Contact: info@speakerbureau.com | (555) 123-4567",
-                featuredTitle: "Des Conférenciers Experts, Adaptés à Votre Événement",
-                featuredText1: "Nous sélectionnons soigneusement notre liste de conférenciers pour garantir que chaque voix apporte des perspectives uniques et des idées transformatrices à votre public.",
-                featuredText2: "Des rassemblements corporatifs intimes aux conférences à grande échelle, nos conférenciers offrent des expériences engageantes et mémorables qui inspirent l'action et produisent des résultats.",
-                stat1Number: "500+",
-                stat1Label: "Événements Réalisés",
-                stat2Number: "98%",
-                stat2Label: "Satisfaction Client",
-                stat3Number: "50+",
-                stat3Label: "Industries Desservies",
-                stat4Number: "Mondiale",
-                stat4Label: "Portée",
-                expertiseTitle: "Domaines d'Expertise",
-                expertise1Title: "Leadership et Stratégie",
-                expertise1Text: "Des leaders visionnaires qui inspirent les équipes et conduisent la transformation organisationnelle grâce à des stratégies éprouvées et une pensée innovante.",
-                expertise2Title: "Innovation et Technologie",
-                expertise2Text: "Des pionniers technologiques et innovateurs partageant des perspectives sur les tendances émergentes, la transformation numérique et l'avenir des affaires.",
-                expertise3Title: "Ventes et Marketing",
-                expertise3Text: "Des experts de l'industrie proposant des stratégies concrètes pour accélérer la croissance, bâtir des marques et se connecter avec les consommateurs modernes.",
-                expertise4Title: "Durabilité et Impact",
-                expertise4Text: "Des leaders d'opinion défendant la responsabilité environnementale et l'impact social dans les affaires et au-delà.",
-                ctaTitle: "Prêt à Réserver un Conférencier?",
-                ctaText: "Discutons de la façon dont nos conférenciers peuvent rendre votre prochain événement inoubliable. Contactez-nous dès aujourd'hui.",
-                ctaButton: "Nous Contacter"
+                navCTA: "Parlons Possibilités",
+                langToggle: "EN",
+
+                heroSlogan: "Là où la Créativité rencontre la Compétition.",
+                heroSubtext: "Libérez le potentiel illimité de l'Art et du Sport.",
+
+                visionTitle: "Pourquoi Nous Existons",
+                visionBody: "Notre but est de déclencher des **collaborations inoubliables**. Nous générons un engagement renouvelé du public, créons de puissantes sources de revenus et favorisons le développement de carrières durables en unissant la beauté délibérée de l'Art et l'énergie brute du Sport.",
+
+                pillarTitle: "Nos Piliers d'Action : Allumer l'Avenir",
+                p1Title: "Inspirer et Connecter",
+                p1Desc: "Nous allumons la mèche. Nous éduquons, défendons et démontrons le potentiel commun et puissant entre les créateurs, les athlètes et les organisations—prouvant qu'ils sont faits pour s'entendre.",
+                p2Title: "Créer et Amplifier",
+                p2Desc: "C'est là que la magie opère. Nous conservons et produisons du contenu riche et percutant, des documentaires aux expériences numériques, qui montre au monde ce qui est possible lorsque l'art et le sport se rencontrent.",
+                p3Title: "Unir et Grandir",
+                p3Desc: "Nous bâtissons l'avenir ensemble. Nous forgeons des alliances rentables et durables qui stimulent la croissance et maximisent les avantages mutuels pour tous les acteurs impliqués, des ligues aux artistes individuels.",
+
+                contactPrompt: "Prêt à changer la donne ?",
+                contactCTA: "Parlons Possibilités",
+
+                footerLegal: "© 2024 Passerelles. Tous droits réservés. Créez la valeur. Franchissez le fossé."
             }
         };
 
-        let currentLang = localStorage.getItem('language') || 'en';
-        let speakers = [];
-        let currentFilter = 'all';
-        let searchTerm = '';
-        let displayedCount = 8; // Show 2 rows of 4 speakers initially
-        const speakersPerLoad = 8;
+        let currentLang = 'en';
 
-        // Language switching
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('language', lang);
-            document.documentElement.lang = lang;
-            
-            // Update language buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-            
-            // Update all translatable elements
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.dataset.i18n;
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+        // Load content from localStorage if available
+        function loadSavedContent() {
+            const savedContent = localStorage.getItem('passerellesContent');
+            if (savedContent) {
+                try {
+                    const parsed = JSON.parse(savedContent);
+                    // Merge saved content with default content
+                    if (parsed.en) Object.assign(content.en, parsed.en);
+                    if (parsed.fr) Object.assign(content.fr, parsed.fr);
+                    console.log('✅ Content loaded from admin panel');
+                } catch (e) {
+                    console.error('Error loading saved content:', e);
                 }
-            });
-            
-            
-            // Update placeholders
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-                const key = element.dataset.i18nPlaceholder;
-                if (translations[lang][key]) {
-                    element.placeholder = translations[lang][key];
-                }
-            });
-            
-            // Re-render speakers to update filter buttons
-            generateFilterButtons();
+            }
         }
 
-        // Language button listeners
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        function handleParallax() {
+            const parallaxLayer = document.getElementById('parallax-layer');
+            if (parallaxLayer) {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollFactor = 0.5; 
+                const yPos = -scrollTop * scrollFactor;
+                parallaxLayer.style.transform = `translateY(${yPos}px)`;
+            }
+        }
+
+        function updateContent(lang) {
+            const data = content[lang];
+            document.querySelectorAll('[data-text]').forEach(el => {
+                const key = el.getAttribute('data-text');
+                if (data[key]) {
+                    if (data[key].includes('**')) {
+                         const strongReplacement = '<strong class="text-accent-mustard">$1</strong>';
+                         el.innerHTML = data[key].replace(/\*\*(.*?)\*\*/g, strongReplacement);
+                    } else {
+                        el.textContent = data[key];
+                    }
+                }
+            });
+
+            document.getElementById('nav-cta').textContent = data.navCTA;
+            document.getElementById('lang-toggle').textContent = data.langToggle;
+            document.getElementById('nav-cta-mobile').textContent = data.navCTA;
+            document.getElementById('lang-toggle-mobile').textContent = data.langToggle;
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            updateContent(currentLang);
+            document.documentElement.lang = currentLang;
+        }
+
+        function setupAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.animated-item').forEach(item => {
+                observer.observe(item);
+            });
+        }
+
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+        }
+
+        function closeMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('open');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved content first
+            loadSavedContent();
+            
+            document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
+            document.getElementById('lang-toggle-mobile').addEventListener('click', () => {
+                toggleLanguage();
+                closeMobileMenu();
+            });
+            document.getElementById('hamburger').addEventListener('click', toggleMobileMenu);
+            
+            // Close menu when clicking on links
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+            
+            updateContent(currentLang);
+            setupAnimations();
+            handleParallax();
         });
+    </script>
 
-        // Fetch speakers from API
-        async function loadSpeakers() {
-            try {
-                const response = await fetch('/api/speakers');
-                speakers = await response.json();
-                generateFilterButtons();
-                renderSpeakers();
-                document.getElementById('loading').style.display = 'none';
-            } catch (error) {
-                console.error('Error loading speakers:', error);
-                const errorMsg = currentLang === 'fr' 
-                    ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page</p>'
-                    : '<h3>Error loading speakers</h3><p>Please refresh the page</p>';
-                document.getElementById('loading').innerHTML = errorMsg;
-            }
-        }
-
-        // Generate filter buttons dynamically
-        function generateFilterButtons() {
-            const allTopics = new Set();
-            speakers.forEach(speaker => {
-                const topics = currentLang === 'fr' && speaker.topics_fr 
-                    ? speaker.topics_fr 
-                    : speaker.topics;
-                topics.forEach(topic => allTopics.add(topic));
-            });
-
-            const filterButtons = document.getElementById('filterButtons');
-            const sortedTopics = Array.from(allTopics).sort();
+    <header class="sticky top-0 z-50 bg-primary-dark-bg shadow-lg shadow-black/50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+            <a href="#" class="text-3xl font-black text-accent-mustard tracking-wider">
+                <span data-text="navBrand">Passerelles</span>
+            </a>
             
-            filterButtons.innerHTML = `
-                <button class="filter-btn active" data-category="all">${translations[currentLang].filterAll}</button>
-                ${sortedTopics.map(topic => 
-                    `<button class="filter-btn" data-category="${topic}">${topic}</button>`
-                ).join('')}
-            `;
-        }
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#hero" class="text-text-light hover:text-accent-mustard transition duration-300 font-semibold" data-text="navHome">Home</a>
+                <a href="#pillars" class="text-text-light hover:text-accent-mustard transition duration-300 font-semibold" data-text="navPillars">Pillars</a>
+                <a href="#contact" class="text-text-light hover:text-accent-mustard transition duration-300 font-semibold" data-text="navContact">Contact</a>
+                <button id="lang-toggle" class="px-4 py-2 text-sm font-bold rounded-full border border-text-light text-text-light hover:bg-primary-deep hover:border-primary-deep hover:text-white transition duration-300 transform hover:scale-105">FR</button>
+                <button id="nav-cta" class="bg-accent-mustard text-primary-deep px-8 py-3 rounded-full font-bold hover:bg-primary-deep hover:text-white transition duration-300 shadow-xl transform hover:scale-105">Let's Talk Possibilities</button>
+            </div>
 
-        function renderSpeakers() {
-            const grid = document.getElementById('speakersGrid');
-            const noResults = document.getElementById('noResults');
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            
-            const filtered = speakers.filter(speaker => {
-                const topics = currentLang === 'fr' && speaker.topics_fr 
-                    ? speaker.topics_fr 
-                    : speaker.topics;
-                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
-                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
-                
-                const matchesFilter = currentFilter === 'all' || topics.includes(currentFilter);
-                const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                    title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                    topics.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
-                return matchesFilter && matchesSearch;
-            });
+            <!-- Mobile Menu Controls -->
+            <div class="flex lg:hidden items-center space-x-3">
+                <button id="hamburger" class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="items-center lg:hidden bg-primary-dark-bg border-t border-primary-deep">
+            <nav class="flex flex-col px-4 py-4 space-y-3 items-center">
+                <a href="#hero" class="mobile-nav-link text-text-light hover:text-accent-mustard transition duration-300 font-semibold py-3" data-text="navHome">Home</a>
+                <a href="#pillars" class="mobile-nav-link text-text-light hover:text-accent-mustard transition duration-300 font-semibold py-3" data-text="navPillars">Pillars</a>
+                <a href="#contact" class="mobile-nav-link text-text-light hover:text-accent-mustard transition duration-300 font-semibold py-3" data-text="navContact">Contact</a>
+                <button id="lang-toggle-mobile" class="text-center px-4 py-3 text-sm font-bold rounded-full border border-text-light text-text-light hover:bg-primary-deep hover:border-primary-deep hover:text-white transition duration-300 w-20">FR</button>
+                <button id="nav-cta-mobile" class="bg-accent-mustard text-primary-deep px-6 py-3 text-sm rounded-full font-bold hover:bg-primary-deep hover:text-white transition duration-300 shadow-md w-full" data-text="navCTA">Let's Talk Possibilities</button>
+            </nav>
+        </div>
+    </header>
 
-            if (filtered.length === 0) {
-                grid.style.display = 'none';
-                noResults.style.display = 'block';
-                loadMoreContainer.style.display = 'none';
-                return;
-            }
+    <main>
+        <section id="hero" class="relative bg-primary-dark-bg min-h-[75vh] flex items-center justify-center p-8 overflow-hidden">
+            <div id="parallax-layer" class="absolute inset-0 opacity-10" style="background: radial-gradient(circle at top right, #FFC82D 10%, transparent 60%), radial-gradient(circle at bottom left, #FFC82D 10%, transparent 60%);"></div>
 
-            grid.style.display = 'grid';
-            noResults.style.display = 'none';
+            <div class="relative z-10 text-center max-w-6xl mx-auto py-20">
+                <h1 id="hero-text" class="text-white text-5xl sm:text-7xl lg:text-9xl font-black mb-6 animated-item is-visible" style="animation-delay: 0.1s;">
+                    <span data-text="heroSlogan">Where Creativity Meets Competition.</span>
+                </h1>
+                <p class="text-accent-mustard text-xl sm:text-3xl lg:text-4xl font-extrabold mb-12 animated-item" style="animation-delay: 0.3s;">
+                    <span data-text="heroSubtext">Unleashing the full potential of Art and Sport.</span>
+                </p>
+                <a href="#contact" class="inline-block bg-accent-mustard text-primary-deep px-12 py-5 text-xl font-bold rounded-full shadow-2xl hover:bg-primary-deep hover:text-white transition duration-300 transform hover:scale-110 animated-item" style="animation-delay: 0.5s;">
+                    <span data-text="navCTA">Let's Talk Possibilities</span>
+                </a>
+            </div>
+        </section>
 
-            // Show only up to displayedCount speakers
-            const speakersToShow = filtered.slice(0, displayedCount);
+        <section id="mission" class="bg-primary-dark-bg py-24 px-8 sm:px-16 lg:px-24">
+            <div class="max-w-4xl mx-auto text-center animated-item">
+                <h2 class="text-5xl font-black mb-6 text-text-light" data-text="visionTitle">Why We Exist</h2>
+                <div class="w-32 h-1 bg-accent-mustard mx-auto mb-10 rounded-full"></div>
+                <p class="text-2xl leading-relaxed text-text-light" data-text="visionBody">
+                    We're here to spark <strong class="text-accent-mustard">unforgettable collaboration</strong>. We unlock fresh audience engagement, build powerful new revenue streams, and cultivate sustainable careers by bringing the deliberate beauty of Art and the raw energy of Sport together.
+                </p>
+            </div>
+        </section>
 
-            grid.innerHTML = speakersToShow.map((speaker, index) => {
-                const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
-                    ? `<img src="${speaker.image}" alt="${speaker.name}">`
-                    : speaker.image || '👤';
-                
-                const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
-                const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
-                const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
+        <section id="pillars" class="py-24 px-4 sm:px-8 lg:px-16">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-5xl font-black text-center mb-20 text-text-light animated-item" data-text="pillarTitle">Our Pillars of Action: Igniting the Future</h2>
 
-                // Assign subtle parallax speed factors (0.05 to 0.15) based on the column index.
-                const columnIndex = (index % 4) + 1;
-                const parallaxSpeed = 
-                    columnIndex === 1 ? 0: 
-                    columnIndex === 2 ? 0 : 
-                    columnIndex === 3 ? 0 : 
-                    0; // Column 4 has 0 speed (no parallax)
-                
-                return `
-                    <div class="speaker-card" data-parallax-speed="${parallaxSpeed}" onclick="openModal(${speakers.indexOf(speaker)})">
-                        <div class="speaker-image-container">
-                            <div class="speaker-image-bg">${imageContent}</div>
-                        </div>
-                        <div class="speaker-info">
-                            <div class="speaker-name">${name}</div>
-                            <div class="speaker-details">
-                                <div class="speaker-title">${title}</div>
-                                <div class="speaker-topics">
-                                    ${topics.slice(0, 3).map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
-                                </div>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="bg-white p-10 rounded-2xl animated-item pillar-card" style="transition-delay: 0.1s;">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="w-14 h-14 flex items-center justify-center bg-accent-mustard rounded-full shadow-xl">
+                                <svg class="w-7 h-7 text-primary-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.108a12.025 12.025 0 01-4.32 2.35c.123.637.227 1.3.303 2H12c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8V8.392c-.287-.234-.572-.48-.857-.74z"></path></svg>
                             </div>
+                            <h3 class="text-2xl font-black text-primary-deep" data-text="p1Title">Inspire & Connect</h3>
                         </div>
+                        <div class="w-full h-1 bg-subtle-gray/70 mb-5 rounded-full"></div>
+                        <p class="text-lg text-gray-700" data-text="p1Desc">We light the fuse. We educate, advocate, and demonstrate the powerful, shared potential between creatives, athletes, and organizations—proving they belong together.</p>
                     </div>
-                `;
-            }).join('');
 
-            // Add data attribute for centering few speakers
-            grid.setAttribute('data-count', speakersToShow.length);
-
-            // Show/hide load more button
-            if (filtered.length > displayedCount) {
-                loadMoreContainer.style.display = 'block';
-            } else {
-                loadMoreContainer.style.display = 'none';
-            }
-
-            // Initialize parallax effect after rendering
-           // initParallax();
-        }
-
-        function loadMoreSpeakers() {
-            displayedCount += speakersPerLoad;
-            renderSpeakers();
-        }
-
-        // Parallax scrolling effect
-        let parallaxEnabled = false;
-
-        function initParallax() {
-            // Cards and container are scoped to this function
-            const cards = document.querySelectorAll('.speaker-card');
-            const speakersContainer = document.getElementById('speakers');
-            
-            if (cards.length === 0) {
-                parallaxEnabled = false;
-                return;
-            }
-
-            console.log(`Initializing parallax for ${cards.length} cards`);
-            parallaxEnabled = true;
-           
-            
-            function updateParallax() {
-                if (!parallaxEnabled) return;
-                
-                const containerRect = speakersContainer.getBoundingClientRect();
-                
-                // --- FIX: Check if the container is currently within the viewport ---
-                // containerRect.top < window.innerHeight: top edge is above the bottom of the viewport
-                // containerRect.bottom > 0: bottom edge is below the top of the viewport
-                if (containerRect.top < window.innerHeight && containerRect.bottom > 0) {
-                    
-                    // Calculate the scroll distance of the container up the screen from its starting point.
-                    // This value is 0 when the container top is at the viewport top, and increases as we scroll down (containerRect.top becomes negative).
-                    const relativeScroll = -containerRect.top;
-                
-                cards.forEach((card) => {
-                        const speed = parseFloat(card.dataset.parallaxSpeed);
-                        if (speed === 0) return;
-                        
-                        // Calculate the offset. A positive offset makes the card move down relative
-                        // to the page's scroll, causing it to scroll slower (lag effect).
-                        const offset = relativeScroll * speed;
-                        
-                        // Apply transform
-                        card.style.transform = `translateY(${offset}px)`;
-                    });
-                } else {
-                    // Reset transform when the container is fully out of the viewport 
-                    // to prevent transform offsets from stacking and causing issues.
-                    cards.forEach((card) => {
-                        card.style.transform = `translateY(0px)`;
-                    });
-                }
-            }
-
-            // Use scroll event with requestAnimationFrame
-            let ticking = false;
-            
-            function onScroll() {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        updateParallax();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }
-            
-            window.addEventListener('scroll', onScroll, { passive: true });
-            
-            // Initial call
-            setTimeout(() => {
-                updateParallax();
-            }, 100);
-        }
-
-
-
-        function openModal(index) {
-            const speaker = speakers[index];
-            const modal = document.getElementById('modal');
-            const modalBody = document.getElementById('modalBody');
-
-            const imageContent = speaker.image && speaker.image.startsWith('/uploads') 
-                ? `<img src="${speaker.image}" alt="${speaker.name}">`
-                : speaker.image || '👤';
-
-            const name = currentLang === 'fr' && speaker.name_fr ? speaker.name_fr : speaker.name;
-            const title = currentLang === 'fr' && speaker.title_fr ? speaker.title_fr : speaker.title;
-            const bio = currentLang === 'fr' && speaker.bio_fr ? speaker.bio_fr : speaker.bio;
-            const keyTopics = currentLang === 'fr' && speaker.keyTopics_fr ? speaker.keyTopics_fr : speaker.keyTopics;
-            const topics = currentLang === 'fr' && speaker.topics_fr ? speaker.topics_fr : speaker.topics;
-
-            modalBody.innerHTML = `
-                <div class="modal-image">${imageContent}</div>
-                <div class="modal-info">
-                    <h2 class="modal-name">${name}</h2>
-                    <p class="modal-title">${title}</p>
-                    <div class="modal-bio">${bio}</div>
-                    ${keyTopics && keyTopics.length > 0 ? `
-                        <div class="modal-section">
-                            <h3>${translations[currentLang].keyTopicsTitle}</h3>
-                            <ul>
-                                ${keyTopics.map(topic => `<li>${topic}</li>`).join('')}
-                            </ul>
+                    <div class="bg-white p-10 rounded-2xl animated-item pillar-card" style="transition-delay: 0.3s;">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="w-14 h-14 flex items-center justify-center bg-primary-deep rounded-full shadow-xl">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-black text-primary-deep" data-text="p2Title">Create & Amplify</h3>
                         </div>
-                    ` : ''}
-                    <div class="speaker-topics">
-                        ${topics.map(topic => `<span class="topic-tag" style="background: var(--grey); color: var(--dark-grey);">${topic}</span>`).join('')}
+                        <div class="w-full h-1 bg-subtle-gray/70 mb-5 rounded-full"></div>
+                        <p class="text-lg text-gray-700" data-text="p2Desc">This is where the magic happens. We curate and produce rich, high-impact content—from documentaries to digital experiences—that shows the world what's possible when art and sport collide.</p>
                     </div>
-                    <div style="margin-top: 2rem;">
-                        <button class="contact-btn" onclick="alert('${translations[currentLang].bookMessage}')">${translations[currentLang].bookButton}</button>
+
+                    <div class="bg-white p-10 rounded-2xl animated-item pillar-card" style="transition-delay: 0.5s;">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="w-14 h-14 flex items-center justify-center bg-accent-mustard rounded-full shadow-xl">
+                                <svg class="w-7 h-7 text-primary-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.586a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-black text-primary-deep" data-text="p3Title">Unite & Grow</h3>
+                        </div>
+                        <div class="w-full h-1 bg-subtle-gray/70 mb-5 rounded-full"></div>
+                        <p class="text-lg text-gray-700" data-text="p3Desc">We build the future together. We forge profitable, sustainable alliances that drive growth and maximize mutual benefits for everyone involved—from leagues to individual artists.</p>
                     </div>
                 </div>
-            `;
+            </div>
+        </section>
 
-            modal.classList.add('active');
-        }
+        <section id="contact" class="bg-primary-dark-bg py-24 px-8 sm:px-16 lg:px-24">
+            <div class="max-w-4xl mx-auto text-center animated-item">
+                <h2 class="text-4xl sm:text-5xl font-black text-white mb-8" data-text="contactPrompt">Ready to change the game?</h2>
+                <a href="mailto:info@passerelles.com" class="inline-block bg-accent-mustard text-primary-deep px-12 py-5 text-xl font-bold rounded-full shadow-2xl hover:bg-white hover:text-primary-deep transition duration-300 transform hover:scale-110">
+                    <span data-text="contactCTA">Let's Talk Possibilities</span>
+                </a>
+                <p class="mt-6 text-subtle-gray font-medium">info@passerelles.com</p>
+            </div>
+        </section>
+    </main>
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
+    <footer class="bg-primary-dark-bg py-10 px-8">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-subtle-gray">
+            <div class="text-xl font-black mb-4 md:mb-0 text-white" data-text="navBrand">Passerelles</div>
+            <p class="text-sm" data-text="footerLegal">© 2024 Passerelles. All Rights Reserved. Bridge the gap. Create the value.</p>
+        </div>
+    </footer>
 
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') closeModal();
-        });
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            searchTerm = e.target.value;
-            displayedCount = 8; // Reset to initial count when searching
-            renderSpeakers();
-        });
-
-        document.getElementById('filterButtons').addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-btn')) {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                currentFilter = e.target.dataset.category;
-                displayedCount = 8; // Reset to initial count when filtering
-                renderSpeakers();
-            }
-        });
-
-   
-
-
-    
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
-
-        // Disable parallax on mobile for better performance
-        const isMobile = window.innerWidth < 768;
-        
-        console.log('Page loaded, mobile:', isMobile);
-        
-        if (isMobile) {
-            window.initParallax = () => {
-                console.log('Parallax disabled on mobile');
-            };
-        }
-
-        // Initialize
-        setLanguage(currentLang);
-        loadSpeakers();
-
-        // UI Listeners
-        document.getElementById('mobile-menu-button').addEventListener('click', toggleMobileMenu);
-        document.getElementById('lang-toggle').addEventListener('click', toggleLang);
-        document.getElementById('lang-toggle-mobile').addEventListener('click', toggleLang);
-
-        
-    </script>
 </body>
 </html>
