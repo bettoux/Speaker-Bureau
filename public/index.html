@@ -1283,8 +1283,7 @@ function loadSavedContent() {
     }
 }
 
-// Call this function immediately after translations object is defined
-loadSavedContent();
+
 
 
         // Translations
@@ -1408,6 +1407,9 @@ loadSavedContent();
                 ctaButton: "Nous Contacter"
             }
         };
+
+        // Call this function immediately after translations object is defined
+        loadSavedContent();
 
         let currentLang = localStorage.getItem('language') || 'en';
         let speakers = [];
