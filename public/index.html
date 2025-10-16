@@ -1266,6 +1266,27 @@
 
 
     <script>
+
+// Load content from localStorage (saved from admin panel)
+function loadSavedContent() {
+    const savedContent = localStorage.getItem('facettesContent');
+    if (savedContent) {
+        try {
+            const parsed = JSON.parse(savedContent);
+            // Merge saved content with default translations
+            if (parsed.en) Object.assign(translations.en, parsed.en);
+            if (parsed.fr) Object.assign(translations.fr, parsed.fr);
+            console.log('✅ Content loaded from admin panel');
+        } catch (e) {
+            console.error('Error loading saved content:', e);
+        }
+    }
+}
+
+// Call this function immediately after translations object is defined
+loadSavedContent();
+
+
         // Translations
         const translations = {
             en: {
