@@ -280,9 +280,83 @@
             }
         }
 
+        // Handle image upload
+        function handleImageUpload(event, speakerIndex) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image size must be less than 5MB');
+                return;
+            }
+            
+            // Show upload status
+            const statusElement = document.getElementById(`upload-status-${speakerIndex}`);
+            if (statusElement) {
+                statusElement.classList.remove('hidden');
+            }
+            
+            // Convert image to base64 (for local storage)
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Image = e.target.result;
+                
+                // Update the image input field
+                document.getElementById('speaker-image').value = base64Image;
+                
+                // Show preview
+                const previewElement = document.getElementById(`image-preview-${speakerIndex}`);
+                if (previewElement) {
+                    const img = previewElement.querySelector('img');
+                    img.src = base64Image;
+                    previewElement.classList.remove('hidden');
+                }
+                
+                // Hide upload status
+                if (statusElement) {
+                    statusElement.classList.add('hidden');
+                }
+                
+                // Show success message
+                const successMsg = document.getElementById('successMessage');
+                successMsg.querySelector('span').textContent = 'Image uploaded successfully!';
+                successMsg.classList.remove('hidden');
+                setTimeout(() => {
+                    successMsg.classList.add('hidden');
+                    successMsg.querySelector('span').textContent = 'Changes saved successfully!';
+                }, 2000);
+            };
+            
+            reader.onerror = function() {
+                alert('Error reading file. Please try again.');
+                if (statusElement) {
+                    statusElement.classList.add('hidden');
+                }
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', loadContent);
     </script>
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
 
 </body>
 </html><!DOCTYPE html>
