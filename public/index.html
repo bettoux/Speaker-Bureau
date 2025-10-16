@@ -1454,21 +1454,32 @@ loadSavedContent();
         });
 
         // Fetch speakers from API
+        // Fetch speakers from API or localStorage
         async function loadSpeakers() {
-            try {
+        try {
+            // First, try to load from localStorage (admin panel data)
+            const savedSpeakers = localStorage.getItem('facettesSpeakers');
+            if (savedSpeakers) {
+                speakers = JSON.parse(savedSpeakers);
+                console.log('✅ Speakers loaded from admin panel');
+            } else {
+                // Fallback to API if no local data
                 const response = await fetch('/api/speakers');
                 speakers = await response.json();
-                generateFilterButtons();
-                renderSpeakers();
-                document.getElementById('loading').style.display = 'none';
+            }
+        
+            generateFilterButtons();
+            renderSpeakers();
+            document.getElementById('loading').style.display = 'none';
             } catch (error) {
                 console.error('Error loading speakers:', error);
+                // If both fail, show error
                 const errorMsg = currentLang === 'fr' 
-                    ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page</p>'
-                    : '<h3>Error loading speakers</h3><p>Please refresh the page</p>';
-                document.getElementById('loading').innerHTML = errorMsg;
-            }
-        }
+                ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page</p>'
+                : '<h3>Error loading speakers</h3><p>Please refresh the page</p>';
+            document.getElementById('loading').innerHTML = errorMsg;
+    }
+}
 
         // Generate filter buttons dynamically
         function generateFilterButtons() {
