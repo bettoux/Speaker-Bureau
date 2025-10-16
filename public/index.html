@@ -1457,29 +1457,40 @@ function loadSavedContent() {
 
         // Fetch speakers from API
         // Fetch speakers from API or localStorage
-        async function loadSpeakers() {
-        try {
-            // First, try to load from localStorage (admin panel data)
-            const savedSpeakers = localStorage.getItem('facettesSpeakers');
-            if (savedSpeakers) {
-                speakers = JSON.parse(savedSpeakers);
-                console.log('✅ Speakers loaded from admin panel');
-            } else {
-                // Fallback to API if no local data
-                const response = await fetch('/api/speakers');
-                speakers = await response.json();
-            }
-        
+        // Fetch speakers from API or localStorage
+    async function loadSpeakers() {
+    try {
+        // FIRST: Try to load from localStorage (admin panel data)
+        const savedSpeakers = localStorage.getItem('facettesSpeakers');
+        if (savedSpeakers) {
+            speakers = JSON.parse(savedSpeakers);
+            console.log('✅ Speakers loaded from admin panel:', speakers.length);
             generateFilterButtons();
             renderSpeakers();
             document.getElementById('loading').style.display = 'none';
-            } catch (error) {
-                console.error('Error loading speakers:', error);
-                // If both fail, show error
-                const errorMsg = currentLang === 'fr' 
-                ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page</p>'
-                : '<h3>Error loading speakers</h3><p>Please refresh the page</p>';
+            return; // Exit early if we have local data
+        }
+        
+        // FALLBACK: Try API if no localStorage data
+        const response = await fetch('/api/speakers');
+        if (response.ok) {
+            speakers = await response.json();
+            console.log('✅ Speakers loaded from API:', speakers.length);
+            generateFilterButtons();
+            renderSpeakers();
+            document.getElementById('loading').style.display = 'none';
+        } else {
+            throw new Error('API not available');
+        }
+    } catch (error) {
+        console.error('Error loading speakers:', error);
+        // Show error only if both localStorage and API fail
+        if (!localStorage.getItem('facettesSpeakers')) {
+            const errorMsg = currentLang === 'fr' 
+                ? '<h3>Erreur de chargement</h3><p>Veuillez actualiser la page ou utiliser le panneau admin</p>'
+                : '<h3>Error loading speakers</h3><p>Please refresh the page or use the admin panel</p>';
             document.getElementById('loading').innerHTML = errorMsg;
+        }
     }
 }
 
